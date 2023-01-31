@@ -186,7 +186,7 @@
                 <div style="display: flex; flex-direction: row; align-items: center;">
                     <label style="margin-right: 10px;" for="email">Email*</label> <p style="margin: 0px; font-size: 14px;" id="result"></p>
                 </div>
-                <input  id="email" maxlength="60" name="email" size="20" type="email" pattern="^([A-Za-z0-9][._-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" required/><br>
+                <input  id="email" maxlength="60" name="email" size="20" type="email" pattern="^([A-Za-z0-9][._-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" oninvalid="this.setCustomValidity('Please enter a valid email address')" required/><br>
             </div>
             <div class="width_50">
                 <label for="phone">Phone*</label><input  id="phone" maxlength="16" name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required/><br>
