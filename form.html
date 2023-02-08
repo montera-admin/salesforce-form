@@ -30,7 +30,6 @@
           display: grid;
           grid-template-columns: 1fr 1fr;
           column-gap: 20px;
-          row-gap: 18px;
         }
         
         label {
@@ -53,7 +52,7 @@
             background-color: white;
             height: 40px;
             color: black;
-            margin-top: 10px;
+            margin: 10px 0px 17px 0px;
         }
     
         input {
@@ -62,7 +61,7 @@
             border: none;
             padding: 0 10px;
             width: 100%;
-            margin-top: 10px;
+            margin: 10px 0px 17px 0px;
         }
     
         .flexRow{
@@ -134,12 +133,17 @@
             font-size: 24px;
             line-height: 36px;
             color: white;
-            margin: 0px;
+            margin: 0px 0px 15px 0px;
         }
         
         @media screen and (max-width:568px) {
             input{
                 width: 100%;
+                margin-bottom: 20px;
+            }
+
+            #select{
+                margin-bottom: 20px;
             }
 
             .flexRow{
@@ -161,6 +165,7 @@
 
             .isMcol{
                 flex-direction: column;
+                margin-bottom: 20px;
             }
 
             .dflexRow{
@@ -230,7 +235,7 @@
             <label for="city">City*</label>
             <input  id="city" maxlength="20" name="city" size="20" type="text" required/><br>
         </div>
-        <div style="position: relative; display: flex; flex-direction: column; height: 64px;">
+        <div style="position: relative; display: flex; flex-direction: column; min-height: 64px;">
             <label for="state">State*</label> 
                 <select id="select">
                     <option value="" selected="selected">Select a State</option>
