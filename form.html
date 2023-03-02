@@ -343,10 +343,13 @@
     </form>
     
       <script>
-        window.addEventListener('message', event => {
-           var getlid = event.data; 
-           document.getElementById("00N8b00000GjstL").value = getlid;
-        });
+        window.addEventListener('message', function(event) {
+            var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
+            if (event.data.call=='gcValue') {
+                console.log(event.data.value)
+            }
+        }, false);
+
     </script>
     
     <script>
