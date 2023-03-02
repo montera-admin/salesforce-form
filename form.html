@@ -342,6 +342,12 @@
         <input  id="00N8b00000GjstL" name="00N8b00000GjstL" type="hidden"/>
     </form>
     
+      <script>
+        window.addEventListener('message', event => {
+           var getlid = event.data; 
+           console.log(getlid);
+        });
+    </script>
     
     <script>
         //script for insurance checkbox
@@ -499,10 +505,5 @@
     </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
-    <script>
-        window.addEventListener('message', event => {
-           document.getElementById("00N8b00000GjstL").value = event.data; 
-        });
-    </script>
 </body>
 </html>
