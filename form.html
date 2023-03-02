@@ -348,7 +348,6 @@
     const insuranceYes = document.getElementById("insuranceYes");
     const insuranceNo = document.getElementById("insuranceNo");
     const formSales = document.getElementById("form_wrapper");
-    var setGC = document.getElementById("00N8b00000GjstL");
     
     insuranceYes.addEventListener("change", ()=> {
             if(insuranceYes.checked){
@@ -502,7 +501,7 @@
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
     <script>
         window.addEventListener('message', event => {
-           console.log(event.data);
+           document.getElementById("00N8b00000GjstL").value = event.data; 
         });
     </script>
 </body>
