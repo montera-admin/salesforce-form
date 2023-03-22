@@ -329,7 +329,7 @@
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50" name="00N8b00000Bz6et" size="20" type="text" required/><br>
         </div>
         <div  class="select-wrapper" id="insuranceName" style="display:flex; flex-direction:column; justify-content:flex-end;">
-            <label for="insurance">NaSta&#8204;me of insurance provider</label>
+            <label for="insurance">Na&#8204;me of insurance provider</label>
             <select id="insurance" class="select"> 
                 <option value="" selected="selected">Select</option>
                 <option value="AARP">AARP</option>
@@ -406,7 +406,7 @@
         <div class="dflexRow">
             <input class="checkbox" type="checkbox" id="communicationYes" name="Yes"/>
             <label class="checkbox_text m-spacing_20" for="communication">Do you consent to text communication from Forta?</label>
-            <input class="hidden" id="00N8b00000EQM3O" maxlength="50" name="00N8b00000EQM3O" size="20" type="text" /><br>
+            <input class="hidden" id="00N8b00000EQM3O" maxlength="50" name="00N8b00000EQM3O" size="20" type="text" value="No"/><br>
         </div>
         <div class="dflexRow" style="align-content: start">
             <input style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox" type="checkbox" id="consent" name="Yes" required/> <label class="checkbox_text" style="font-size: 14px; font-weight: 400;"for="consent">I agree to the <span><a href="https://www.fortahealth.com/electronic-communications-policy" style="color: white;">Electronic Communications Policy </a></span>and consent to Montera, Inc. (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or present directors, officers, representatives, and employees communicating with you through nonsecure methods like Text messages, email, and other forms of electronic communication.*
@@ -443,7 +443,7 @@
         if (communicationYes.checked){
             document.getElementById("00N8b00000EQM3O").setAttribute("value", "Yes");
         } else if (communicationYes.checked === false) {
-            document.getElementById("00N8b00000EQM3O").setAttribute("value", "");
+            document.getElementById("00N8b00000EQM3O").setAttribute("value", "No");
         }
     });
     
