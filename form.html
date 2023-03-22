@@ -304,7 +304,7 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" id="input-field-1" maxlength="2" name="state" size="20" type="text" required/><br>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off" autocorrect="off" spellcheck="false" autocomplete="off" id="input-field-1" maxlength="2" name="state" size="20" type="text" required/><br>
         </div>
         <div style = "display:flex; flex-direction:column; justify-content:flex-end;">
             <label for="age">Age of Child</label>
@@ -329,7 +329,7 @@
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50" name="00N8b00000Bz6et" size="20" type="text" required/><br>
         </div>
         <div  class="select-wrapper" id="insuranceName" style="display:flex; flex-direction:column; justify-content:flex-end;">
-            <label for="insurance">Name of insurance provider</label>
+            <label for="insurance">NaSta&#8204;me of insurance provider</label>
             <select id="insurance" class="select"> 
                 <option value="" selected="selected">Select</option>
                 <option value="AARP">AARP</option>
@@ -400,7 +400,7 @@
                 <option value="Wellcare">Wellcare</option>
                 <option value="Not Listed">Other</option>
             </select>
-            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" id="00N8b00000EQM3J" maxlength="255" name="00N8b00000EQM3J" size="20" type="text" /><br>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off" autocorrect="off" spellcheck="false" autocomplete="off" id="00N8b00000EQM3J" maxlength="255" name="00N8b00000EQM3J" size="20" type="text" /><br>
         </div>
 
         <div class="dflexRow">
@@ -429,6 +429,10 @@
                 document.getElementById("00N8b00000GjstL").value = event.data.value;
             }
         }, false);
+    </script>
+
+    <script>
+        $('input').attr('autocomplete', 'off');
     </script>
 
     <script>
