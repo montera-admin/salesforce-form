@@ -143,6 +143,7 @@
 
         .disabled{
             opacity: 0.5 !important;
+            pointer-events: none;
         }
 
         
@@ -509,10 +510,12 @@
             document.getElementById("insuranceType").classList.remove("disabled");
             document.getElementById("00N8b00000EQM3J").setAttribute("required", "");
             document.getElementById("00N8b00000Bz6et").setAttribute("value", "Yes");
+            document.getElementById("00N8b00000Bz6ey").setAttribute("required", "");
         } else if (insuranceSelect.value == 'No') {
             document.getElementById("insuranceName").classList.add("disabled");
             document.getElementById("insuranceType").classList.add("disabled");
             document.getElementById("00N8b00000EQM3J").removeAttribute("required", "");
+            document.getElementById("00N8b00000Bz6ey").removeAttribute("required", "");
             document.getElementById("00N8b00000Bz6et").setAttribute("value", "No");
         }
     })
