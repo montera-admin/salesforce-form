@@ -141,9 +141,10 @@
             min-height: 64px;
         }
 
-        .hide{
-            display: none !important;
+        .disabled{
+            opacity: 0.5 !important;
         }
+
         
         @media screen and (max-width:568px) {
             input{
@@ -339,6 +340,7 @@
                 <option value="" selected="selected">Select</option>
                 <option value="AARP">AARP</option>
                 <option value="Aetna">Aetna</option>
+                <option value="Aetna Better Health">Aetna Better Health</option>
                 <option value="American Family Insurance">American Family Insurance</option>
                 <option value="American National Insurance Company">American National Insurance Company</option>
                 <option value="Amerigroup">Amerigroup</option>
@@ -354,10 +356,15 @@
                 <option value="Centene Corp">Centene Corp</option>
                 <option value="Centene Corporation">Centene Corporation</option>
                 <option value="Cigna Health">Cigna Health</option>
+                <option value="Community First Health Plans Star Kids">Community First Health Plans Star Kids</option>
                 <option value="ComPsych">ComPsych</option>
+                <option value="Coordinated Care">Coordinated Care</option>
                 <option value="Coventry Health Care">Coventry Health Care</option>
                 <option value="CVS">CVS</option>
+                <option value="Driscoll">Driscoll</option>
                 <option value="EmblemHealth">EmblemHealth</option>
+                <option value="Evernorth">Evernorth</option>
+                <option value="First Care">First Care</option>
                 <option value="Fortis">Fortis</option>
                 <option value="Forward Health">Forward Health</option>
                 <option value="Geisinger">Geisinger</option>
@@ -373,14 +380,18 @@
                 <option value="HealthSpring">HealthSpring</option>
                 <option value="Highmark">Highmark</option>
                 <option value="Horace Mann Educators Corporation">Horace Mann Educators Corporation</option>
+                <option value="Horizon Blue (BCBS NJ)">Horizon Blue (BCBS NJ)</option>
                 <option value="Humana">Humana</option>
+                <option value="Humana MCal">Humana MCal</option>
                 <option value="Independence Blue Cross">Independence Blue Cross</option>
                 <option value="Independence Health Group Inc.">Independence Health Group Inc.</option>
                 <option value="Kaiser Permanente">Kaiser Permanente</option>
+                <option value="Kaiser Permanente MCO CA">Kaiser Permanente MCO CA</option>
                 <option value="Kaleida Health">Kaleida Health</option>
                 <option value="Liberty Medical">Liberty Medical</option>
                 <option value="Magellan">Magellan</option>
                 <option value="MassHealth">MassHealth</option>
+                <option value="Medi-Cal State of California">Medi-Cal State of California</option>
                 <option value="Medicaid">Medicaid</option>
                 <option value="Medical Mutual of Ohio">Medical Mutual of Ohio</option>
                 <option value="MEGA Life and Health Insurance">MEGA Life and Health Insurance</option>
@@ -391,22 +402,39 @@
                 <option value="Oscar Health">Oscar Health</option>
                 <option value="Oxford Health Plans">Oxford Health Plans</option>
                 <option value="Pacific Source">Pacific Source</option>
+                <option value="Peach State Health plan">Peach State Health plan</option>
                 <option value="Point32Health">Point32Health</option>
                 <option value="Premera Blue Cross">Premera Blue Cross</option>
                 <option value="Principal Financial Group">Principal Financial Group</option>
                 <option value="Shelter Insurance">Shelter Insurance</option>
                 <option value="State Farm">State Farm</option>
+                <option value="Sunshine Health">Sunshine Health</option>
+                <option value="Superior">Superior</option>
+                <option value="Texas Star">Texas Star</option>
                 <option value="Thrivent Financial for Lutherans">Thrivent Financial for Lutherans</option>
                 <option value="Tricare">Tricare</option>
+                <option value="UMR">UMR</option>
                 <option value="UnitedHealth Group">UnitedHealth Group</option>
                 <option value="Unitrin">Unitrin</option>
                 <option value="Universal American Corporation">Universal American Corporation</option>
                 <option value="UPMC Health System">UPMC Health System</option>
+                <option value="Utah Department of Health Medicaid">Utah Department of Health Medicaid</option>
                 <option value="Wellcare">Wellcare</option>
                 <option value="Not Listed">Other</option>
             </select>
             <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off" autocorrect="off" spellcheck="false" autocomplete="off" id="00N8b00000EQM3J" maxlength="255" name="00N8b00000EQM3J" size="20" type="text" /><br>
         </div>
+        
+        <div  class="select-wrapper" id="insuranceType">
+            <label for="insuranceType">Type of Insurance</label>
+                <select class="select" id="type">
+                    <option value="" selected="selected">Select</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="State Medicaid">State Medicaid</option>
+                    <option value="Managed Care Organization (MCO)">Managed Care Organization (MCO)</option>
+                </select>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" id="00N8b00000Bz6ey" type="text" required/><br>
+        </div> 
 
         <div class="dflexRow">
             <input class="checkbox" type="checkbox" id="communicationYes" name="Yes"/>
@@ -466,15 +494,24 @@
         asdInput.setAttribute("value", asd.value);
     })
 
+     //script for type dropdown 
+    const type = document.getElementById("type"); 
+    const typeInput = document.getElementById("00N8b00000Bz6ey");
+    type.addEventListener("change", function(){
+        typeInput.setAttribute("value", type.value);
+    })
+
     //script for insuranceSelect 
     const insuranceSelect = document.getElementById("insuranceSelect");
     insuranceSelect.addEventListener("change", function(){
         if(insuranceSelect.value == 'Yes'){
-            document.getElementById("insuranceName").classList.remove("hide");
+            document.getElementById("insuranceName").classList.remove("disabled");
+            document.getElementById("insuranceType").classList.remove("disabled");
             document.getElementById("00N8b00000EQM3J").setAttribute("required", "");
             document.getElementById("00N8b00000Bz6et").setAttribute("value", "Yes");
         } else if (insuranceSelect.value == 'No') {
-            document.getElementById("insuranceName").classList.add("hide");
+            document.getElementById("insuranceName").classList.add("disabled");
+            document.getElementById("insuranceType").classList.add("disabled");
             document.getElementById("00N8b00000EQM3J").removeAttribute("required", "");
             document.getElementById("00N8b00000Bz6et").setAttribute("value", "No");
         }
