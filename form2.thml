@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+    <base target="_parent">
+</head>
+<body>
+    <style>
+        html {
+        box-sizing: border-box;
+        }
+        *, *:before, *:after {
+        box-sizing: inherit;
+        }
+        body{
+            font-family: 'Manrope', sans-serif;
+        }
+
+        #form_wrapper{
+          background-color: #571F4E;
+          padding: 35px 45px 0px 45px;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          border-radius: 10px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          column-gap: 20px;
+        }
+        
+        label {
+          font-family: 'Manrope';
+          font-style: normal;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 150%;
+          color: #FFFFFF;
+          margin: 0 0 0 10px;
+        }
+
+        .select{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 13px 10px !important;; 
+            border-radius: 10px;
+            border: none;
+            background-color: white;
+            height: 40px;
+            color: black;
+            margin: 10px 0px 0px 0px;
+        }
+    
+        input {
+            border-radius: 10px;
+            min-height: 40px;
+            border: none;
+            padding: 0 10px;
+            width: 100%;
+            margin: 10px 0px 17px 0px;
+        }
+    
+        .flexRow{
+            display: flex;
+            flex-direction: row;
+        }
+    
+        .dflexRow{
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            grid-column: 1 / 3;
+        }
+            
+        #consent{
+            font-weight: 400;
+        }
+    
+        .ctaButton{
+            position: relative;
+            width: 227px;
+            border: 2px solid #efa00b;
+            border-radius: 30px;
+            background-color: #efa00b;
+            box-shadow: 0 4px 4px 0 rgba(0,0,0,.25);
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer; 
+            color: white;
+            font-size: 16px;
+            line-height: 24px;
+            max-width: 120px;
+        }
+        
+        .ctaButton:hover {
+            border: 2px solid #efa00b;
+            background-color: #fff;
+            color: #efa00b;
+            }
+    
+        .hidden{
+            display: none;
+        }
+    
+        .checkbox{
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: none;
+            min-height: auto;
+            margin-top: 5px; 
+            margin-right: 10px;
+        }
+    
+        .checkbox_text{
+            font-weight: 400;
+        }
+
+        .button-wrapper{
+            grid-column: 1/3;
+        }
+
+        .m-heading{
+            display: none;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 36px;
+            color: white;
+            margin: 0px 0px 15px 0px;
+        }
+
+        .select-wrapper {
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 64px;
+        }
+
+        .disabled{
+            opacity: 0.5 !important;
+            pointer-events: none;
+        }
+
+        
+        @media screen and (max-width:568px) {
+            input{
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .flexRow{
+                flex-direction: column;
+            }
+
+            .rm_23{
+                margin-right: 0px;
+            }
+
+            .width_50{
+                width: 100%;
+            }
+
+             #form_wrapper{
+                grid-template-columns: 1fr;
+                padding: 30px 20px 0px 20px;
+                margin-bottom: 60px;
+            }
+            
+            .isMcol{
+                flex-direction: column;
+            }
+
+            .dflexRow{
+                grid-column: 1;
+            }
+
+            .m-spacing_20{
+                margin-bottom: 20px;
+            }
+
+            .consent-spacing{
+                padding-top: 0px; 
+            }
+
+            label {
+                margin: 0 0 0 8px
+            }
+
+            .custom-select select {
+            display: block;
+            height: 100%;
+            width: 100%;
+            background-color: white;
+            }
+
+            .ctaButton{
+                max-width: 100px;
+                padding-top: 8px;
+                padding-bottom: 8px;
+            }
+
+            .button-wrapper{
+            grid-column: 1;
+            }
+
+            .m-heading{
+                display: block;
+            }
+
+            .checkbox_text{
+                font-size: 14px;
+            }
+
+            select {
+                width: 100%;
+            }
+
+        }
+    
+    </style>
+
+    <form id="form_wrapper" name="myForm" target='_parent' action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+        <input type=hidden name="oid" value="00D8b000002cl8t">
+        <input type=hidden name="retURL" value="http://www.fortahealth.com/thank-you-2">
+    
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+        <!--  these lines if you wish to test in debug mode.                          -->
+        <!--  <input type="hidden" name="debug" value=1>                              -->
+        <!--  <input type="hidden" name="debugEmail"                                  -->
+        <!--  value="christian@fortahealth.com">                                      -->
+        <!--  ----------------------------------------------------------------------  -->
+        <div>
+            <label for="first_name">First Name</label>
+            <input  id="first_name" maxlength="30" name="first_name" size="20" type="text" required /><br>
+        </div>
+        <div>
+            <label for="last_name">Last Name</label>
+            <input  id="last_name" maxlength="30" name="last_name" size="20" type="text" required /><br>  
+        </div>
+        <div>
+            <label style="margin-right: 10px;" for="email">Email Address</label>
+            <input  id="email" maxlength="60" name="email" size="20" type="email" pattern="^([A-Za-z0-9][._+-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="setCustomValidity('')" required/><br>
+        </div>
+        <div>
+            <label for="phone">Phone number</label>
+            <input  id="phone" maxlength="16" name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required/><br>
+        </div>
+        <div>
+            <label for="zip">Zip code </label>
+            <input  id="zip" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="5" name="zip" size="20" type="number" required/><br>
+        </div>
+        <div class="select-wrapper ">
+            <label for="state">Sta&#8204;te</label> 
+                <select id="select" class="select">
+                    <option value="" selected="selected">Select a State</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off" autocorrect="off" spellcheck="false" autocomplete="off" id="input-field-1" maxlength="2" name="state" size="20" type="text" required/><br>
+        </div>
+        <div style = "display:flex; flex-direction:column; justify-content:flex-end;">
+            <label for="age">Age of Child</label>
+            <input  style="margin-bottom: 0px !important;" id="00N8b00000EQM2a" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="2" name="00N8b00000EQM2a" size="20" type="number" required/><br>
+        </div>
+        <div class="select-wrapper">
+            <label for="asd">Does your child have an ASD diagnosis and evaluation?</label>
+            <select id="asd" class="select">
+                <option value="" selected="selected">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000EQM2f" maxlength="50" name="00N8b00000EQM2f" size="20" type="text" required/><br>
+        </div>
+        <div  class="select-wrapper">
+            <label for="insuranceYes">Does your child have health insurance?</label>
+            <select id="insuranceSelect" class="select">
+                <option value="" selected="selected">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50" name="00N8b00000Bz6et" size="20" type="text" required/><br>
+        </div>
+        <div  class="select-wrapper" id="insuranceName" style="display:flex; flex-direction:column; justify-content:flex-end;">
+            <label for="insurance">Na&#8204;me of insurance provider</label>
+            <select id="insurance" class="select"> 
+                <option value="" selected="selected">Select</option>
+                <option value="Aetna">Aetna</option>
+                <option value="Aetna Better Health">Aetna Better Health</option>
+                <option value="Aetna Better Health Illinois">Aetna Better Health Illinois</option>
+                <option value="​Aetna Better Health of California">​Aetna Better Health of California</option>
+                <option value="AHCCCS">AHCCCS</option>
+                <option value="Alabama Medicaid">Alabama Medicaid</option>
+                <option value="Alliance Health">Alliance Health</option>
+                <option value="Alliant Health Plans">Alliant Health Plans</option>
+                <option value="Amerigroup">Amerigroup</option>
+                <option value="AmeriHealth Caritas">AmeriHealth Caritas</option>
+                <option value="Anthem">Anthem</option>
+                <option value="Anthem Blue Cross Partnership Plan">Anthem Blue Cross Partnership Plan</option>
+                <option value="Anthem Health Keepers Plus">Anthem Health Keepers Plus</option>
+                <option value="Apple Health">Apple Health</option>
+                <option value="Arkansas Medicaid">Arkansas Medicaid</option>
+                <option value="ARKids First">ARKids First</option>
+                <option value="Banner University Family Care">Banner University Family Care</option>
+                <option value="Baylor Scott & White Health Plan">Baylor Scott & White Health Plan</option>
+                <option value="BCBS">BCBS</option>
+                <option value="BCBS FEP">BCBS FEP</option>
+                <option value="BCBS IL">BCBS IL</option>
+                <option value="BCBS TX">BCBS TX</option>
+                <option value="Beacon">Beacon</option>
+                <option value="Blue Care">Blue Care</option>
+                <option value="Blue Shield of California">Blue Shield of California</option>
+                <option value="Buckeye CommunityHP">Buckeye CommunityHP</option>
+                <option value="Cal Viva Health">Cal Viva Health</option>
+                <option value="CalOptima">CalOptima</option>
+                <option value="Cardinal Care">Cardinal Care</option>
+                <option value="Carefirst">Carefirst</option>
+                <option value="Caresource">Caresource</option>
+                <option value="Cenpatico Behavioral Health">Cenpatico Behavioral Health</option>
+                <option value="Centennial Care">Centennial Care</option>
+                <option value="ChampVa">ChampVa</option>
+                <option value="Children's Medical Services Health Plan">Children's Medical Services Health Plan</option>
+                <option value="Colorado Access">Colorado Access</option>
+                <option value="Community Care Plan">Community Care Plan</option>
+                <option value="Community First">Community First</option>
+                <option value="Community Health Group">Community Health Group</option>
+                <option value="Community Health Plan of Washington">Community Health Plan of Washington</option>
+                <option value="ComPsych">ComPsych</option>
+                <option value="Cook Children's Health Plan">Cook Children's Health Plan</option>
+                <option value="Coordinated Care">Coordinated Care</option>
+                <option value="DeanHealth Plan">DeanHealth Plan</option>
+                <option value="DenaliCare">DenaliCare</option>
+                <option value="DMMA - Medical Assistance Services">DMMA - Medical Assistance Services</option>
+                <option value="Driscoll">Driscoll</option>
+                <option value="Eastpointe">Eastpointe</option>
+                <option value="Evernorth(Cigna)">Evernorth(Cigna)</option>
+                <option value="First Care">First Care</option>
+                <option value="First Health Aetna">First Health Aetna</option>
+                <option value="Florida Blue">Florida Blue</option>
+                <option value="Florida Medicaid">Florida Medicaid</option>
+                <option value="ForwardHealth">ForwardHealth</option>
+                <option value="Frontpath">Frontpath</option>
+                <option value="Georgia Families">Georgia Families</option>
+                <option value="Georgia Medicaid">Georgia Medicaid</option>
+                <option value="Green Mountain care">Green Mountain care</option>
+                <option value="Health Alliance">Health Alliance</option>
+                <option value="Health Connection">Health Connection</option>
+                <option value="Health First Colorado">Health First Colorado</option>
+                <option value="Health Net">Health Net</option>
+                <option value="Health Plan of Nevada">Health Plan of Nevada</option>
+                <option value="Health Plan of San Joaquin">Health Plan of San Joaquin</option>
+                <option value="Health Share of Oregon">Health Share of Oregon</option>
+                <option value="HealthChoice Illinois">HealthChoice Illinois</option>
+                <option value="HealthSmart">HealthSmart</option>
+                <option value="Healthy Blue">Healthy Blue</option>
+                <option value="Healthy Connections">Healthy Connections</option>
+                <option value="Healthy Louisiana Health Plan">Healthy Louisiana Health Plan</option>
+                <option value="Highmark">Highmark</option>
+                <option value="HMC Healthworks">HMC Healthworks</option>
+                <option value="Home State Health">Home State Health</option>
+                <option value="Hoosier Care Connect">Hoosier Care Connect</option>
+                <option value="Horizon NJ Health">Horizon NJ Health</option>
+                <option value="HSCSN">HSCSN</option>
+                <option value="Humana">Humana</option>
+                <option value="Humana Healthy Horizons FL">Humana Healthy Horizons FL</option>
+                <option value="Humana Healthy Horizons KY">Humana Healthy Horizons KY</option>
+                <option value="Husky Health">Husky Health</option>
+                <option value="Idaho Medicaid">Idaho Medicaid</option>
+                <option value="Independence Blue Cross">Independence Blue Cross</option>
+                <option value="Inland Empire Health Plan (IEHP)">Inland Empire Health Plan (IEHP)</option>
+                <option value="Iowa Total care">Iowa Total care</option>
+                <option value="Kaiser Permanente">Kaiser Permanente</option>
+                <option value="KanCare">KanCare</option>
+                <option value="Kentucky Medicaid">Kentucky Medicaid</option>
+                <option value="Kern Family Health Care">Kern Family Health Care</option>
+                <option value="KyHealth Choices">KyHealth Choices</option>
+                <option value="L. A. Care Health Plan">L. A. Care Health Plan</option>
+                <option value="Magellan">Magellan</option>
+                <option value="MaineCare">MaineCare</option>
+                <option value="Maryland Physicians Care">Maryland Physicians Care</option>
+                <option value="Mass Health">Mass Health</option>
+                <option value="MDWise">MDWise</option>
+                <option value="Medica Choice Passport">Medica Choice Passport</option>
+                <option value="Meridian">Meridian</option>
+                <option value="Meritain">Meritain</option>
+                <option value="MetLife">MetLife</option>
+                <option value="mhs Hoosier Healthwise">mhs Hoosier Healthwise</option>
+                <option value="Michigan Medicaid">Michigan Medicaid</option>
+                <option value="miHealth">miHealth</option>
+                <option value="Minnesota Health Care Programs">Minnesota Health Care Programs</option>
+                <option value="MississippiCAN">MississippiCAN</option>
+                <option value="Molina Healthcare">Molina Healthcare</option>
+                <option value="Mountain Co-OP">Mountain Co-OP</option>
+                <option value="NC Medicaid Direct">NC Medicaid Direct</option>
+                <option value="Nebraska State Medicaid">Nebraska State Medicaid</option>
+                <option value="Nevada Medicaid">Nevada Medicaid</option>
+                <option value="NH Healthy Families">NH Healthy Families</option>
+                <option value="Ohio Department of Medicaid">Ohio Department of Medicaid</option>
+                <option value="Ohio Medicaid">Ohio Medicaid</option>
+                <option value="Oklahoma Health Care Authority">Oklahoma Health Care Authority</option>
+                <option value="Optima Health">Optima Health</option>
+                <option value="Optum">Optum</option>
+                <option value="Oregon Health Plan">Oregon Health Plan</option>
+                <option value="Oscar">Oscar</option>
+                <option value="Pacific Source">Pacific Source</option>
+                <option value="Parkland Community Health Plan">Parkland Community Health Plan</option>
+                <option value="Partners Health Management">Partners Health Management</option>
+                <option value="Partnership HealthPlan of California">Partnership HealthPlan of California</option>
+                <option value="Peach State Health Plan">Peach State Health Plan</option>
+                <option value="PeachCare for Kids">PeachCare for Kids</option>
+                <option value="PHP">PHP</option>
+                <option value="Premera BC">Premera BC</option>
+                <option value="Presbyterian">Presbyterian</option>
+                <option value="Priority Partners">Priority Partners</option>
+                <option value="QUEST">QUEST</option>
+                <option value="Regence">Regence</option>
+                <option value="Rhode Island Medical Assistance">Rhode Island Medical Assistance</option>
+                <option value="Rocky Mountain Health Plans">Rocky Mountain Health Plans</option>
+                <option value="SAMBA">SAMBA</option>
+                <option value="Sandhills">Sandhills</option>
+                <option value="Select Health of South Carolina">Select Health of South Carolina</option>
+                <option value="SelectHealth">SelectHealth</option>
+                <option value="Simply Healthcare">Simply Healthcare</option>
+                <option value="South Dakota Medicaid">South Dakota Medicaid</option>
+                <option value="Steward Health Choice">Steward Health Choice</option>
+                <option value="Sunflower Health Plan">Sunflower Health Plan</option>
+                <option value="Sunshine Health">Sunshine Health</option>
+                <option value="Superior Plan (STAR)">Superior Plan (STAR)</option>
+                <option value="TennCare">TennCare</option>
+                <option value="Texas Children's Health Plan">Texas Children's Health Plan</option>
+                <option value="Texas Star">Texas Star</option>
+                <option value="The Health Plan">The Health Plan</option>
+                <option value="The Ohio State University Health Plan">The Ohio State University Health Plan</option>
+                <option value="Total Health Care">Total Health Care</option>
+                <option value="Tricare">Tricare</option>
+                <option value="Trillium Health Resources">Trillium Health Resources</option>
+                <option value="UCARE">UCARE</option>
+                <option value="UHC Community Plan (STAR)">UHC Community Plan (STAR)</option>
+                <option value="UMR">UMR</option>
+                <option value="Unicare">Unicare</option>
+                <option value="United Healthcare">United Healthcare</option>
+                <option value="United Healthcare Community Plan">United Healthcare Community Plan</option>
+                <option value="Utah Medicaid">Utah Medicaid</option>
+                <option value="VA Healthcare">VA Healthcare</option>
+                <option value="Vaya Health">Vaya Health</option>
+                <option value="Wellcare">Wellcare</option>
+                <option value="Wellpoint">Wellpoint</option>
+                <option value="WellSense Health Plan">WellSense Health Plan</option>
+                <option value="Western Sky Community Care">Western Sky Community Care</option>
+                <option value="Wisconsin Medical Assistance Program">Wisconsin Medical Assistance Program</option>
+                <option value="WV Medicaid">WV Medicaid</option>
+                <option value="Wyoming Medicaid">Wyoming Medicaid</option>
+                <option value="*Other, Not Listed">*Other, Not Listed</option>
+            </select>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off" autocorrect="off" spellcheck="false" autocomplete="off" id="00N8b00000EQM3J" maxlength="255" name="00N8b00000EQM3J" size="20" type="text" /><br>
+        </div>
+        
+        <div  class="select-wrapper" id="insuranceType">
+            <label for="insuranceType">Is this a Medicaid plan?</label>
+                <select class="select" id="type">
+                    <option value="" selected="selected">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" id="00N8b00000Bz6ey" name="00N8b00000Bz6ey" type="text" required/><br>
+        </div> 
+
+        <div class="dflexRow">
+            <input class="checkbox" type="checkbox" id="communicationYes" name="Yes"/>
+            <label class="checkbox_text m-spacing_20" for="communication">Do you consent to text communication from Forta?</label>
+            <input class="hidden" id="00N8b00000EQM3O" maxlength="50" name="00N8b00000EQM3O" size="20" type="text" value="No"/><br>
+        </div>
+        <div class="dflexRow" style="align-content: start">
+            <input style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox" type="checkbox" id="consent" name="Yes" required/> <label class="checkbox_text" style="font-size: 14px; font-weight: 400;"for="consent">I agree to the <span><a href="https://www.fortahealth.com/electronic-communications-policy" style="color: white;">Electronic Communications Policy </a></span>and consent to Montera, Inc. (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or present directors, officers, representatives, and employees communicating with you through nonsecure methods like Text messages, email, and other forms of electronic communication.*
+            </label> 
+        </div>
+        <div style="display:flex; flex-direction:row; justify-content:center; padding-top: 20px;" class="button-wrapper">
+              <input class="ctaButton" type="submit" name="submit">
+        </div>
+        <!--Hidden Fields-->
+        <input  id="company" maxlength="40" name="company" size="20" type="hidden" value="Forta2"/><br>
+        <input  id="city" maxlength="20" name="city" size="20" type="hidden" value=""/><br>
+        <input  id="00N8b00000GjstL" name="00N8b00000GjstL" type="hidden"/>
+    </form>
+    
+    <script>
+        //script for gclid capture
+        window.addEventListener('message', function(event) {
+            var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
+            if (event.data.call=='gcValue') {
+                document.getElementById("00N8b00000GjstL").value = event.data.value;
+            }
+        }, false);
+    </script>
+
+    <script>
+    
+    //script for communication checkbox
+    const communicationYes = document.getElementById("communicationYes");
+    communicationYes.addEventListener("change", ()=> {
+        if (communicationYes.checked){
+            document.getElementById("00N8b00000EQM3O").setAttribute("value", "Yes");
+        } else if (communicationYes.checked === false) {
+            document.getElementById("00N8b00000EQM3O").setAttribute("value", "No");
+        }
+    });
+    
+    //script for state dropdown 
+    const select = document.getElementById("select"); 
+    const state2 = document.getElementById("input-field-1");
+    select.addEventListener("change", function(){
+        state2.setAttribute("value", select.value);
+    })
+
+    //script for asd dropdown 
+    const asd = document.getElementById("asd"); 
+    const asdInput = document.getElementById("00N8b00000EQM2f");
+    asd.addEventListener("change", function(){
+        asdInput.setAttribute("value", asd.value);
+    })
+
+     //script for type dropdown 
+    const type = document.getElementById("type"); 
+    const typeInput = document.getElementById("00N8b00000Bz6ey");
+    type.addEventListener("change", function(){
+        typeInput.setAttribute("value", type.value);
+    })
+
+    //script for insuranceSelect 
+    const insuranceSelect = document.getElementById("insuranceSelect");
+    insuranceSelect.addEventListener("change", function(){
+        if(insuranceSelect.value == 'Yes'){
+            document.getElementById("insuranceName").classList.remove("disabled");
+            document.getElementById("insuranceType").classList.remove("disabled");
+            document.getElementById("00N8b00000EQM3J").setAttribute("required", "");
+            document.getElementById("00N8b00000Bz6et").setAttribute("value", "Yes");
+            document.getElementById("00N8b00000Bz6ey").setAttribute("required", "");
+        } else if (insuranceSelect.value == 'No') {
+            document.getElementById("insuranceName").classList.add("disabled");
+            document.getElementById("insuranceType").classList.add("disabled");
+            document.getElementById("00N8b00000EQM3J").removeAttribute("required", "");
+            document.getElementById("00N8b00000Bz6ey").removeAttribute("required", "");
+            document.getElementById("00N8b00000Bz6et").setAttribute("value", "No");
+        }
+    })
+
+    //script for insuranceName dropdown 
+    const insurance = document.getElementById("insurance"); 
+    const insuranceInput = document.getElementById("00N8b00000EQM3J");
+    insurance.addEventListener("change", function(){
+        insuranceInput.setAttribute("value", insurance.value);
+    })
+
+    //removes unnecessary fields upon submission    
+    const formSales = document.getElementById("form_wrapper")
+    formSales.addEventListener("submit", function(e){
+                communicationYes.remove();
+                consent.remove();
+    })
+    
+    // Format the phone number as the user types it
+    document.getElementById('phone').addEventListener('keyup',function(evt){
+            var phoneNumber = document.getElementById('phone');
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            phoneNumber.value = phoneFormat(phoneNumber.value);
+    });
+    
+    // We need to manually format the phone number on page load
+    document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
+    
+    // A function to determine if the pressed key is an integer
+    function numberPressed(evt){
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if(charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)){
+                    return false;
+            }
+            return true;
+    }
+    
+    // A function to format text to look like a phone number
+    function phoneFormat(input){
+            // Strip all characters from the input except digits
+            input = input.replace(/\D/g,'');
+            
+            // Trim the remaining input to ten characters, to preserve phone number format
+            input = input.substring(0,10);
+    
+            // Based upon the length of the string, we add formatting as necessary
+            var size = input.length;
+            if(size == 0){
+                    input = input;
+            }else if(size < 4){
+                    input = '('+input;
+            }else if(size < 7){
+                    input = '('+input.substring(0,3)+') '+input.substring(3,6);
+            }else{
+                    input = '('+input.substring(0,3)+') '+input.substring(3,6)+' - '+input.substring(6,10);
+            }
+            return input; 
+    }
+    
+    </script>
+
+    <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
+</body>
+</html>
