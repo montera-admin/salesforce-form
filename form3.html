@@ -670,9 +670,9 @@
         if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
             ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
             (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
-            window.location.href = "https://www.fortahealth.com/confirmation";
+            window.parent.location.href = "https://www.fortahealth.com/confirmation";
         } else {
-            window.location.href = "https://fortahealth.com/thank-you-4";
+            window.parent.location.href = "https://fortahealth.com/thank-you-4";
         }
     });
 </script>
