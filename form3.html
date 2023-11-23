@@ -663,13 +663,14 @@
         var state = document.getElementById('select').value;
         var isMedicaid = document.getElementById('type').value;
 
-        // Disqualification criteria
+        // Check disqualification criteria
         if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
             ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
             (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
-            window.top.location.href = "https://www.fortahealth.com/confirmation";
+            // Send a message to the parent window
+            window.parent.postMessage('disqualify', '*');
         } else {
-            window.top.location.href = "https://fortahealth.com/thank-you-4";
+            window.parent.postMessage('qualify', '*');
         }
     });
 </script>
