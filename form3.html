@@ -653,10 +653,7 @@
             return input; 
     }
     
-    </script>
-
-    <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
-    <script>
+<script>
     document.getElementById('form_wrapper').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -670,12 +667,13 @@
         if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
             ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
             (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
-            window.parent.location.href = "https://www.fortahealth.com/confirmation";
+            window.top.location.href = "https://www.fortahealth.com/confirmation";
         } else {
-            window.parent.location.href = "https://fortahealth.com/thank-you-4";
+            window.top.location.href = "https://fortahealth.com/thank-you-4";
         }
     });
 </script>
+
 
 </body>
 </html>
