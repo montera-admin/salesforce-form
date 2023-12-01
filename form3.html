@@ -659,6 +659,9 @@
 
     <script>
     document.getElementById('form_wrapper').addEventListener('submit', function(e) {
+    console.log('Form submitted');
+      //remove-----  
+    document.getElementById('form_wrapper').addEventListener('submit', function(e) {
         e.preventDefault();
 
         var asdDiagnosis = document.getElementById('asd').value;
@@ -677,6 +680,9 @@
             window.parent.postMessage('qualify', '*');
         }
     });
+//remove-----  
+});
+
 </script>
 
 </body>
