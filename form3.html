@@ -658,24 +658,22 @@
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 
     <script>
-        document.getElementById('form_wrapper').addEventListener('submit', function(e) {
-            var asdDiagnosis = document.getElementById('asd').value;
-            var hasInsurance = document.getElementById('insuranceSelect').value;
-            var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-            var state = document.getElementById('select').value;
-            var isMedicaid = document.getElementById('type').value;
-        
-            // Check disqualification criteria
-            if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
-                ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
-                (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
-                e.preventDefault(); // Prevent form submission only if disqualified
-                window.parent.postMessage('disqualify', '*');
-            } else {
-                window.parent.postMessage('qualify', '*');
-                // No need to call e.preventDefault(); here, allowing normal submission
-            }
-        });
+document.getElementById('form_wrapper').addEventListener('submit', function(e) {
+    var asdDiagnosis = document.getElementById('asd').value;
+    var hasInsurance = document.getElementById('insuranceSelect').value;
+    var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    var state = document.getElementById('select').value;
+    var isMedicaid = document.getElementById('type').value;
+    
+    // Check qualification criteria
+    if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
+        ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
+        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
+        window.parent.postMessage('disqualify', '*');
+    } else {
+        window.parent.postMessage('qualify', '*');
+    }
+});
 
 </script>
 
