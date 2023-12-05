@@ -657,9 +657,9 @@
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 
-    <script>
+<script>
 document.getElementById('form_wrapper').addEventListener('submit', function(e) {
-    // Create an object to capture form data
+    // Create an object to capture form data for logging
     let formData = {
         firstName: document.getElementById('first_name').value,
         lastName: document.getElementById('last_name').value,
@@ -689,10 +689,10 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
         ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
         (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
         window.parent.postMessage('disqualify', '*');
-        e.preventDefault(); // prevent form submission if disqualified
+        // Redirect or handle disqualification as needed
     } else {
         window.parent.postMessage('qualify', '*');
-        // The form will submit normally if qualified
+        // Redirect or handle qualification as needed
     }
 });
 </script>
