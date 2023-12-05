@@ -226,7 +226,7 @@
 
     <form id="form_wrapper" name="myForm" target='_parent' action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
         <input type=hidden name="oid" value="00D8b000002cl8t">
-        <input type=hidden name="retURL" value="http://www.fortahealth.com/confirmation">
+        <!--<input type=hidden name="retURL" value="http://www.fortahealth.com/confirmation"> -->
     
         <!--  ----------------------------------------------------------------------  -->
         <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
@@ -657,46 +657,24 @@
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 
-<script>
+   <script>
 document.getElementById('form_wrapper').addEventListener('submit', function(e) {
-    // Create an object to capture form data for logging
-    let formData = {
-        firstName: document.getElementById('first_name').value,
-        lastName: document.getElementById('last_name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        zip: document.getElementById('zip').value,
-        state: document.getElementById('select').value,
-        ageOfChild: document.getElementById('00N8b00000EQM2a').value,
-        asdDiagnosis: document.getElementById('asd').value,
-        hasInsurance: document.getElementById('insuranceSelect').value,
-        insuranceProvider: document.getElementById('insurance').value,
-        isMedicaidPlan: document.getElementById('type').value,
-        // Add other form fields as needed
-    };
-
-    // Log the form data
-    console.log('Form Data:', formData);
-
+    var asdDiagnosis = document.getElementById('asd').value;
+    var hasInsurance = document.getElementById('insuranceSelect').value;
+    var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    var state = document.getElementById('select').value;
+    var isMedicaid = document.getElementById('type').value;
+    
     // Check qualification criteria
-    var asdDiagnosis = formData.asdDiagnosis;
-    var hasInsurance = formData.hasInsurance;
-    var childAge = parseInt(formData.ageOfChild, 10);
-    var state = formData.state;
-    var isMedicaid = formData.isMedicaidPlan;
-
     if (asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
         ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
         (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state))) {
         window.parent.postMessage('disqualify', '*');
-        // Redirect or handle disqualification as needed
     } else {
         window.parent.postMessage('qualify', '*');
-        // Redirect or handle qualification as needed
     }
 });
+
 </script>
-
-
 </body>
 </html>
