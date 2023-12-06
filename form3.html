@@ -653,30 +653,27 @@
             return input; 
     }
 
-     //Redirect Conditions
-document.getElementById('form_wrapper').addEventListener('submit', function(e) {
-    var asdDiagnosis = document.getElementById('asd').value;
-    var hasInsurance = document.getElementById('insuranceSelect').value;
-    var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-    var state = document.getElementById('select').value;
-    var isMedicaid = document.getElementById('type').value;
-
-    // Default return URL
-    var returnURL = "www.fortahealth.com/confirmation";
-
-    // Check qualification criteria for special redirect
-    if (!(asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
-        ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
-        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state)))) {
-        returnURL = "https://fortahealth.com/thank-you-schedule";
-    }
-
-    // Set the return URL in the hidden input field
-    document.getElementsByName("retURL")[0].value = returnURL;
-});
-   
+    //Redirect Conditions
+    document.getElementById('form_wrapper').addEventListener('submit', function(e) {
+        var asdDiagnosis = document.getElementById('asd').value;
+        var hasInsurance = document.getElementById('insuranceSelect').value;
+        var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+        var state = document.getElementById('select').value;
+        var isMedicaid = document.getElementById('type').value;
     
-    </script>
+        var returnURL = "www.fortahealth.com/confirmation"; // Default return URL
+    
+        // Check qualification criteria for special redirect
+        if (!(asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
+            ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
+            (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state)))) {
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+        }
+    
+        console.log("Redirecting to: " + returnURL); // Debugging line
+        document.getElementsByName("retURL")[0].value = returnURL;
+    });
+  </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
