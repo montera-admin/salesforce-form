@@ -661,13 +661,13 @@
         var state = document.getElementById('select').value;
         var isMedicaid = document.getElementById('type').value;
     
-        var returnURL = "www.google.com"; // Default return URL
+        var returnURL = "https://www.fortahealth.com/confirmation"; // Default return URL
     
         // Check qualification criteria for special redirect
         if (!(asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
             ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
             (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state)))) {
-            returnURL = "www.facebook.com";
+            returnURL = "https://fortahealth.com/thank-you-schedule";
         }
     
         console.log("Redirecting to: " + returnURL); // Debugging line
