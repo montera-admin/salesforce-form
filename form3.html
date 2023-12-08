@@ -394,6 +394,7 @@
                 <option value="Florida Medicaid">Florida Medicaid</option>
                 <option value="ForwardHealth">ForwardHealth</option>
                 <option value="Frontpath">Frontpath</option>
+                <option value="Geisinger Health">Geisinger Health</option>
                 <option value="Georgia Families">Georgia Families</option>
                 <option value="Georgia Medicaid">Georgia Medicaid</option>
                 <option value="Green Mountain care">Green Mountain care</option>
@@ -491,6 +492,7 @@
                 <option value="UCARE">UCARE</option>
                 <option value="UHC Community Plan (STAR)">UHC Community Plan (STAR)</option>
                 <option value="UMR">UMR</option>
+                <option value="UPMC Health Plan">UPMC Health Plan</option>
                 <option value="Unicare">Unicare</option>
                 <option value="United Healthcare">United Healthcare</option>
                 <option value="United Healthcare Community Plan">United Healthcare Community Plan</option>
@@ -666,7 +668,7 @@
         // Check qualification criteria for special redirect
         if (!(asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
             ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
-            (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'OH', 'OK', 'SC', 'TN', 'TX', 'WV', 'WY'].includes(state)))) {
+            (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NH', 'NJ', 'NM', 'OH', 'WV'].includes(state)))) {
             returnURL = "https://fortahealth.com/thank-you-schedule";
         }
     
