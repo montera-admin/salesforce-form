@@ -318,11 +318,14 @@
             <input  style="margin-bottom: 0px !important;" id="00N8b00000EQM2a" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="2" name="00N8b00000EQM2a" size="20" type="number" required/><br>
         </div>
         <div class="select-wrapper">
-            <label for="asd">Does your child have an ASD diagnosis and evaluation?</label>
+            <label for="asd">Does your child have an ASD diagnosis?</label>
             <select id="asd" class="select">
                 <option value="" selected="selected">Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
+                <option value="No, evaluation scheduled">No, evaluation scheduled</option>
+                <option value="No, on a waitlist">No, on a waitlist</option>
+                 <option value="No, have other symptoms">No, have other symptoms</option>
             </select>
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000EQM2f" maxlength="50" name="00N8b00000EQM2f" size="20" type="text" required/><br>
         </div>
@@ -655,26 +658,27 @@
             return input; 
     }
 
-    //Redirect Conditions
-    document.getElementById('form_wrapper').addEventListener('submit', function(e) {
-        var asdDiagnosis = document.getElementById('asd').value;
-        var hasInsurance = document.getElementById('insuranceSelect').value;
-        var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-        var state = document.getElementById('select').value;
-        var isMedicaid = document.getElementById('type').value;
-    
-        var returnURL = "https://www.fortahealth.com/confirmation"; // Default return URL
-    
-        // Check qualification criteria for special redirect
-        if (!(asdDiagnosis === 'No' || hasInsurance === 'No' || childAge > 20 ||
-            ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
-            (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NH', 'NJ', 'NM', 'OH', 'WV'].includes(state)))) {
-            returnURL = "https://fortahealth.com/thank-you-schedule";
-        }
-    
-        console.log("Redirecting to: " + returnURL); // Debugging line
-        document.getElementsByName("retURL")[0].value = returnURL;
-    });
+//Redirect Conditions
+document.getElementById('form_wrapper').addEventListener('submit', function(e) {
+    var asdDiagnosis = document.getElementById('asd').value;
+    var hasInsurance = document.getElementById('insuranceSelect').value;
+    var childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    var state = document.getElementById('select').value;
+    var isMedicaid = document.getElementById('type').value;
+
+    var returnURL = "https://www.fortahealth.com/confirmation"; // Default return URL
+
+    // Check qualification criteria for special redirect
+    if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have other symptoms' || hasInsurance === 'No' || childAge > 20 ||
+        ['AK', 'NV', 'NY', 'SD', 'MS'].includes(state) ||
+        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'KY', 'MD', 'MN', 'MO', 'MT', 'ND', 'NH', 'NJ', 'NM', 'OH', 'WV'].includes(state)))) {
+        returnURL = "https://fortahealth.com/thank-you-schedule";
+    }
+
+    console.log("Redirecting to: " + returnURL); // Debugging line
+    document.getElementsByName("retURL")[0].value = returnURL;
+});
+
   </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
