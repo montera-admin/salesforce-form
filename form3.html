@@ -226,7 +226,7 @@
 
     <form id="form_wrapper" name="myForm" target='_parent' action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
         <input type=hidden name="oid" value="00D8b000002cl8t">
-        <input type=hidden name="retURL" value="www.fortahealth.com/confirmation">
+        <input type=hidden name="retURL" value="www.fortahealth.com/thank-you-2">
     
         <!--  ----------------------------------------------------------------------  -->
         <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
@@ -669,7 +669,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     var isMedicaid = document.getElementById('type').value;
     var insuranceProvider = document.getElementById('insurance').value; // Get the insurance provider value
 
-    var returnURL = "https://www.fortahealth.com/confirmation"; // Default return URL
+    var returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
 
     // Add the new condition for Tricare options
     if (insuranceProvider === 'Tricare' || insuranceProvider === 'Tricare East' || insuranceProvider === 'Tricare West') {
