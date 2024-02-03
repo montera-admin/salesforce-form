@@ -699,19 +699,15 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
 
 //script to pass UTMs
     document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    // Define a function to set the value of hidden fields
-    function setFieldValue(fieldId, paramValue) {
-        const field = document.getElementById(fieldId);
-        if (field) field.value = paramValue;
-    }
-    // Capture UTM parameters and set them in the form
-    setFieldValue('00NRc0000083yKn', urlParams.get('utm_source'));
-    setFieldValue('00NRc0000083yW5', urlParams.get('utm_medium'));
-    setFieldValue('00NRc0000083yhN', urlParams.get('utm_campaign'));
-    setFieldValue('00NRc0000083pBL', urlParams.get('utm_content'));
+    // Helper function to get URL parameters
+    const getParamValue = (param) => new URLSearchParams(window.location.search).get(param) || '';
+
+    // Set the values of hidden fields
+    document.getElementById('00NRc0000083yKn').value = getParamValue('utm_source');
+    document.getElementById('00NRc0000083yW5').value = getParamValue('utm_medium');
+    document.getElementById('00NRc0000083yhN').value = getParamValue('utm_campaign');
+    document.getElementById('00NRc0000083pBL').value = getParamValue('utm_content');
 });
-        
 </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
