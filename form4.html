@@ -550,12 +550,11 @@
         <input  id="company" maxlength="40" name="company" size="20" type="hidden" value="Forta2"/><br>
         <input  id="city" maxlength="20" name="city" size="20" type="hidden" value=""/><br>
         <input  id="00N8b00000GjstL" name="00N8b00000GjstL" type="hidden"/>
-
-        <input type="hidden" id="00NRc0000083yKn" name="00NRc0000083yKn" value="">
-        <input type="hidden" id="00NRc0000083yW5" name="00NRc0000083yW5" value="">
-        <input type="hidden" id="00NRc0000083yhN" name="00NRc0000083yhN" value="">
-        <input type="hidden" id="00NRc0000083pBL" name="00NRc0000083pBL" value="">
-
+        <!--Hidden UTMs Fields-->
+        <input type="hidden" name="00NRc0000083yKn" id="00NRc0000083yKn" value="">
+        <input type="hidden" name="00NRc0000083yW5" id="00NRc0000083yW5" value="">
+        <input type="hidden" name="00NRc0000083yhN" id="00NRc0000083yhN" value="">
+        <input type="hidden" name="00NRc0000083pBL" id="00NRc0000083pBL" value="">
     </form>
     
     <script>
@@ -697,24 +696,23 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     console.log("Redirecting to: " + returnURL); // Debugging line
     document.getElementsByName("retURL")[0].value = returnURL;
 });
-        //script to pass UTMs
-        function getURLParameter(name) {
-              return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-          }
-          
-          function captureUTMParameters() {
-              document.getElementById('00NRc0000083yKn').value = getURLParameter('utm_source') || '';
-              document.getElementById('00NRc0000083yW5').value = getURLParameter('utm_medium') || '';
-              document.getElementById('00NRc0000083yhN').value = getURLParameter('utm_campaign') || '';
-              document.getElementById('00NRc0000083pBL').value = getURLParameter('utm_content') || '';
-          }
-          
-          // Call the function on page load
-          window.onload = function() {
-              captureUTMParameters();
-          };
-     
-  </script>
+
+//script to pass UTMs
+    document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    // Define a function to set the value of hidden fields
+    function setFieldValue(fieldId, paramValue) {
+        const field = document.getElementById(fieldId);
+        if (field) field.value = paramValue;
+    }
+    // Capture UTM parameters and set them in the form
+    setFieldValue('00NRc0000083yKn', urlParams.get('utm_source'));
+    setFieldValue('00NRc0000083yW5', urlParams.get('utm_medium'));
+    setFieldValue('00NRc0000083yhN', urlParams.get('utm_campaign'));
+    setFieldValue('00NRc0000083pBL', urlParams.get('utm_content'));
+});
+        
+</script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
