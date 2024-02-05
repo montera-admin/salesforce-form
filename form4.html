@@ -697,6 +697,26 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
+// Directly set UTM values without waiting for DOMContentLoaded
+const getParamValue = (param) => new URLSearchParams(window.location.search).get(param) || '';
+
+// Set the values of hidden fields
+const utmSource = getParamValue('utm_source');
+const utmMedium = getParamValue('utm_medium');
+const utmCampaign = getParamValue('utm_campaign');
+const utmContent = getParamValue('utm_content');
+
+document.getElementById('00NRc0000083yKn').value = utmSource;
+document.getElementById('00NRc0000083yW5').value = utmMedium;
+document.getElementById('00NRc0000083yhN').value = utmCampaign;
+document.getElementById('00NRc0000083pBL').value = utmContent;
+
+// Log the captured UTM values for verification
+console.log('UTM Source:', utmSource);
+console.log('UTM Medium:', utmMedium);
+console.log('UTM Campaign:', utmCampaign);
+console.log('UTM Content:', utmContent);
+
 </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
