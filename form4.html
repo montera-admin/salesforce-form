@@ -697,19 +697,35 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-// Inside the iframe, capture UTM parameters directly from its own URL
-const params = new URLSearchParams(window.location.search);
-const utmSource = params.get('utm_source');
-const utmMedium = params.get('utm_medium');
-const utmCampaign = params.get('utm_campaign');
-const utmContent = params.get('utm_content');
+// Function to get URL parameters
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
 
-// Example of using these parameters
-console.log('UTM Source:', utmSource);
-console.log('UTM Medium:', utmMedium);
-console.log('UTM Campaign:', utmCampaign);
-console.log('UTM Content:', utmContent);
+// Capture UTM parameters
+var utm_source = getURLParameter('utm_source');
+var utm_medium = getURLParameter('utm_medium');
+var utm_campaign = getURLParameter('utm_campaign');
+var utm_content = getURLParameter('utm_content');
 
+// Function to populate hidden fields with UTM parameters
+function populateHiddenFields() {
+    if(document.getElementById('00NRc0000083yKn')) {
+        document.getElementById('00NRc0000083yKn').value = utm_source;
+    }
+    if(document.getElementById('00NRc0000083yW5')) {
+        document.getElementById('00NRc0000083yW5').value = utm_medium;
+    }
+    if(document.getElementById('00NRc0000083yhN')) {
+        document.getElementById('00NRc0000083yhN').value = utm_campaign;
+    }
+    if(document.getElementById('00NRc0000083pBL')) {
+        document.getElementById('00NRc0000083pBL').value = utm_content;
+    }
+}
+
+// Call the function to populate the fields when the page loads
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
 </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
