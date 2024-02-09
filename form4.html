@@ -689,7 +689,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
         returnURL = "https://www.fortahealth.com/confirmation"; // Set to your confirmation page URL
     } else if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
         ['NV', 'SD'].includes(state) ||
-        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'AK', 'DE', 'HI', 'IA', 'ID', 'KY', 'MN', 'MT', 'ND', 'NH', 'NJ', 'NM', 'NY', 'WV'].includes(state)))) {
+        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'AK', 'DE', 'HI', 'IA', 'ID', 'KY', 'MN', 'MT', 'ND', 'NH', 'NJ', 'NM', 'WV'].includes(state)))) {
         returnURL = "https://fortahealth.com/thank-you-schedule";
     }
 
