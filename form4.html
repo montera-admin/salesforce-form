@@ -726,27 +726,18 @@ function populateHiddenFields() {
 
 // Call the function to populate the fields when the page loads
 document.addEventListener('DOMContentLoaded', populateHiddenFields);*/
-        document.addEventListener('DOMContentLoaded', function() {
-    // Function to parse URL parameters
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        
+
+        window.addEventListener('message', function(event) {
+    var data = JSON.parse(event.data);
+    // Assuming the event data contains UTM parameters
+    if (data.utm_source) {
+        document.getElementById('00NRc0000083yKn').value = data.utm_source;
+        document.getElementById('00NRc0000083yW5').value = data.utm_medium;
+        document.getElementById('00NRc0000083yhN').value = data.utm_campaign;
+        document.getElementById('00NRc0000083pBL').value = data.utm_content;
     }
-
-    // Capture UTM parameters
-    var utm_source = getUrlParameter('utm_source');
-    var utm_medium = getUrlParameter('utm_medium');
-    var utm_campaign = getUrlParameter('utm_campaign');
-    var utm_content = getUrlParameter('utm_content');
-
-    // Populate hidden fields
-    document.getElementById('00NRc0000083yKn').value = utm_source;
-    document.getElementById('00NRc0000083yW5').value = utm_medium;
-    document.getElementById('00NRc0000083yhN').value = utm_campaign;
-    document.getElementById('00NRc0000083pBL').value = utm_content;
-});
+}, false);
 
 </script>
 
