@@ -704,9 +704,13 @@ function getURLParameter(name) {
 
 // Capture UTM parameters
 var utm_source = getURLParameter('utm_source');
+console.log('UTM Source:', utm_source);
 var utm_medium = getURLParameter('utm_medium');
+console.log('UTM Medium:', utm_medium);
 var utm_campaign = getURLParameter('utm_campaign');
+console.log('UTM Campaign:', utm_campaign);
 var utm_content = getURLParameter('utm_content');
+console.log('UTM Content:', utm_content);
 
 // Function to populate hidden fields with UTM parameters
 function populateHiddenFields() {
@@ -726,6 +730,7 @@ function populateHiddenFields() {
 
 // Call the function to populate the fields when the page loads
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
+
 </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
