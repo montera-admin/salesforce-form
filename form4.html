@@ -697,7 +697,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-/*/ Function to get URL parameters
+// Function to get URL parameters
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
@@ -725,37 +725,7 @@ function populateHiddenFields() {
 }
 
 // Call the function to populate the fields when the page loads
-document.addEventListener('DOMContentLoaded', populateHiddenFields);*/
-        
-
-document.addEventListener('DOMContentLoaded', function() {
-    function getUrlParameter(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(window.location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
-
-    var utm_source = getUrlParameter('utm_source');
-    var utm_medium = getUrlParameter('utm_medium');
-    var utm_campaign = getUrlParameter('utm_campaign');
-    var utm_content = getUrlParameter('utm_content');
-
-    if(document.getElementById('00NRc0000083yKn')) {
-        document.getElementById('00NRc0000083yKn').value = utm_source;
-    }
-    if(document.getElementById('00NRc0000083yW5')) {
-        document.getElementById('00NRc0000083yW5').value = utm_medium;
-    }
-    if(document.getElementById('00NRc0000083yhN')) {
-        document.getElementById('00NRc0000083yhN').value = utm_campaign;
-    }
-    if(document.getElementById('00NRc0000083pBL')) {
-        document.getElementById('00NRc0000083pBL').value = utm_content;
-    }
-});
-
-
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
 </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
