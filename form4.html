@@ -713,7 +713,7 @@ var utm_content = getURLParameter('utm_content');
 console.log('UTM Content1:', utm_content);
 
 // Function to populate hidden fields with UTM parameters
-function populateHiddenFields() {
+/*function populateHiddenFields() {
     if(document.getElementById('00NRc0000083yKn')) {
         document.getElementById('00NRc0000083yKn').value = utm_source;
     }
@@ -726,7 +726,21 @@ function populateHiddenFields() {
     if(document.getElementById('00NRc0000083pBL')) {
         document.getElementById('00NRc0000083pBL').value = utm_content;
     }
-}
+}*/
+function populateHiddenFields() {
+    if(document.getElementById('00NRc0000083yKn')) {
+        document.getElementById('00NRc0000083yKn').value = utm_source === 'null' ? '' : utm_source;
+    }
+    if(document.getElementById('00NRc0000083yW5')) {
+        document.getElementById('00NRc0000083yW5').value = utm_medium === 'null' ? '' : utm_medium;
+    }
+    if(document.getElementById('00NRc0000083yhN')) {
+        document.getElementById('00NRc0000083yhN').value = utm_campaign === 'null' ? '' : utm_campaign;
+    }
+    if(document.getElementById('00NRc0000083pBL')) {
+        document.getElementById('00NRc0000083pBL').value = utm_content === 'null' ? '' : utm_content;
+    }
+}       
 
 // Call the function to populate the fields when the page loads
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
