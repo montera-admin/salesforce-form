@@ -699,13 +699,14 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
 });
 
 // Function to get URL parameters
+// Function to get URL parameters
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
 
-// Capture UTM parameters
-var utm_source = getURLParameter('utm_source');
-console.log('UTM Source1:', utm_source);
+// Capture UTM parameters (except utm_source which we will hard code)
+// var utm_source = getURLParameter('utm_source'); // No longer needed
+console.log('UTM Source1:', 'basis');
 var utm_medium = getURLParameter('utm_medium');
 console.log('UTM Medium1:', utm_medium);
 var utm_campaign = getURLParameter('utm_campaign');
@@ -716,26 +717,9 @@ var utm_domain = getURLParameter('utm_domain');
 console.log('UTM Domain1:', utm_domain);
 
 // Function to populate hidden fields with UTM parameters
-/*function populateHiddenFields() {
-    if(document.getElementById('00NRc0000083yKn')) {
-        document.getElementById('00NRc0000083yKn').value = utm_source;
-    }
-    if(document.getElementById('00NRc0000083yW5')) {
-        document.getElementById('00NRc0000083yW5').value = utm_medium;
-    }
-    if(document.getElementById('00NRc0000083yhN')) {
-        document.getElementById('00NRc0000083yhN').value = utm_campaign;
-    }
-    if(document.getElementById('00NRc0000083pBL')) {
-        document.getElementById('00NRc0000083pBL').value = utm_content;
-    }
-    if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain;
-    }
-}*/
 function populateHiddenFields() {
     if(document.getElementById('00NRc0000083yKn')) {
-        document.getElementById('00NRc0000083yKn').value = utm_source === 'null' ? '' : utm_source;
+        document.getElementById('00NRc0000083yKn').value = 'basis'; // Hard-coded value
     }
     if(document.getElementById('00NRc0000083yW5')) {
         document.getElementById('00NRc0000083yW5').value = utm_medium === 'null' ? '' : utm_medium;
