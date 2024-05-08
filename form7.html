@@ -689,8 +689,8 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     if (insuranceProvider === 'Tricare' || insuranceProvider === 'Tricare East' || insuranceProvider === 'Tricare West') {
         returnURL = "https://www.fortahealth.com/thank-you-2"; // Set to your confirmation page URL
     } else if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
-        ['NV', 'SD'].includes(state) ||
-        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'AK', 'DE', 'HI', 'IA', 'ID', 'KY', 'MN', 'MT', 'ND', 'NH', 'NJ', 'NM', 'WV'].includes(state)))) {
+        ['AK', 'AL', 'AR', 'AZ', 'DC', 'DE', 'GA', 'HI', 'IA', 'ID', 'IN', 'KS', 'KY', 'LA', 'MD', 'ME', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'VT', 'WI', 'WV', 'WY'].includes(state) ||
+        (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY', ].includes(state)))) {
         returnURL = "https://fortahealth.com/thank-you-schedule";
     }
 
