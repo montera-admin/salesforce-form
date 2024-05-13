@@ -738,7 +738,7 @@ function populateHiddenFields(fullPath) {
 // Listener for message from parent
 window.addEventListener("message", function(event) {
     // Check the origin here for security
-    if (event.origin === "https://theExpectedParentDomain.com") {
+    if (event.origin === "https://fortahealth.com") {
         if (event.data.fullUrl) {
             console.log('Full URL from Parent:', event.data.fullUrl);
             populateHiddenFields(new URL(event.data.fullUrl).pathname);
