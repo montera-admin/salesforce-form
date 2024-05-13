@@ -712,27 +712,16 @@ var utm_campaign = getURLParameter('utm_campaign');
 console.log('UTM Campaign1:', utm_campaign);
 var utm_content = getURLParameter('utm_content');
 console.log('UTM Content1:', utm_content);
-var utm_content = getURLParameter('utm_domain');
-console.log('UTM Domain1:', utm_content);
 
-// Function to populate hidden fields with UTM parameters
-/*function populateHiddenFields() {
-    if(document.getElementById('00NRc0000083yKn')) {
-        document.getElementById('00NRc0000083yKn').value = utm_source;
-    }
-    if(document.getElementById('00NRc0000083yW5')) {
-        document.getElementById('00NRc0000083yW5').value = utm_medium;
-    }
-    if(document.getElementById('00NRc0000083yhN')) {
-        document.getElementById('00NRc0000083yhN').value = utm_campaign;
-    }
-    if(document.getElementById('00NRc0000083pBL')) {
-        document.getElementById('00NRc0000083pBL').value = utm_content;
-    }
-    if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain;
-    }
-}*/
+// Function to get the domain from the URL
+function getDomain() {
+    return window.location.hostname;
+}
+
+var domain_name = getDomain(); // Get the domain name
+console.log('Domain:', domain_name);
+
+// Function to populate hidden fields with UTM parameters and domain
 function populateHiddenFields() {
     if(document.getElementById('00NRc0000083yKn')) {
         document.getElementById('00NRc0000083yKn').value = utm_source === 'null' ? '' : utm_source;
@@ -746,18 +735,15 @@ function populateHiddenFields() {
     if(document.getElementById('00NRc0000083pBL')) {
         document.getElementById('00NRc0000083pBL').value = utm_content === 'null' ? '' : utm_content;
     }
-    /*if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain === 'null' ? '' : utm_domain;*/
     if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain;
-    }
+        document.getElementById('00NRc00000D4OSr').value = domain_name === 'null' ? '' : domain_name;
     }
 }       
 
 // Call the function to populate the fields when the page loads
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
-
 </script>
+
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
