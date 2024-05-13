@@ -47,13 +47,14 @@
             -webkit-appearance: none;
             -moz-appearance: none;
             appearance: none;
-            padding: 13px 10px !important;; 
+            padding: 8px 4px !important;; 
             border-radius: 4px;
             border: none;
             background-color: white;
             height: 40px;
             color: #7D7D7D;
             margin: 10px 0px 0px 0px;
+            font-size: 14px;
         }
     
         input {
@@ -63,6 +64,7 @@
             padding: 0 10px;
             width: 100%;
             margin: 10px 0px 17px 0px;
+            font-size: 14px;
         }
     
         .flexRow{
@@ -238,23 +240,23 @@
         <!--  ----------------------------------------------------------------------  -->
         <div>
             <label for="first_name">First Name</label>
-            <input  id="first_name" maxlength="30" name="first_name" size="20" type="text" required /><br>
+            <input  id="first_name" maxlength="30" name="first_name" placeholder="Enter name" size="20" type="text" required /><br>
         </div>
         <div>
             <label for="last_name">Last Name</label>
-            <input  id="last_name" maxlength="30" name="last_name" size="20" type="text" required /><br>  
+            <input  id="last_name" maxlength="30" name="last_name" placeholder="Enter name" size="20" type="text" required /><br>  
         </div>
         <div>
             <label style="margin-right: 10px;" for="email">Email Address</label>
-            <input  id="email" maxlength="60" name="email" size="20" type="email" pattern="^([A-Za-z0-9][._+-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="setCustomValidity('')" required/><br>
+            <input  id="email" maxlength="60" name="email" placeholder="Enter email address" size="20" type="email" pattern="^([A-Za-z0-9][._+-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="setCustomValidity('')" required/><br>
         </div>
         <div>
             <label for="phone">Phone number</label>
-            <input  id="phone" maxlength="16" name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required/><br>
+            <input  id="phone" maxlength="16" name="phone" placeholder="Enter phone number" size="20" type="text" onkeypress="return numberPressed(event);" required/><br>
         </div>
         <div>
             <label for="zip">Zip code </label>
-            <input  id="zip" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="5" name="zip" size="20" type="number" required/><br>
+            <input  id="zip" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="5" name="zip" placeholder="Enter zip code" size="20" type="number" required/><br>
         </div>
         <div class="select-wrapper ">
             <label for="state">Sta&#8204;te</label> 
