@@ -724,7 +724,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("message", function(event) {
         if (event.origin === "https://www.fortahealth.com") {  // Ensure the origin matches your parent domain
             if (event.data.fullUrl) {
-                console.log('Received Full URL from Parent:', event.data.fullUrl);
+                console.log('Full URL:', event.data.fullUrl);
                 populateHiddenFields(event.data.fullUrl);
             }
         } else {
