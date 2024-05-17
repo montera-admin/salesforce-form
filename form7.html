@@ -711,29 +711,30 @@ document.addEventListener("DOMContentLoaded", function() {
     var utm_campaign = getURLParameter('utm_campaign');
     var utm_content = getURLParameter('utm_content');
 
+    document.addEventListener("DOMContentLoaded", function() {
     // Function to populate hidden fields with UTM parameters and full URL
     function populateHiddenFields(fullUrl) {
+        var utm_source = getURLParameter('utm_source');
+        var utm_medium = getURLParameter('utm_medium');
+        var utm_campaign = getURLParameter('utm_campaign');
+        var utm_content = getURLParameter('utm_content');
+
         document.getElementById('00NRc0000083yKn').value = utm_source || '';
         document.getElementById('00NRc0000083yW5').value = utm_medium || '';
         document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
         document.getElementById('00NRc0000083pBL').value = utm_content || '';
-        document.getElementById('00NRc00000D4OSr').value = fullUrl || '';  // Set full URL
+        document.getElementById('00NRc00000D4OSr').value = fullUrl || '';
+        console.log('Populated fields with:', utm_source, utm_medium, utm_campaign, utm_content, fullUrl);
     }
 
     // Listen for message from parent
     window.addEventListener("message", function(event) {
-        if (event.origin === "https://www.fortahealth.com") {  // Ensure the origin matches your parent domain
-            if (event.data.fullUrl) {
-                console.log('Full URL:', event.data.fullUrl);
-                populateHiddenFields(event.data.fullUrl);
-            }
-        } else {
-            console.log("Received message from unknown origin:", event.origin);
+        console.log("Message received with data:", event.data);
+        if (event.data.fullUrl) {
+            console.log('Received Full URL from Parent:', event.data.fullUrl);
+            populateHiddenFields(event.data.fullUrl);
         }
     }, false);
-
-    // Initial call to populate hidden fields in case it's needed
-    populateHiddenFields('');
 });
 
 </script>
