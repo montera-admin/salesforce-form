@@ -720,7 +720,7 @@ function populateHiddenFields(fullPath) {
     document.getElementById('00NRc0000083yW5').value = utm_medium || '';
     document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
     document.getElementById('00NRc0000083pBL').value = utm_content || '';
-    document.getElementById('00NRc00000D4OSr').value = fullPath || '';  // Assumes there's a field for the full path
+    document.getElementById('00NRc00000D4OSr').value = utm_domain || '';  // Assumes there's a field for the full path
 }
 
 // Listen for message from parent
@@ -728,8 +728,8 @@ window.addEventListener("message", function(event) {
     if (event.origin === "https://www.fortahealth.com") {  // Ensure the origin matches your parent domain
         if (event.data.fullUrl) {
             var fullPath = new URL(event.data.fullUrl).pathname;
-            console.log('Full Path with Domain from Parent:', fullPath);
-            populateHiddenFields(fullPath);
+            console.log('Full Path with Domain from Parent:', utm_domain);
+            populateHiddenFields(utm_domain);
         }
     } else {
         console.log("Received message from unknown origin:", event.origin);
