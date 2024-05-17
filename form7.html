@@ -700,19 +700,6 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
 
 // Function to get URL parameters from the iframe's own URL
 document.addEventListener("DOMContentLoaded", function() {
-    // Function to get URL parameters
-    function getURLParameter(name) {
-        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-    }
-
-    // Capture UTM parameters
-    var utm_source = getURLParameter('utm_source');
-    var utm_medium = getURLParameter('utm_medium');
-    var utm_campaign = getURLParameter('utm_campaign');
-    var utm_content = getURLParameter('utm_content');
-
-    document.addEventListener("DOMContentLoaded", function() {
-    // Function to populate hidden fields with UTM parameters and full URL
     function populateHiddenFields(fullUrl) {
         var utm_source = getURLParameter('utm_source');
         var utm_medium = getURLParameter('utm_medium');
@@ -727,7 +714,6 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log('Populated fields with:', utm_source, utm_medium, utm_campaign, utm_content, fullUrl);
     }
 
-    // Listen for message from parent
     window.addEventListener("message", function(event) {
         console.log("Message received with data:", event.data);
         if (event.data.fullUrl) {
@@ -738,9 +724,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 </script>
-
-
-
-    <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
+<script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
 </html>
