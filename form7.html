@@ -709,12 +709,7 @@ var utm_medium = getURLParameter('utm_medium');
 var utm_campaign = getURLParameter('utm_campaign');
 var utm_content = getURLParameter('utm_content');
 
-console.log('UTM Source:', utm_source);
-console.log('UTM Medium:', utm_medium);
-console.log('UTM Campaign:', utm_campaign);
-console.log('UTM Content:', utm_content);
-
-// Function to populate hidden fields with UTM parameters and full URL
+// Populate hidden fields with UTM parameters and full URL
 function populateHiddenFields() {
     document.getElementById('00NRc0000083yKn').value = utm_source || '';
     document.getElementById('00NRc0000083yW5').value = utm_medium || '';
@@ -723,21 +718,19 @@ function populateHiddenFields() {
     document.getElementById('00NRc00000D4OSr').value = window.location.href || ''; // Populate with full URL
 }
 
-// Populate fields when document is ready
-document.addEventListener('DOMContentLoaded', populateHiddenFields);
-
-// Listen for message from parent in case of any further updates (if applicable)
-window.addEventListener("message", function(event) {
-    if (event.origin === "https://www.fortahealth.com") {
-        if (event.data.fullUrl) {
-            console.log('Received full URL from Parent:', event.data.fullUrl);
+// Event Listener for form submission
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('form'); // Adjust the selector to target your specific form if needed
+    if (form) {
+        form.addEventListener('submit', function(event) {
             populateHiddenFields();
-        }
-    } else {
-        console.log("Received message from unknown origin:", event.origin);
+            event.preventDefault(); 
+            setTimeout(function() {
+                form.submit(); 
+            }, 500); 
+        });
     }
-}, false);
-
+});
 </script>
 
 
