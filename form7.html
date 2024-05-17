@@ -714,20 +714,12 @@ console.log('UTM Medium:', utm_medium);
 console.log('UTM Campaign:', utm_campaign);
 console.log('UTM Content:', utm_content);
 
-// Function to populate hidden fields with UTM parameters and full path with domain
-function populateHiddenFields(fullPath) {
-    document.getElementById('00NRc0000083yKn').value = utm_source || '';
-    document.getElementById('00NRc0000083yW5').value = utm_medium || '';
-    document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
-    document.getElementById('00NRc0000083pBL').value = utm_content || '';
-    document.getElementById('00NRc00000D4OSr').value = fullPath || ''; 
-}
 
 // Listen for message from parent
 window.addEventListener("message", function(event) {
-    if (event.origin === "https://www.fortahealth.com") { 
+    if (event.origin === "https://www.fortahealth.com") {  // Ensure the origin matches your parent domain
         if (event.data.fullUrl) {
-            var fullPath = new URL(event.data.fullUrl).pathname;
+            var fullPath = new URL(event.data.fullUrl).pathname; // Or use href for full URL
             console.log('Full Path with Domain from Parent:', fullPath);
             populateHiddenFields(fullPath);
         }
@@ -736,9 +728,14 @@ window.addEventListener("message", function(event) {
     }
 }, false);
 
-document.addEventListener('DOMContentLoaded', function() {
-    populateHiddenFields('');
-});
+function populateHiddenFields(fullPath) {
+    document.getElementById('00NRc0000083yKn').value = utm_source || '';
+    document.getElementById('00NRc0000083yW5').value = utm_medium || '';
+    document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
+    document.getElementById('00NRc0000083pBL').value = utm_content || '';
+    document.getElementById('00NRc00000D4OSr').value = fullPath || '';
+}
+
 </script>
 
 
