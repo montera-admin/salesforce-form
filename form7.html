@@ -698,7 +698,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-// Function to get URL parameters from the iframe's own URL
+// Function to get URL parameters
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
@@ -714,32 +714,30 @@ console.log('UTM Medium:', utm_medium);
 console.log('UTM Campaign:', utm_campaign);
 console.log('UTM Content:', utm_content);
 
-// Function to populate hidden fields with UTM parameters and full path with domain
-function populateHiddenFields(fullPath) {
+// Function to populate hidden fields with UTM parameters and full URL
+function populateHiddenFields() {
     document.getElementById('00NRc0000083yKn').value = utm_source || '';
     document.getElementById('00NRc0000083yW5').value = utm_medium || '';
     document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
     document.getElementById('00NRc0000083pBL').value = utm_content || '';
-    document.getElementById('00NRc00000D4OSr').value = utm_domain || '';  // Assumes there's a field for the full path
+    document.getElementById('00NRc00000D4OSr').value = window.location.href || ''; // Populate with full URL
 }
 
-// Listen for message from parent
+// Populate fields when document is ready
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
+
+// Listen for message from parent in case of any further updates (if applicable)
 window.addEventListener("message", function(event) {
-    if (event.origin === "https://www.fortahealth.com") {  // Ensure the origin matches your parent domain
+    if (event.origin === "https://www.fortahealth.com") {
         if (event.data.fullUrl) {
-            var fullPath = new URL(event.data.fullUrl).pathname;
-            console.log('Full Path with Domain from Parent:', utm_domain);
-            populateHiddenFields(utm_domain);
+            console.log('Received full URL from Parent:', event.data.fullUrl);
+            populateHiddenFields();
         }
     } else {
         console.log("Received message from unknown origin:", event.origin);
     }
 }, false);
 
-// Call populateHiddenFields initially with no path until message is received
-document.addEventListener('DOMContentLoaded', function() {
-    populateHiddenFields('');
-});
 </script>
 
 
