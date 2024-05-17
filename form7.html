@@ -698,7 +698,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-// Function to get URL parameters
+// Function to get URL parameters from the iframe's own URL
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
 }
@@ -709,45 +709,36 @@ var utm_medium = getURLParameter('utm_medium');
 var utm_campaign = getURLParameter('utm_campaign');
 var utm_content = getURLParameter('utm_content');
 
-console.log('Captured UTM Parameters:');
 console.log('UTM Source:', utm_source);
 console.log('UTM Medium:', utm_medium);
 console.log('UTM Campaign:', utm_campaign);
 console.log('UTM Content:', utm_content);
 
-// Populate hidden fields with UTM parameters and full URL from the parent page
-function populateHiddenFields() {
-    console.log('Populating hidden fields...');
+// Function to populate hidden fields with UTM parameters and full path with domain
+function populateHiddenFields(fullPath) {
     document.getElementById('00NRc0000083yKn').value = utm_source || '';
     document.getElementById('00NRc0000083yW5').value = utm_medium || '';
     document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
     document.getElementById('00NRc0000083pBL').value = utm_content || '';
-    var parentURL = document.referrer; // Gets the URL of the page that loaded the iframe
-    document.getElementById('00NRc00000D4OSr').value = parentURL || ''; // Populate with parent URL
-    console.log('Parent URL Set to:', parentURL);
+    document.getElementById('00NRc00000D4OSr').value = fullPath || ''; 
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    populateHiddenFields(); // Populate fields when the DOM is fully loaded
-    var form = document.querySelector('form'); // Adjust the selector to target your specific form if needed
-    if (form) {
-        form.addEventListener('submit', function(event) {
-            console.log('Form submission triggered...');
-            populateHiddenFields();
-            // Delay the form submission for a few milliseconds to ensure data is set
-            event.preventDefault(); // Prevent the form from submitting immediately
-            setTimeout(function() {
-                console.log('Submitting form...');
-                if (typeof form.requestSubmit === 'function') {
-                    form.requestSubmit(); // Modern way to submit the form programmatically
-                } else {
-                    form.dispatchEvent(new Event('submit')); // Fallback method
-                }
-            }, 500); // Adjust delay as needed
-        });
+// Listen for message from parent
+window.addEventListener("message", function(event) {
+    if (event.origin === "https://www.fortahealth.com") { 
+        if (event.data.fullUrl) {
+            var fullPath = new URL(event.data.fullUrl).pathname;
+            console.log('Full Path with Domain from Parent:', fullPath);
+            populateHiddenFields(fullPath);
+        }
+    } else {
+        console.log("Received message from unknown origin:", event.origin);
     }
-});
+}, false);
 
+document.addEventListener('DOMContentLoaded', function() {
+    populateHiddenFields('');
+});
 </script>
 
 
