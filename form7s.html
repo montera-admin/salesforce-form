@@ -749,10 +749,8 @@ function populateHiddenFields() {
     if(document.getElementById('00NRc0000083pBL')) {
         document.getElementById('00NRc0000083pBL').value = utm_content === 'null' ? '' : utm_content;
     }
-    /*if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain === 'null' ? '' : utm_domain;*/
     if(document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain;
+        document.getElementById('00NRc00000D4OSr').value = utm_domain === 'null' ? '' : utm_domain;
     }
 }       
 
