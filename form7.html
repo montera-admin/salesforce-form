@@ -738,7 +738,11 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault(); // Prevent the form from submitting immediately
             setTimeout(function() {
                 console.log('Submitting form...');
-                form.submit(); // Submit the form after a delay
+                if (typeof form.requestSubmit === 'function') {
+                    form.requestSubmit(); // Modern way to submit the form programmatically
+                } else {
+                    form.dispatchEvent(new Event('submit')); // Fallback method
+                }
             }, 500); // Adjust delay as needed
         });
     }
