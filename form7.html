@@ -698,12 +698,11 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-// Function to get URL parameters
 document.addEventListener("DOMContentLoaded", function() {
     function getURLParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
+        var results = regex.exec(window.location.search);  // Ensure this is the iframe's location.search
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
@@ -714,12 +713,6 @@ document.addEventListener("DOMContentLoaded", function() {
         var utm_content = getURLParameter('utm_content');
         var utm_domain = getURLParameter('utm_domain');
 
-        document.getElementById('00NRc0000083yKn').value = utm_source || '';
-        document.getElementById('00NRc0000083yW5').value = utm_medium || '';
-        document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
-        document.getElementById('00NRc0000083pBL').value = utm_content || '';
-        document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
-
         console.log('Populated fields with UTM parameters:', {
             utm_source: utm_source,
             utm_medium: utm_medium,
@@ -727,10 +720,17 @@ document.addEventListener("DOMContentLoaded", function() {
             utm_content: utm_content,
             utm_domain: utm_domain
         });
+
+        if (document.getElementById('00NRc0000083yKn')) { document.getElementById('00NRc0000083yKn').value = utm_source || ''; }
+        if (document.getElementById('00NRc0000083yW5')) { document.getElementById('00NRc0000083yW5').value = utm_medium || ''; }
+        if (document.getElementById('00NRc0000083yhN')) { document.getElementById('00NRc0000083yhN').value = utm_campaign || ''; }
+        if (document.getElementById('00NRc0000083pBL')) { document.getElementById('00NRc0000083pBL').value = utm_content || ''; }
+        if (document.getElementById('00NRc00000D4OSr')) { document.getElementById('00NRc00000D4OSr').value = utm_domain || ''; }
     }
 
     populateHiddenFields();
 });
+
 
 </script>
     
