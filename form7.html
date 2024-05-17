@@ -698,8 +698,12 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     document.getElementsByName("retURL")[0].value = returnURL;
 });
 
-// Function to get URL parameters from the iframe's own URL
+// Function to get URL parameters
 document.addEventListener("DOMContentLoaded", function() {
+    function getURLParameter(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+    }
+
     function populateHiddenFields(fullUrl) {
         var utm_source = getURLParameter('utm_source');
         var utm_medium = getURLParameter('utm_medium');
