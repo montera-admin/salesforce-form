@@ -686,11 +686,11 @@ document.getElementById('form_wrapper').addEventListener('submit', function(e) {
     var returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
 
     // Add the new condition for Tricare options
-    if (insuranceProvider === 'Tricare' || insuranceProvider === 'Tricare East' || insuranceProvider === 'Tricare West' || insuranceProvider === 'United Healthcare' || insuranceProvider === 'Optum' || insuranceProvider === 'ComPsych' || insuranceProvider === 'Humana' || insuranceProvider === 'Kaiser Permanente' || insuranceProvider === 'L. A. Care Health Plan' || insuranceProvider === 'Inland Empire Health Plan (IEHP)' || insuranceProvider === 'Magellan' || insuranceProvider === 'United Healthcare Community Plan' || insuranceProvider === 'Carelon' || insuranceProvider === 'Beacon' || insuranceProvider === 'Pacific Source' || insuranceProvider === 'Molina Healthcare' || insuranceProvider === 'Aetna Better Health') {
+    if (insuranceProvider === 'Tricare' || insuranceProvider === 'Tricare East' || insuranceProvider === ['Tricare West', 'Optum'] || insuranceProvider === 'United Healthcare' || insuranceProvider === 'Optum' || insuranceProvider === 'ComPsych' || insuranceProvider === 'Humana' || insuranceProvider === 'Kaiser Permanente' || insuranceProvider === 'L. A. Care Health Plan' || insuranceProvider === 'Inland Empire Health Plan (IEHP)' || insuranceProvider === 'Magellan' || insuranceProvider === 'United Healthcare Community Plan' || insuranceProvider === 'Carelon' || insuranceProvider === 'Beacon' || insuranceProvider === 'Pacific Source' || insuranceProvider === 'Molina Healthcare' || insuranceProvider === 'Aetna Better Health') {
         returnURL = "https://www.fortahealth.com/thank-you-2"; // Set to your confirmation page URL
     } else if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
         ['NV', 'SD’, ‘AZ’, ‘LA’, ‘PA’].includes(state) ||
-        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'AK', ‘CT’, ‘DE', ‘FL’, 'HI', 'IA', 'ID', ‘IN’, 'KY', ‘MD’, ‘MN', 'MT', ‘MO’, ‘ND', 'NH', 'NJ', 'NM', ’NE’, ‘NY’, ‘OK’, ‘TN’, ‘TX’, WV’, ‘WA’].includes(state)))) {
+        (isMedicaid === 'Yes' && ['AL', 'AR', 'AZ', 'AK', ‘CT’, ‘DE', ‘FL’, 'HI', 'IA', 'ID', ‘IN’, 'KY', ‘MD’, ‘MN', 'MT', ‘MO’, ‘ND', 'NH', 'NJ', 'NM', ’NE’, ‘NY’, ‘OK’, ‘TN’, ‘TX’, 'WV’, ‘WA’].includes(state)))) {
         returnURL = "https://fortahealth.com/thank-you-schedule";
     }
 
