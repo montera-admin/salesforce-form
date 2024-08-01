@@ -231,6 +231,29 @@
             }
 
         }
+
+                /* Additional styles for full-width fields */
+        .full-width {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .full-width select,
+        .full-width input[type="checkbox"],
+        .full-width label {
+            flex: 1;
+        }
+
+        .full-width input[type="checkbox"] {
+            flex: 0;
+            margin-left: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 
     <form id="form_wrapper" name="myForm" target='_parent'
@@ -352,13 +375,14 @@
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000EQM2f" maxlength="50"
                 name="00N8b00000EQM2f" size="20" type="text" required /><br>
         </div>
-        <div class="select-wrapper">
-            <label for="insuranceYes">Does your child have health insurance?</label>
-            <select id="insuranceSelect" class="select">
+       <div class="full-width">
+            <label for="insuranceSelect">Does your child have health insurance?</label>
+            <select id="insuranceSelect" class="select full-width">
                 <option value="" selected="selected">Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
+        </div>
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50"
                 name="00N8b00000Bz6et" size="20" type="text" required /><br>
         </div>
