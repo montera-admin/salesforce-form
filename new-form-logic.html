@@ -818,6 +818,16 @@
       function getURLParameter(name) {
           return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
       }
+
+      //Zip code characters limit
+        document.getElementById('zip').addEventListener('input', function (e) {
+            let value = e.target.value;
+            value = value.replace(/\D/g, '');
+            if (value.length > 5) {
+                value = value.slice(0, 5);
+            }
+            e.target.value = value;
+        });
   </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
