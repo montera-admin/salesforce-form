@@ -971,30 +971,23 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
         'Aetna Better Health'
     ];
 
-    // Check if the primary insurance is in the specificProviders list
-    if (specificProviders.includes(insuranceProvider)) {
-        // Primary insurance is disqualified, so we check the secondary insurance
-        if (specificProviders.includes(secondaryInsuranceProvider)) {
-            // If both primary and secondary are disqualified, redirect to the "schedule" page
-            returnURL = "https://fortahealth.com/thank-you-schedule";
-        } else {
-            // If primary is disqualified but secondary is not, redirect to the "passed" page
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-        }
+    // Check if either primary or secondary insurance is in the specificProviders list
+    if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
+        // If both primary and secondary are disqualified, redirect to the "schedule" page
+        returnURL = "https://fortahealth.com/thank-you-schedule";
     } else {
-        // If primary insurance is not disqualified, run the additional checks
+        // If either primary or secondary insurance is NOT disqualified, or if additional checks are passed
         if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
             ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
             (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
             returnURL = "https://fortahealth.com/thank-you-schedule";
-        } else {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
         }
     }
 
     console.log("Redirecting to: " + returnURL); // Debugging line
     document.getElementsByName("retURL")[0].value = returnURL;
 });
+
     </script>
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
