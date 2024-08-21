@@ -952,59 +952,49 @@
             });
         
             // Form submission logic with secondary insurance consideration
-            document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-                const asdDiagnosis = document.getElementById('asd').value;
-                const hasInsurance = insuranceSelect.value;
-                const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-                const state = document.getElementById('select').value;
-                const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
-                const insuranceProvider = insurance.value;
-                const secondaryInsuranceProvider = insurance2.value;
-                const isSecondaryMedicaid = document.getElementById('type2').checked ? "Yes" : "No";
-        
-                let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
-        
-                const specificProviders = [
-                    'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-                    'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-                    'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-                    'Aetna Better Health'
-                ];
-        
-               /* if (specificProviders.includes(insuranceProvider)) {
-                    if (!specificProviders.includes(secondaryInsuranceProvider)) {
-                        returnURL = "https://fortahealth.com/thank-you-schedule";
-                    }
-                } else if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
-                    ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
-                    (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
-                    returnURL = "https://fortahealth.com/thank-you-schedule";
-                }*/
-                // Check if the primary insurance is in the specificProviders list
-                if (specificProviders.includes(insuranceProvider)) {
-                    // Primary insurance is disqualified, so we check the secondary insurance
-                    if (specificProviders.includes(secondaryInsuranceProvider)) {
-                        // If both primary and secondary are disqualified, redirect to the "schedule" page
-                        returnURL = "https://fortahealth.com/thank-you-schedule";
-                    } else {
-                        // If primary is disqualified but secondary is not, redirect to the "passed" page
-                        returnURL = "https://www.fortahealth.com/thank-you-2";
-                    }
-                } else {
-                    // If primary insurance is not disqualified, run the additional checks
-                    if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
-                        ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
-                        (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
-                        returnURL = "https://fortahealth.com/thank-you-schedule";
-                    } else {
-                        returnURL = "https://www.fortahealth.com/thank-you-2";
-                    }
-                }
+document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+    const asdDiagnosis = document.getElementById('asd').value;
+    const hasInsurance = insuranceSelect.value;
+    const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    const state = document.getElementById('select').value;
+    const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
+    const insuranceProvider = insurance.value;
+    const secondaryInsuranceProvider = insurance2.value;
+    const isSecondaryMedicaid = document.getElementById('type2').checked ? "Yes" : "No";
 
-                console.log("Redirecting to: " + returnURL); // Debugging line
-                document.getElementsByName("retURL")[0].value = returnURL;
-            });
-        });
+    let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
+
+    const specificProviders = [
+        'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+        'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+        'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+        'Aetna Better Health'
+    ];
+
+    // Check if the primary insurance is in the specificProviders list
+    if (specificProviders.includes(insuranceProvider)) {
+        // Primary insurance is disqualified, so we check the secondary insurance
+        if (specificProviders.includes(secondaryInsuranceProvider)) {
+            // If both primary and secondary are disqualified, redirect to the "schedule" page
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+        } else {
+            // If primary is disqualified but secondary is not, redirect to the "passed" page
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+    } else {
+        // If primary insurance is not disqualified, run the additional checks
+        if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
+            ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
+            (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+        } else {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+    }
+
+    console.log("Redirecting to: " + returnURL); // Debugging line
+    document.getElementsByName("retURL")[0].value = returnURL;
+});
     </script>
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
