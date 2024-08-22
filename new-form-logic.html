@@ -259,10 +259,10 @@
         <!--  ----------------------------------------------------------------------  -->
         <div> <label for="first_name">First Name</label> <input id="first_name" maxlength="30" name="first_name" size="20" type="text" required /> <br /> </div>
         <div> <label for="last_name">Last Name</label> <input id="last_name" maxlength="30" name="last_name" size="20" type="text" required /> <br /> </div>
-        <div> <label style="margin-right: 10px;" for="email">Email Address</label> <input id="email" maxlength="60" name="email" size="20" type="email" pattern="^([A-Za-z0-9][._+-]?)+[A-Za-z0-9]@[A-Za-z0-9]+(\.?[A-Za-z0-9]){2}\.(com|net|org|co|in|us|info|co|edu)+(\.[A-Za-z0-9]{2,4})?$" oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="setCustomValidity('')" required /> <br /> </div>
+        <div> <label style="margin-right: 10px;" for="email">Email Address</label> <input id="email" maxlength="60" name="email" size="20" type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="this.setCustomValidity('')" required/> <br /> </div>
         <div> <label for="phone">Phone number</label> <input id="phone" maxlength="16" name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required /> <br /> </div>
         <div> <label for="zip">Zip code </label> <input id="zip" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="5" name="zip" size="20" type="number" required /> <br /> </div>
-        <div class="select-wrapper "> <label for="state">Sta&#8204;te</label> <select id="select" class="select">
+        <div class="select-wrapper "> <label for="state">State</label> <select id="select" class="select">
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -789,72 +789,82 @@
     });
 
     // Format the phone number as the user types it
-    document.getElementById('phone').addEventListener('keyup', function (evt) {
-        var phoneNumber = document.getElementById('phone');
-        phoneNumber.value = phoneFormat(phoneNumber.value);
+    document.getElementById('phone').addEventListener('keyup',function(evt){
+            var phoneNumber = document.getElementById('phone');
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            phoneNumber.value = phoneFormat(phoneNumber.value);
     });
-
+    
     // We need to manually format the phone number on page load
     document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
-
+    
     // A function to determine if the pressed key is an integer
-    function numberPressed(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)) {
-            return false;
-        }
-        return true;
+    function numberPressed(evt){
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if(charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)){
+                    return false;
+            }
+            return true;
     }
-
+    
     // A function to format text to look like a phone number
-    function phoneFormat(input) {
-        input = input.replace(/\D/g, '');  // Strip all characters from the input except digits
-        input = input.substring(0, 10);    // Trim the remaining input to ten characters, to preserve phone number format
-
-        if (input.length < 4) {
-            return '(' + input;
-        } else if (input.length < 7) {
-            return '(' + input.substring(0, 3) + ') ' + input.substring(3, 6);
-        } else {
-            return '(' + input.substring(0, 3) + ') ' + input.substring(3, 6) + ' - ' + input.substring(6, 10);
-        }
+    function phoneFormat(input){
+            // Strip all characters from the input except digits
+            input = input.replace(/\D/g,'');
+            
+            // Trim the remaining input to ten characters, to preserve phone number format
+            input = input.substring(0,10);
+    
+            // Based upon the length of the string, we add formatting as necessary
+            var size = input.length;
+            if(size == 0){
+                    input = input;
+            }else if(size < 4){
+                    input = '('+input;
+            }else if(size < 7){
+                    input = '('+input.substring(0,3)+') '+input.substring(3,6);
+            }else{
+                    input = '('+input.substring(0,3)+') '+input.substring(3,6)+' - '+input.substring(6,10);
+            }
+            return input; 
     }
 
     // Redirect Conditions
     document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-        const asdDiagnosis = document.getElementById('asd').value;
-        const hasInsurance = document.getElementById('insuranceSelect').value;
-        const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-        const state = document.getElementById('select').value;
-        const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
-        const insuranceProvider = document.getElementById('insurance').value; 
-        const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+    const asdDiagnosis = document.getElementById('asd').value;
+    const hasInsurance = document.getElementById('insuranceSelect').value;
+    const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    const state = document.getElementById('select').value;
+    const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
+    const insuranceProvider = document.getElementById('insurance').value; 
+    const secondaryInsuranceProvider = document.getElementById('insurance2').value;
 
-        let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
+    let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL
 
-        const specificProviders = [
-            'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-            'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-            'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-            'Aetna Better Health'
-        ];
+    const specificProviders = [
+        'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+        'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+        'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+        'Aetna Better Health'
+    ];
 
-        // Check if both primary and secondary insurance are in the specificProviders list
-        if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
-            // If both primary and secondary are disqualified, redirect to the "schedule" page
+    // Logic to redirect based on insurance
+    if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
+        // If both primary and secondary are disqualified, redirect to "schedule"
+        returnURL = "https://fortahealth.com/thank-you-schedule";
+    } else {
+        // If either primary or secondary insurance is not disqualified, or if additional checks are passed
+        if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
+            ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
+            (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
             returnURL = "https://fortahealth.com/thank-you-schedule";
-        } else {
-            // If either primary or secondary insurance is NOT disqualified, or if additional checks are passed
-            if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
-                ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
-                (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
-                returnURL = "https://fortahealth.com/thank-you-schedule";
-            }
         }
+    }
 
-        console.log("Redirecting to: " + returnURL); // Debugging line
-        document.getElementsByName("retURL")[0].value = returnURL;
-    });
+    console.log("Redirecting to: " + returnURL); // Debugging line
+    document.getElementsByName("retURL")[0].value = returnURL;
+});
+
 
     // Function to get URL parameters
     function getURLParameter(name) {
