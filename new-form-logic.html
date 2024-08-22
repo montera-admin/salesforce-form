@@ -719,7 +719,7 @@
     <script>
     //script for gclid capture
     window.addEventListener('message', function (event) {
-        var origin = event.origin || event.originalEvent.origin; 
+        var origin = event.origin || event.originalEvent.origin;
         if (event.data.call == 'gcValue') {
             document.getElementById("00N8b00000GjstL").value = event.data.value;
         }
@@ -785,13 +785,12 @@
     const formSales = document.getElementById("form_wrapper");
     formSales.addEventListener("submit", function (e) {
         communicationYes.remove();
-        consent.remove();
+        document.getElementById('consent').remove();
     });
 
     // Format the phone number as the user types it
     document.getElementById('phone').addEventListener('keyup', function (evt) {
         var phoneNumber = document.getElementById('phone');
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
         phoneNumber.value = phoneFormat(phoneNumber.value);
     });
 
@@ -809,24 +808,16 @@
 
     // A function to format text to look like a phone number
     function phoneFormat(input) {
-        // Strip all characters from the input except digits
-        input = input.replace(/\D/g, '');
-    
-        // Trim the remaining input to ten characters, to preserve phone number format
-        input = input.substring(0, 10);
-    
-        // Based upon the length of the string, we add formatting as necessary
-        var size = input.length;
-        if (size == 0) {
-            input = input;
-        } else if (size < 4) {
-            input = '(' + input;
-        } else if (size < 7) {
-            input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6);
+        input = input.replace(/\D/g, '');  // Strip all characters from the input except digits
+        input = input.substring(0, 10);    // Trim the remaining input to ten characters, to preserve phone number format
+
+        if (input.length < 4) {
+            return '(' + input;
+        } else if (input.length < 7) {
+            return '(' + input.substring(0, 3) + ') ' + input.substring(3, 6);
         } else {
-            input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6) + ' - ' + input.substring(6, 10);
+            return '(' + input.substring(0, 3) + ') ' + input.substring(3, 6) + ' - ' + input.substring(6, 10);
         }
-        return input;
     }
 
     // Redirect Conditions
