@@ -830,7 +830,7 @@
     }
 
     // Redirect Conditions
-    document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+document.getElementById('form_wrapper').addEventListener('submit', function (e) {
     const asdDiagnosis = document.getElementById('asd').value;
     const hasInsurance = document.getElementById('insuranceSelect').value;
     const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
@@ -851,6 +851,9 @@
     // Logic to redirect based on insurance
     if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
         // If both primary and secondary are disqualified, redirect to "schedule"
+        returnURL = "https://fortahealth.com/thank-you-schedule";
+    } else if (isMedicaid === "Yes" && !specificProviders.includes(secondaryInsuranceProvider)) {
+        // If primary is Medicaid and secondary is not in specificProviders, redirect to "schedule"
         returnURL = "https://fortahealth.com/thank-you-schedule";
     } else {
         // If either primary or secondary insurance is not disqualified, or if additional checks are passed
