@@ -48,10 +48,10 @@
             font-family: "Manrope";
             font-style: normal;
             font-weight: 400;
-            font-size: 16px;
+            font-size: 14px;
             line-height: 150%;
             color: #ffffff;
-            margin: 0 0 0 10px;
+            margin: 0;
         }
 
         .select {
@@ -63,9 +63,15 @@
             border: none;
             background-color: white;
             height: 40px;
-            color: #000000;
+            color: #7D7D7D;
             margin: 10px 0px 0px 0px;
-        }
+            font-size: 13px;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="black" stroke-width="1" fill="none" /></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 24px;
+            padding-right: 30px; 
+            }
 
         input {
             border-radius: 10px;
@@ -74,6 +80,13 @@
             padding: 0 10px;
             width: 100%;
             margin: 10px 0px 17px 0px;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        input::placeholder {
+            color: #7D7D7D;
+            font-weight: 300;
         }
 
         .flexRow {
@@ -86,6 +99,7 @@
             flex-direction: row;
             align-content: center;
             grid-column: 1 / 3;
+            margin-bottom: 16px;
         }
 
         #consent {
@@ -137,6 +151,8 @@
 
         .checkbox_text {
             font-weight: 400;
+            font-size: 12px;
+            margin-top: 4px;
         }
 
         .button-wrapper {
@@ -261,20 +277,20 @@
         <!--  <input type="hidden" name="debugEmail"                                  -->
         <!--  value="christian@fortahealth.com">                                      -->
         <!--  ----------------------------------------------------------------------  -->
-        <div> <label for="first_name">First Name</label> <input id="first_name" maxlength="30" name="first_name"
+        <div> <label for="first_name">First Name*</label> <input id="first_name" maxlength="30" placeholder="Enter name" name="first_name"
                 size="20" type="text" required /> <br /> </div>
-        <div> <label for="last_name">Last Name</label> <input id="last_name" maxlength="30" name="last_name" size="20"
+        <div> <label for="last_name">Last Name*</label> <input id="last_name" maxlength="30" placeholder="Enter name" name="last_name" size="20"
                 type="text" required /> <br /> </div>
-        <div> <label style="margin-right: 10px;" for="email">Email Address</label> <input id="email" maxlength="60"
+        <div> <label style="margin-right: 10px;" for="email">Email Address*</label> <input id="email" maxlength="60" placeholder="Enter email address"
                 name="email" size="20" type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="this.setCustomValidity('')"
                 required /> <br /> </div>
-        <div> <label for="phone">Phone number</label> <input id="phone" maxlength="16" name="phone" size="20"
+        <div> <label for="phone">Phone number*</label> <input id="phone" maxlength="16" placeholder="Enter phone number" name="phone" size="20"
                 type="text" onkeypress="return numberPressed(event);" required /> <br /> </div>
-        <div> <label for="zip">Zip code </label> <input id="zip"
+        <div> <label for="zip">Zip code*</label> <input id="zip"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                maxlength="5" name="zip" size="20" type="number" required /> <br /> </div>
-        <div class="select-wrapper "> <label for="state">State</label> <select id="select" class="select">
+                maxlength="5" placeholder="Enter zip code" name="zip" size="20" type="number" required /> <br /> </div>
+        <div class="select-wrapper "> <label for="state">State*</label> <select id="select" class="select">
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -331,10 +347,10 @@
                 autocorrect="off" spellcheck="false" autocomplete="off" id="input-field-1" maxlength="2" name="state"
                 size="20" type="text" required /> <br /> </div>
         <div style="display:flex; flex-direction:column; justify-content:flex-end;"> <label for="age">Age of
-                Child</label> <input style="margin-bottom: 0px !important;" id="00N8b00000EQM2a"
+                Child*</label> <input style="margin-bottom: 0px !important;" id="00N8b00000EQM2a"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                maxlength="2" name="00N8b00000EQM2a" size="20" type="number" required /> <br /> </div>
-        <div class="select-wrapper"> <label for="asd">Does your child have an ASD diagnosis?</label> <select id="asd"
+                maxlength="2" placeholder="Enter age" name="00N8b00000EQM2a" size="20" type="number" required /> <br /> </div>
+        <div class="select-wrapper"> <label for="asd">Does your child have an ASD diagnosis?*</label> <select id="asd"
                 class="select">
                 <option value="" selected="selected">Select</option>
                 <option value="Yes">Yes</option>
@@ -344,7 +360,7 @@
                 <option value="No, have non-ASD diagnosis"> No, have non-ASD diagnosis </option>
             </select> <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000EQM2f"
                 maxlength="50" name="00N8b00000EQM2f" size="20" type="text" required /> <br /> </div>
-        <div class="select-wrapper full-width"> <label for="insuranceYes">Does your child have health insurance?</label>
+        <div class="select-wrapper full-width"> <label for="insuranceYes">Does your child have health insurance?*</label>
             <select id="insuranceSelect" class="select">
                 <option value="" selected="selected">Select</option>
                 <option value="Yes">Yes</option>
@@ -354,7 +370,7 @@
         <div class="row full-width new hidden" id="insuranceName">
             <div class="form-group"> <label for="insurance">Child’s primary insurance</label> <select id="insurance"
                     class="select">
-                    <option value="" selected="selected">Select</option>
+                    <option value="" selected="selected">Select provider</option>
                     <option value="Aetna">Aetna</option>
                     <option value="Aetna Better Health">Aetna Better Health</option>
                     <option value="Aetna Better Health Illinois"> Aetna Better Health Illinois </option>
@@ -545,7 +561,7 @@
         <div class="row full-width new hidden" id="insuranceName2">
             <div class="form-group"> <label for="insurance2">Child’s secondary insurance (if applicable)</label> <select
                     id="insurance2" class="select">
-                    <option value="" selected="selected">Select</option>
+                    <option value="" selected="selected">No secondary insurance</option>
                     <option value="Aetna">Aetna</option>
                     <option value="Aetna Better Health">Aetna Better Health</option>
                     <option value="Aetna Better Health Illinois"> Aetna Better Health Illinois </option>
@@ -733,23 +749,24 @@
                 style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00NRc00000KXQa0"
                 name="00NRc00000KXQa0" type="text" />
         </div>
+        <div class="dflexRow" style="align-content: start"> <input
+            style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox"
+            type="checkbox" id="consent" name="Yes" required />
+        <label class="checkbox_text" for="consent">I agree to the
+            <span><a href="https://www.fortahealth.com/electronic-communications-policy"
+                    style="color: white;">Electronic Communications Policy</a></span>and consent to Montera, Inc.
+            (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or
+            present directors, officers, representatives, and employees communicating with you through nonsecure
+            methods like Text messages, email, and other forms of electronic communication.* </label>
+    </div>
         <div class="dflexRow"> <input class="checkbox" type="checkbox" id="communicationYes" name="Yes" />
             <label class="checkbox_text m-spacing_20" for="communication">Do you consent to text communication from
                 Forta?</label>
             <input class="hidden" id="00N8b00000EQM3O" maxlength="50" name="00N8b00000EQM3O" size="20" type="text"
                 value="No" /> <br />
         </div>
-        <div class="dflexRow" style="align-content: start"> <input
-                style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox"
-                type="checkbox" id="consent" name="Yes" required />
-            <label class="checkbox_text" style="font-size: 14px; font-weight: 400;" for="consent">I agree to the
-                <span><a href="https://www.fortahealth.com/electronic-communications-policy"
-                        style="color: white;">Electronic Communications Policy</a></span>and consent to Montera, Inc.
-                (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or
-                present directors, officers, representatives, and employees communicating with you through nonsecure
-                methods like Text messages, email, and other forms of electronic communication.* </label>
-        </div>
-        <div style="display:flex; flex-direction:row; justify-content:center; padding-top: 20px;"
+
+        <div style="display:flex; flex-direction:row; justify-content:center"
             class="button-wrapper">
             <input class="ctaButton" type="submit" name="submit" />
         </div>
