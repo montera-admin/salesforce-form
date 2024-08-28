@@ -31,7 +31,7 @@
 
         #form_wrapper {
             background-color: #571f4e;
-            padding: 35px 45px 0px 45px;
+            padding: 16px 16px 0 16px;
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
             display: grid;
@@ -42,6 +42,12 @@
         .full-width {
             grid-column: span 2;
             margin-bottom: 17px;
+
+        }
+
+        .new {
+            grid-template-columns: 1.1fr 1fr!important;
+
         }
 
         label {
@@ -63,7 +69,7 @@
             border: none;
             background-color: white;
             height: 40px;
-            color: #7D7D7D;
+            color: #000;
             margin: 10px 0px 0px 0px;
             font-size: 13px;
             background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5" stroke="black" stroke-width="1" fill="none" /></svg>');
@@ -140,8 +146,8 @@
         }
 
         .checkbox {
-            width: 16px;
-            height: 16px;
+            width: 17px;
+            height: 17px;
             border-radius: 3px;
             border: none;
             min-height: auto;
@@ -192,6 +198,7 @@
             input {
                 width: 100%;
                 margin-bottom: 20px;
+                font-size: 16px;
             }
 
             .flexRow {
@@ -204,15 +211,24 @@
 
             .full-width {
                 grid-column: span 1;
+                margin-bottom: 0;
             }
 
+/*             .row {
+                grid-template-columns: 1fr;
+             } */
+
+             .new {
+                grid-template-columns: 1fr!important;
+
+        }
             .width_50 {
                 width: 100%;
             }
 
             #form_wrapper {
                 grid-template-columns: 1fr;
-                padding: 30px 20px 0px 20px;
+                padding: 16px;
                 margin-bottom: 60px;
             }
 
@@ -233,7 +249,7 @@
             }
 
             label {
-                margin: 0 0 0 8px;
+                margin: 0;
             }
 
             .custom-select select {
@@ -258,7 +274,7 @@
             }
 
             .checkbox_text {
-                font-size: 14px;
+                font-size: 12px;
             }
 
             select {
@@ -559,7 +575,7 @@
                 name="00N8b00000Bz6ey" type="text" />
         </div> <!-- Secondary Insurance -->
         <div class="row full-width new hidden" id="insuranceName2">
-            <div class="form-group"> <label for="insurance2">Child’s secondary insurance (if applicable)</label> <select
+            <div class="form-group"> <label for="insurance2">Child’s secondary insurance <span style="font-size: 12px;"> (If applicable)</span></label> <select
                     id="insurance2" class="select">
                     <option value="" selected="selected">No secondary insurance</option>
                     <option value="Aetna">Aetna</option>
@@ -766,7 +782,7 @@
                 value="No" /> <br />
         </div>
 
-        <div style="display:flex; flex-direction:row; justify-content:center"
+        <div style="display:flex; flex-direction:row"
             class="button-wrapper">
             <input class="ctaButton" type="submit" name="submit" />
         </div>
@@ -1030,5 +1046,4 @@
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
-
 </html>
