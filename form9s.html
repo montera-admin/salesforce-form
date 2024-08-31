@@ -46,7 +46,7 @@
         }
 
         .new {
-            grid-template-columns: 1.1fr 1fr!important;
+            grid-template-columns: 1.1fr 1fr !important;
 
         }
 
@@ -76,8 +76,8 @@
             background-repeat: no-repeat;
             background-position: right 10px center;
             background-size: 24px;
-            padding-right: 30px; 
-            }
+            padding-right: 30px;
+        }
 
         input {
             border-radius: 10px;
@@ -214,14 +214,15 @@
                 margin-bottom: 0;
             }
 
-/*             .row {
-                grid-template-columns: 1fr;
-             } */
+            .margin-top {
+                margin-top: 16px;
+            }
 
-             .new {
-                grid-template-columns: 1fr!important;
+            .new {
+                grid-template-columns: 1fr !important;
 
-        }
+            }
+
             .width_50 {
                 width: 100%;
             }
@@ -293,20 +294,23 @@
         <!--  <input type="hidden" name="debugEmail"                                  -->
         <!--  value="christian@fortahealth.com">                                      -->
         <!--  ----------------------------------------------------------------------  -->
-        <div> <label for="first_name">First Name*</label> <input id="first_name" maxlength="30" placeholder="Enter name" name="first_name"
-                size="20" type="text" required /> <br /> </div>
-        <div> <label for="last_name">Last Name*</label> <input id="last_name" maxlength="30" placeholder="Enter name" name="last_name" size="20"
-                type="text" required /> <br /> </div>
-        <div> <label style="margin-right: 10px;" for="email">Email Address*</label> <input id="email" maxlength="60" placeholder="Enter email address"
-                name="email" size="20" type="email" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        <div> <label for="first_name">First Name*</label> <input id="first_name" maxlength="30" placeholder="Enter name"
+                name="first_name" size="20" type="text" required /> <br /> </div>
+        <div> <label for="last_name">Last Name*</label> <input id="last_name" maxlength="30" placeholder="Enter name"
+                name="last_name" size="20" type="text" required /> <br /> </div>
+        <div> <label style="margin-right: 10px;" for="email">Email Address*</label> <input id="email" maxlength="60"
+                placeholder="Enter email address" name="email" size="20" type="email"
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="this.setCustomValidity('')"
                 required /> <br /> </div>
-        <div> <label for="phone">Phone number*</label> <input id="phone" maxlength="16" placeholder="Enter phone number" name="phone" size="20"
-                type="text" onkeypress="return numberPressed(event);" required /> <br /> </div>
+        <div> <label for="phone">Phone number*</label> <input id="phone" maxlength="16" placeholder="Enter phone number"
+                name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required /> <br /> </div>
         <div> <label for="zip">Zip code*</label> <input id="zip"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 maxlength="5" placeholder="Enter zip code" name="zip" size="20" type="number" required /> <br /> </div>
-        <div class="select-wrapper "> <label for="state">State*</label> <select id="select" class="select">
+        <div class="select-wrapper ">
+            <label for="state">State*</label>
+            <select id="select" class="select">
                 <option value="" selected="selected">Select a State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -359,13 +363,15 @@
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
-            </select> <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off"
+            </select>
+            <input style="opacity: 0; position: absolute; top: 20px; z-index: -1;" autocomplete="chrome-off"
                 autocorrect="off" spellcheck="false" autocomplete="off" id="input-field-1" maxlength="2" name="state"
                 size="20" type="text" required /> <br /> </div>
         <div style="display:flex; flex-direction:column; justify-content:flex-end;"> <label for="age">Age of
                 Child*</label> <input style="margin-bottom: 0px !important;" id="00N8b00000EQM2a"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                maxlength="2" placeholder="Enter age" name="00N8b00000EQM2a" size="20" type="number" required /> <br /> </div>
+                maxlength="2" placeholder="Enter age" name="00N8b00000EQM2a" size="20" type="number" required /> <br />
+        </div>
         <div class="select-wrapper"> <label for="asd">Does your child have an ASD diagnosis?*</label> <select id="asd"
                 class="select">
                 <option value="" selected="selected">Select</option>
@@ -376,16 +382,22 @@
                 <option value="No, have non-ASD diagnosis"> No, have non-ASD diagnosis </option>
             </select> <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000EQM2f"
                 maxlength="50" name="00N8b00000EQM2f" size="20" type="text" required /> <br /> </div>
-        <div class="select-wrapper full-width"> <label for="insuranceYes">Does your child have health insurance?*</label>
-            <select id="insuranceSelect" class="select">
+        <div class="select-wrapper full-width">
+            <label for="insuranceYes">Does your child have health insurance?*</label>
+            <select id="insuranceSelect" class="select" required>
                 <option value="" selected="selected">Select</option>
-                <option value="Yes">Yes</option>
+                <option value="Yes">Yes, primary only</option>
+                <option value="Yes">Yes, primary & secondary</option>
                 <option value="No">No</option>
-            </select> <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et"
-                maxlength="50" name="00N8b00000Bz6et" size="20" type="text" /> <br /> </div> <!-- Primary Insurance -->
+            </select>
+            <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50"
+                name="00N8b00000Bz6et" size="20" type="text" /> <br />
+        </div>
+
+        <!-- Primary Insurance -->
         <div class="row full-width new hidden" id="insuranceName">
-            <div class="form-group"> <label for="insurance">Child’s primary insurance</label> <select id="insurance"
-                    class="select">
+            <div class="form-group"> <label for="insurance">Child’s primary insurance*</label>
+                <select id="insurance" class="select" required>
                     <option value="" selected="selected">Select provider</option>
                     <option value="Aetna">Aetna</option>
                     <option value="Aetna Better Health">Aetna Better Health</option>
@@ -566,17 +578,34 @@
                     <option value="WV Medicaid">WV Medicaid</option>
                     <option value="Wyoming Medicaid">Wyoming Medicaid</option>
                     <option value="*Other, Not Listed">*Other, Not Listed</option>
-                </select> <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" autocomplete="chrome-off"
+                </select>
+                <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" autocomplete="chrome-off"
                     autocorrect="off" spellcheck="false" autocomplete="off" id="00N8b00000EQM3J" maxlength="255"
-                    name="00N8b00000EQM3J" size="20" type="text" /> </div>
-            <div class="checkbox-group"> <input type="checkbox" id="type" class="checkbox" /> <label for="type">Is
-                    primary Medicaid?</label> </div> <input
-                style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00N8b00000Bz6ey"
-                name="00N8b00000Bz6ey" type="text" />
-        </div> <!-- Secondary Insurance -->
+                    name="00N8b00000EQM3J" size="20" type="text" />
+            </div>
+            <!-- <div class="checkbox-group">
+                <input type="checkbox" id="type" class="checkbox" />
+                <label for="type">Is primary Medicaid?</label>
+            </div> -->
+            <div class="form-group">
+            <label for="type">Plan Type*</label>
+            <select id="type" class="select" required>
+                <option value="" selected="selected">Select type</option>
+                <option value="Commercial">Commercial</option>
+                <option value="State Medicaid">State Medicaid</option>
+                <option value="MCO">Managed Care Organization (MCO)</option>
+                <option value="Government Plan">Government Plan</option>
+                <option value="Employer Plan">Employer Plan</option>
+            </select>
+            <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00N8b00000Bz6ey" name="00N8b00000Bz6ey"
+                type="text" />
+            </div>
+            </div>
+
+        <!-- Secondary Insurance -->
         <div class="row full-width new hidden" id="insuranceName2">
-            <div class="form-group"> <label for="insurance2">Child’s secondary insurance <span style="font-size: 12px;"> (If applicable)</span></label> <select
-                    id="insurance2" class="select">
+            <div class="form-group"> <label for="insurance2">Child’s secondary insurance <span style="font-size: 12px;">
+                        (If applicable)</span></label> <select id="insurance2" class="select">
                     <option value="" selected="selected">No secondary insurance</option>
                     <option value="Aetna">Aetna</option>
                     <option value="Aetna Better Health">Aetna Better Health</option>
@@ -760,21 +789,36 @@
                 </select> <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" autocomplete="chrome-off"
                     autocorrect="off" spellcheck="false" autocomplete="off" id="00NRc00000KXXrJ" maxlength="255"
                     name="00NRc00000KXXrJ" size="20" type="text" /> </div>
-            <div class="checkbox-group"> <input type="checkbox" id="type2" class="checkbox" /> <label for="type2">Is
-                    secondary Medicaid?</label> </div> <input
-                style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00NRc00000KXQa0"
+            <!-- <div class="checkbox-group"> <input type="checkbox" id="type2" class="checkbox" />
+                <label for="type2">Is secondary Medicaid?</label>
+            </div> -->
+            <div class="form-group">
+                <label for="type2">Plan Type</label>
+                <select id="type2" class="select">
+                    <option value="" selected="selected">Select type</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="State Medicaid">State Medicaid</option>
+                    <option value="MCO">Managed Care Organization (MCO)</option>
+                    <option value="Government Plan">Government Plan</option>
+                    <option value="Employer Plan">Employer Plan</option>
+                </select>
+                <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00N8b00000Bz6ey" name="00N8b00000Bz6ey"
+                    type="text" />
+                </div>
+                </div>
+            <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00NRc00000KXQa0"
                 name="00NRc00000KXQa0" type="text" />
         </div>
-        <div class="dflexRow" style="align-content: start"> <input
-            style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox"
-            type="checkbox" id="consent" name="Yes" required />
-        <label class="checkbox_text" for="consent">I agree to the
-            <span><a href="https://www.fortahealth.com/electronic-communications-policy"
-                    style="color: white;">Electronic Communications Policy</a></span>and consent to Montera, Inc.
-            (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or
-            present directors, officers, representatives, and employees communicating with you through nonsecure
-            methods like Text messages, email, and other forms of electronic communication.* </label>
-    </div>
+        <div class="dflexRow margin-top" style="align-content: start"> <input
+                style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox"
+                type="checkbox" id="consent" name="Yes" required />
+            <label class="checkbox_text" for="consent">I agree to the
+                <span><a href="https://www.fortahealth.com/electronic-communications-policy"
+                        style="color: white;">Electronic Communications Policy</a></span>and consent to Montera, Inc.
+                (d/b/a Forta) and its direct and indirect parents, subsidiaries and affiliates, and all of its past or
+                present directors, officers, representatives, and employees communicating with you through nonsecure
+                methods like Text messages, email, and other forms of electronic communication.* </label>
+        </div>
         <div class="dflexRow"> <input class="checkbox" type="checkbox" id="communicationYes" name="Yes" />
             <label class="checkbox_text m-spacing_20" for="communication">Do you consent to text communication from
                 Forta?</label>
@@ -782,8 +826,7 @@
                 value="No" /> <br />
         </div>
 
-        <div style="display:flex; flex-direction:row"
-            class="button-wrapper">
+        <div style="display:flex; flex-direction:row" class="button-wrapper">
             <input class="ctaButton" type="submit" name="submit" />
         </div>
 
@@ -799,6 +842,7 @@
         <input type="hidden" name="00NRc0000083pBL" id="00NRc0000083pBL" value="" />
         <input type="hidden" name="00NRc00000D4OSr" id="00NRc00000D4OSr" value="" />
     </form>
+    
     <script>
         //script for gclid capture
         window.addEventListener('message', function (event) {
@@ -878,7 +922,7 @@
             phoneNumber.value = phoneFormat(phoneNumber.value);
         });
 
-        // We need to manually format the phone number on page load
+        // Format the phone number on page load
         document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
 
         // A function to determine if the pressed key is an integer
@@ -892,13 +936,8 @@
 
         // A function to format text to look like a phone number
         function phoneFormat(input) {
-            // Strip all characters from the input except digits
             input = input.replace(/\D/g, '');
-
-            // Trim the remaining input to ten characters, to preserve phone number format
             input = input.substring(0, 10);
-
-            // Based upon the length of the string, we add formatting as necessary
             var size = input.length;
             if (size == 0) {
                 input = input;
@@ -918,7 +957,8 @@
             const hasInsurance = document.getElementById('insuranceSelect').value;
             const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
             const state = document.getElementById('select').value;
-            const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
+            //const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
+            const isMedicaid = document.getElementById('type').value;
             const insuranceProvider = document.getElementById('insurance').value;
             const secondaryInsuranceProvider = document.getElementById('insurance2').value;
 
@@ -947,7 +987,7 @@
                 }
             }
 
-            console.log("Redirecting to: " + returnURL); // Debugging line
+            console.log("Redirecting to: " + returnURL);
             document.getElementsByName("retURL")[0].value = returnURL;
         });
 
@@ -989,7 +1029,7 @@
 
         document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
-        document.addEventListener('DOMContentLoaded', function () {
+     /*   document.addEventListener('DOMContentLoaded', function () {
             const insuranceSelect = document.getElementById("insuranceSelect");
             const insuranceName = document.getElementById("insuranceName");
             const insuranceName2 = document.getElementById("insuranceName2");
@@ -999,10 +1039,12 @@
             const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
             const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
             const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
+            const type = document.getElementById("type");
+            const type2 = document.getElementById("type2");
 
             // Show primary insurance dropdown when health insurance is selected as Yes
             insuranceSelect.addEventListener("change", function () {
-                if (insuranceSelect.value === 'Yes') {
+                if (insuranceSelect.value.includes('Yes')) {
                     insuranceName.classList.remove("hidden");
                 } else {
                     insuranceName.classList.add("hidden");
@@ -1027,9 +1069,9 @@
                 }
             });
 
-            // Populate hidden field when primary Medicaid is checked
-            document.getElementById("type").addEventListener("change", function () {
-                primaryMedicaidInput.value = this.checked ? "Yes" : "No";
+            // Populate hidden field when primary Medicaid is selected
+            type.addEventListener("change", function () {
+                primaryMedicaidInput.value = this.value;
             });
 
             // Populate hidden field when secondary insurance is selected
@@ -1037,13 +1079,95 @@
                 secondaryInsuranceInput.value = insurance2.value;
             });
 
-            // Populate hidden field when secondary Medicaid is checked
-            document.getElementById("type2").addEventListener("change", function () {
-                secondaryMedicaidInput.value = this.checked ? "Yes" : "No";
+            // Populate hidden field when secondary Medicaid is selected
+            type2.addEventListener("change", function () {
+                secondaryMedicaidInput.value = this.value;
             });
-        });
+        });*/
+        document.addEventListener('DOMContentLoaded', function () {
+    const insuranceSelect = document.getElementById("insuranceSelect");
+    const insuranceName = document.getElementById("insuranceName");
+    const insuranceName2 = document.getElementById("insuranceName2");
+    const insurance = document.getElementById("insurance");
+    const insurance2 = document.getElementById("insurance2");
+    const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
+    const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
+    const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
+    const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
+    const type = document.getElementById("type");
+    const type2 = document.getElementById("type2");
+
+    // Show primary and optionally secondary insurance dropdowns based on the selection
+    insuranceSelect.addEventListener("change", function () {
+        if (insuranceSelect.value === 'Yes, primary only') {
+            // Show only the primary insurance group
+            insuranceName.classList.remove("hidden");
+            insuranceName2.classList.add("hidden");
+            insurance2.removeAttribute("required");
+            type2.removeAttribute("required");
+
+            // Clear secondary insurance and type values
+            secondaryInsuranceInput.value = "";
+            secondaryMedicaidInput.value = "";
+        } else if (insuranceSelect.value === 'Yes, primary & secondary') {
+            // Show both primary and secondary insurance groups
+            insuranceName.classList.remove("hidden");
+            insuranceName2.classList.add("hidden"); // Keep secondary hidden until primary is selected
+
+            insurance.addEventListener("change", function () {
+                if (insurance.value !== "") {
+                    insuranceName2.classList.remove("hidden");
+                    primaryInsuranceInput.value = insurance.value; // Populate hidden field with primary insurance
+
+                    // Make secondary insurance and plan type required
+                    insurance2.setAttribute("required", "");
+                    type2.setAttribute("required", "");
+                } else {
+                    insuranceName2.classList.add("hidden");
+                    primaryInsuranceInput.value = ""; // Clear hidden primary insurance value
+
+                    // Remove required attribute from secondary insurance and plan type
+                    insurance2.removeAttribute("required");
+                    type2.removeAttribute("required");
+
+                    // Clear secondary insurance and type values
+                    secondaryInsuranceInput.value = "";
+                    secondaryMedicaidInput.value = "";
+                }
+            });
+        } else {
+            // Hide both primary and secondary insurance groups
+            insuranceName.classList.add("hidden");
+            insuranceName2.classList.add("hidden");
+            insurance2.removeAttribute("required");
+            type2.removeAttribute("required");
+
+            // Clear all insurance and type values
+            primaryInsuranceInput.value = "";
+            primaryMedicaidInput.value = "";
+            secondaryInsuranceInput.value = "";
+            secondaryMedicaidInput.value = "";
+        }
+    });
+
+    // Populate hidden field when primary Medicaid is selected
+    type.addEventListener("change", function () {
+        primaryMedicaidInput.value = this.value;
+    });
+
+    // Populate hidden field when secondary insurance is selected
+    insurance2.addEventListener("change", function () {
+        secondaryInsuranceInput.value = insurance2.value;
+    });
+
+    // Populate hidden field when secondary Medicaid is selected
+    type2.addEventListener("change", function () {
+        secondaryMedicaidInput.value = this.value;
+    });
+});
     </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
+
 </html>
