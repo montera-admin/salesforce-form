@@ -386,8 +386,8 @@
             <label for="insuranceYes">Does your child have health insurance?*</label>
             <select id="insuranceSelect" class="select" required>
                 <option value="" selected="selected">Select</option>
-                <option value="Yes">Yes, primary only</option>
-                <option value="Yes">Yes, primary & secondary</option>
+                <option value="Yes, primary only">Yes, primary only</option>
+                <option value="Yes, primary & secondary">Yes, primary & secondary</option>
                 <option value="No">No</option>
             </select>
             <input style="opacity: 0; position: absolute; top: 49px; z-index: -1;" id="00N8b00000Bz6et" maxlength="50"
@@ -605,7 +605,7 @@
         <!-- Secondary Insurance -->
         <div class="row full-width new hidden" id="insuranceName2">
             <div class="form-group"> <label for="insurance2">Child’s secondary insurance <span style="font-size: 12px;">
-                        (If applicable)</span></label> <select id="insurance2" class="select">
+                        (If applicable)*</span></label> <select id="insurance2" class="select">
                     <option value="" selected="selected">No secondary insurance</option>
                     <option value="Aetna">Aetna</option>
                     <option value="Aetna Better Health">Aetna Better Health</option>
@@ -793,7 +793,7 @@
                 <label for="type2">Is secondary Medicaid?</label>
             </div> -->
             <div class="form-group">
-                <label for="type2">Plan Type</label>
+                <label for="type2">Plan Type*</label>
                 <select id="type2" class="select">
                     <option value="" selected="selected">Select type</option>
                     <option value="Commercial">Commercial</option>
@@ -881,24 +881,6 @@
         const typeInput = document.getElementById("00N8b00000Bz6ey");
         type.addEventListener("change", function () {
             typeInput.setAttribute("value", type.value);
-        });
-
-        //script for insuranceSelect
-        const insuranceSelect = document.getElementById("insuranceSelect");
-        insuranceSelect.addEventListener("change", function () {
-            if (insuranceSelect.value == 'Yes') {
-                document.getElementById("insuranceName").classList.remove("disabled");
-                document.getElementById("insuranceType").classList.remove("disabled");
-                document.getElementById("00N8b00000EQM3J").setAttribute("required", "");
-                document.getElementById("00N8b00000Bz6et").setAttribute("value", "Yes");
-                document.getElementById("00N8b00000Bz6ey").setAttribute("required", "");
-            } else if (insuranceSelect.value == 'No') {
-                document.getElementById("insuranceName").classList.add("disabled");
-                document.getElementById("insuranceType").classList.add("disabled");
-                document.getElementById("00N8b00000EQM3J").removeAttribute("required", "");
-                document.getElementById("00N8b00000Bz6ey").removeAttribute("required", "");
-                document.getElementById("00N8b00000Bz6et").setAttribute("value", "No");
-            }
         });
 
         //script for insuranceName dropdown
@@ -1029,7 +1011,7 @@
 
         document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
-     /*   document.addEventListener('DOMContentLoaded', function () {
+       /* document.addEventListener('DOMContentLoaded', function () {
             const insuranceSelect = document.getElementById("insuranceSelect");
             const insuranceName = document.getElementById("insuranceName");
             const insuranceName2 = document.getElementById("insuranceName2");
@@ -1084,6 +1066,7 @@
                 secondaryMedicaidInput.value = this.value;
             });
         });*/
+
         document.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
@@ -1097,75 +1080,64 @@
     const type = document.getElementById("type");
     const type2 = document.getElementById("type2");
 
-    // Show primary and optionally secondary insurance dropdowns based on the selection
+    function resetForm() {
+        insuranceName.classList.add("hidden");
+        insuranceName2.classList.add("hidden");
+        insurance.value = "";
+        insurance2.value = "";
+        type.value = "";
+        type2.value = "";
+        primaryInsuranceInput.value = "";
+        primaryMedicaidInput.value = "";
+        secondaryInsuranceInput.value = "";
+        secondaryMedicaidInput.value = "";
+
+        insurance.removeAttribute("required");
+        type.removeAttribute("required");
+        insurance2.removeAttribute("required");
+        type2.removeAttribute("required");
+    }
+
     insuranceSelect.addEventListener("change", function () {
-        if (insuranceSelect.value === 'Yes, primary only') {
-            // Show only the primary insurance group
+        resetForm();
+        const selection = insuranceSelect.value.trim();
+
+        if (selection === 'Yes, primary only') {
             insuranceName.classList.remove("hidden");
-            insuranceName2.classList.add("hidden");
-            insurance2.removeAttribute("required");
-            type2.removeAttribute("required");
-
-            // Clear secondary insurance and type values
-            secondaryInsuranceInput.value = "";
-            secondaryMedicaidInput.value = "";
-        } else if (insuranceSelect.value === 'Yes, primary & secondary') {
-            // Show both primary and secondary insurance groups
+            insurance.setAttribute("required", "required");
+            type.setAttribute("required", "required");
+        } else if (selection === 'Yes, primary & secondary') {
             insuranceName.classList.remove("hidden");
-            insuranceName2.classList.add("hidden"); // Keep secondary hidden until primary is selected
-
-            insurance.addEventListener("change", function () {
-                if (insurance.value !== "") {
-                    insuranceName2.classList.remove("hidden");
-                    primaryInsuranceInput.value = insurance.value; // Populate hidden field with primary insurance
-
-                    // Make secondary insurance and plan type required
-                    insurance2.setAttribute("required", "");
-                    type2.setAttribute("required", "");
-                } else {
-                    insuranceName2.classList.add("hidden");
-                    primaryInsuranceInput.value = ""; // Clear hidden primary insurance value
-
-                    // Remove required attribute from secondary insurance and plan type
-                    insurance2.removeAttribute("required");
-                    type2.removeAttribute("required");
-
-                    // Clear secondary insurance and type values
-                    secondaryInsuranceInput.value = "";
-                    secondaryMedicaidInput.value = "";
-                }
-            });
-        } else {
-            // Hide both primary and secondary insurance groups
-            insuranceName.classList.add("hidden");
-            insuranceName2.classList.add("hidden");
-            insurance2.removeAttribute("required");
-            type2.removeAttribute("required");
-
-            // Clear all insurance and type values
-            primaryInsuranceInput.value = "";
-            primaryMedicaidInput.value = "";
-            secondaryInsuranceInput.value = "";
-            secondaryMedicaidInput.value = "";
+            insuranceName2.classList.remove("hidden");
+            insurance.setAttribute("required", "required");
+            type.setAttribute("required", "required");
+            insurance2.setAttribute("required", "required");
+            type2.setAttribute("required", "required");
         }
     });
 
-    // Populate hidden field when primary Medicaid is selected
+    insurance.addEventListener("change", function () {
+        if (insurance.value !== "") {
+            primaryInsuranceInput.value = insurance.value;
+        }
+    });
+
     type.addEventListener("change", function () {
         primaryMedicaidInput.value = this.value;
     });
 
-    // Populate hidden field when secondary insurance is selected
     insurance2.addEventListener("change", function () {
-        secondaryInsuranceInput.value = insurance2.value;
+        if (insurance2.value !== "") {
+            secondaryInsuranceInput.value = insurance2.value;
+        }
     });
 
-    // Populate hidden field when secondary Medicaid is selected
     type2.addEventListener("change", function () {
         secondaryMedicaidInput.value = this.value;
     });
 });
-    </script>
+
+   </script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
