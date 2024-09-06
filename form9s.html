@@ -927,12 +927,11 @@
         }
 
         // Redirect Conditions
-        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+        /*document.getElementById('form_wrapper').addEventListener('submit', function (e) {
             const asdDiagnosis = document.getElementById('asd').value;
             const hasInsurance = document.getElementById('insuranceSelect').value;
             const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
             const state = document.getElementById('select').value;
-            //const isMedicaid = document.getElementById('type').checked ? "Yes" : "No";
             const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No";;
             const insuranceProvider = document.getElementById('insurance').value;
             const secondaryInsuranceProvider = document.getElementById('insurance2').value;
@@ -955,9 +954,52 @@
                 returnURL = "https://fortahealth.com/thank-you-schedule";
             } else {
                 // If either primary or secondary insurance is not disqualified, or if additional checks are passed
-                if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
+                if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || 
+                asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
                     ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
-                    (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
+                    (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CA', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 
+                    'MD', 'MN', 'MO', 'MS', 'MT', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TN', 'TX', 'WA', 'WV', 'WY'].includes(state)))) {
+                    returnURL = "https://fortahealth.com/thank-you-schedule";
+                }
+            }
+
+            console.log("Redirecting to: " + returnURL);
+            document.getElementsByName("retURL")[0].value = returnURL;
+        });*/
+
+        // Redirect Conditions
+        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+            const asdDiagnosis = document.getElementById('asd').value;
+            const hasInsurance = document.getElementById('insuranceSelect').value;
+            const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+            const state = document.getElementById('select').value;
+            const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No";
+            const insuranceProvider = document.getElementById('insurance').value;
+            const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+
+            let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default return URL (Fail)
+
+            const specificProviders = [
+                'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+                'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+                'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+                'Aetna Better Health'
+            ];
+
+            // Logic to redirect based on insurance
+            if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
+                // If both primary and secondary are disqualified, redirect to "thank-you-2"
+                returnURL = "https://fortahealth.com/thank-you-2";
+            } else if (isMedicaid === "Yes" && !specificProviders.includes(secondaryInsuranceProvider)) {
+                // If primary is Medicaid and secondary is not in specificProviders, redirect to "schedule"
+                returnURL = "https://fortahealth.com/thank-you-schedule";
+            } else {
+                // If either primary or secondary insurance is not disqualified, or if additional checks are passed
+                if (!(asdDiagnosis === 'No' || asdDiagnosis === 'No, evaluation scheduled' || asdDiagnosis === 'No, on a waitlist' || 
+                asdDiagnosis === 'No, have non-ASD diagnosis' || hasInsurance === 'No' || childAge > 99 ||
+                    ['NV', 'SD', 'AZ', 'LA', 'PA'].includes(state) ||
+                    (isMedicaid === 'Yes' && ['AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND', 
+                    'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'].includes(state)))) {
                     returnURL = "https://fortahealth.com/thank-you-schedule";
                 }
             }
@@ -1004,7 +1046,7 @@
 
         document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
-       /* document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             const insuranceSelect = document.getElementById("insuranceSelect");
             const insuranceName = document.getElementById("insuranceName");
             const insuranceName2 = document.getElementById("insuranceName2");
@@ -1017,116 +1059,60 @@
             const type = document.getElementById("type");
             const type2 = document.getElementById("type2");
 
-            // Show primary insurance dropdown when health insurance is selected as Yes
+            function resetForm() {
+                insuranceName.classList.add("hidden");
+                insuranceName2.classList.add("hidden");
+                insurance.value = "";
+                insurance2.value = "";
+                type.value = "";
+                type2.value = "";
+                primaryInsuranceInput.value = "";
+                primaryMedicaidInput.value = "";
+                secondaryInsuranceInput.value = "";
+                secondaryMedicaidInput.value = "";
+
+                insurance.removeAttribute("required");
+                type.removeAttribute("required");
+                insurance2.removeAttribute("required");
+                type2.removeAttribute("required");
+            }
+
             insuranceSelect.addEventListener("change", function () {
-                if (insuranceSelect.value.includes('Yes')) {
+                resetForm();
+                const selection = insuranceSelect.value.trim();
+
+                if (selection === 'Yes, primary only') {
                     insuranceName.classList.remove("hidden");
-                } else {
-                    insuranceName.classList.add("hidden");
-                    insuranceName2.classList.add("hidden"); // Hide secondary insurance if primary is hidden
-                    primaryInsuranceInput.value = ""; // Clear hidden primary insurance value
-                    primaryMedicaidInput.value = ""; // Clear hidden primary Medicaid value
-                    secondaryInsuranceInput.value = ""; // Clear hidden secondary insurance value
-                    secondaryMedicaidInput.value = ""; // Clear hidden secondary Medicaid value
+                    insurance.setAttribute("required", "required");
+                    type.setAttribute("required", "required");
+                } else if (selection === 'Yes, primary & secondary') {
+                    insuranceName.classList.remove("hidden");
+                    insuranceName2.classList.remove("hidden");
+                    insurance.setAttribute("required", "required");
+                    type.setAttribute("required", "required");
+                    insurance2.setAttribute("required", "required");
+                    type2.setAttribute("required", "required");
                 }
             });
 
-            // Show secondary insurance dropdown when a primary insurance is selected
             insurance.addEventListener("change", function () {
                 if (insurance.value !== "") {
-                    insuranceName2.classList.remove("hidden");
-                    primaryInsuranceInput.value = insurance.value; // Populate hidden field with primary insurance
-                } else {
-                    insuranceName2.classList.add("hidden");
-                    primaryInsuranceInput.value = ""; // Clear hidden primary insurance value
-                    secondaryInsuranceInput.value = ""; // Clear hidden secondary insurance value
-                    secondaryMedicaidInput.value = ""; // Clear hidden secondary Medicaid value
+                    primaryInsuranceInput.value = insurance.value;
                 }
             });
 
-            // Populate hidden field when primary Medicaid is selected
             type.addEventListener("change", function () {
                 primaryMedicaidInput.value = this.value;
             });
 
-            // Populate hidden field when secondary insurance is selected
             insurance2.addEventListener("change", function () {
-                secondaryInsuranceInput.value = insurance2.value;
+                if (insurance2.value !== "") {
+                    secondaryInsuranceInput.value = insurance2.value;
+                }
             });
 
-            // Populate hidden field when secondary Medicaid is selected
             type2.addEventListener("change", function () {
                 secondaryMedicaidInput.value = this.value;
-            });
-        });*/
-
-        document.addEventListener('DOMContentLoaded', function () {
-    const insuranceSelect = document.getElementById("insuranceSelect");
-    const insuranceName = document.getElementById("insuranceName");
-    const insuranceName2 = document.getElementById("insuranceName2");
-    const insurance = document.getElementById("insurance");
-    const insurance2 = document.getElementById("insurance2");
-    const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
-    const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
-    const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
-    const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
-    const type = document.getElementById("type");
-    const type2 = document.getElementById("type2");
-
-    function resetForm() {
-        insuranceName.classList.add("hidden");
-        insuranceName2.classList.add("hidden");
-        insurance.value = "";
-        insurance2.value = "";
-        type.value = "";
-        type2.value = "";
-        primaryInsuranceInput.value = "";
-        primaryMedicaidInput.value = "";
-        secondaryInsuranceInput.value = "";
-        secondaryMedicaidInput.value = "";
-
-        insurance.removeAttribute("required");
-        type.removeAttribute("required");
-        insurance2.removeAttribute("required");
-        type2.removeAttribute("required");
-    }
-
-    insuranceSelect.addEventListener("change", function () {
-        resetForm();
-        const selection = insuranceSelect.value.trim();
-
-        if (selection === 'Yes, primary only') {
-            insuranceName.classList.remove("hidden");
-            insurance.setAttribute("required", "required");
-            type.setAttribute("required", "required");
-        } else if (selection === 'Yes, primary & secondary') {
-            insuranceName.classList.remove("hidden");
-            insuranceName2.classList.remove("hidden");
-            insurance.setAttribute("required", "required");
-            type.setAttribute("required", "required");
-            insurance2.setAttribute("required", "required");
-            type2.setAttribute("required", "required");
-        }
-    });
-
-    insurance.addEventListener("change", function () {
-        if (insurance.value !== "") {
-            primaryInsuranceInput.value = insurance.value;
-        }
-    });
-
-    type.addEventListener("change", function () {
-        primaryMedicaidInput.value = this.value;
-    });
-
-    insurance2.addEventListener("change", function () {
-        if (insurance2.value !== "") {
-            secondaryInsuranceInput.value = insurance2.value;
-        }
-    });
-
-    type2.addEventListener("change", function () {
-        secondaryMedicaidInput.value = this.value;
     });
 });
 
