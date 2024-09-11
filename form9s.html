@@ -785,9 +785,7 @@
                 </select> <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" autocomplete="chrome-off"
                     autocorrect="off" spellcheck="false" autocomplete="off" id="00NRc00000KXXrJ" maxlength="255"
                     name="00NRc00000KXXrJ" size="20" type="text" /> </div>
-            <!-- <div class="checkbox-group"> <input type="checkbox" id="type2" class="checkbox" />
-                <label for="type2">Is secondary Medicaid?</label>
-            </div> -->
+
             <div class="form-group">
                 <label for="type2">Plan Type*</label>
                 <select id="type2" class="select">
@@ -927,66 +925,67 @@
         }
 
         // Redirect Conditions
-        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-            // Gather values from form fields
-            const asdDiagnosis = document.getElementById('asd').value;
-            const hasInsurance = document.getElementById('insuranceSelect').value;
-            const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-            const state = document.getElementById('select').value;
-            const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No";
-            const insuranceProvider = document.getElementById('insurance').value;
-            const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+        const asdDiagnosis = document.getElementById('asd').value;
+        const hasInsurance = document.getElementById('insuranceSelect').value;
+        const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+        const state = document.getElementById('select').value;
+        const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
+        const secondaryIsMedicaid = document.getElementById('type2').value === "Yes" ? "Yes" : "No"; // Secondary insurance plan type
+        const insuranceProvider = document.getElementById('insurance').value;
+        const secondaryInsuranceProvider = document.getElementById('insurance2').value;
 
-            // Default return URL (Fail case)
-            let returnURL = "https://www.fortahealth.com/thank-you-2"; 
+        // Default return URL (Fail case)
+        let returnURL = "https://www.fortahealth.com/thank-you-2"; 
 
-            // List of disqualifying states
-            const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
+        // List of disqualifying states
+        const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
 
-            // List of disqualified payors
-            const specificProviders = [
-                'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-                'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-                'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-                'Aetna Better Health'
-            ];
+        // List of disqualified payors
+        const specificProviders = [
+            'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+            'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+            'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+            'Aetna Better Health'
+        ];
 
-            // List of disqualified Medicaid states when there is no secondary insurance
-            const medicaidDisqualifiedStates = [
-                'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
-                'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
-            ];
+        // List of disqualified Medicaid states when there is no secondary insurance
+        const medicaidDisqualifiedStates = [
+            'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
+            'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
+        ];
 
-            // Redirect Logic
+        // Redirect Logic
 
-            // DISQUALIFY if "Does your child have health insurance?" is "No"
-            if (hasInsurance === 'No') {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-            else if (asdDiagnosis.includes('No')) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if state is in the disqualifiedStates list
-            else if (disqualifiedStates.includes(state)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if primary AND no secondary is one of the medicaidDisqualifiedStates AND primary insurance type is Medicaid
-            else if (isMedicaid === "Yes" && !secondaryInsuranceProvider && medicaidDisqualifiedStates.includes(state)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if primary OR secondary insurance provider is in specificProviders list
-            else if (specificProviders.includes(insuranceProvider) || specificProviders.includes(secondaryInsuranceProvider)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // PASS all other conditions, redirect to schedule page
-            else {
-                returnURL = "https://fortahealth.com/thank-you-schedule";
-            }
+        // DISQUALIFY if "Does your child have health insurance?" is "No"
+        if (hasInsurance === 'No') {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+        // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
+        else if (asdDiagnosis.includes('No')) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+        // DISQUALIFY if state is in the disqualifiedStates list
+        else if (disqualifiedStates.includes(state)) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+        // DISQUALIFY if primary AND no secondary is one of the medicaidDisqualifiedStates AND primary insurance type is Medicaid
+        else if (isMedicaid === "Yes" && secondaryIsMedicaid === "No" && medicaidDisqualifiedStates.includes(state)) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+        // DISQUALIFY if BOTH primary AND secondary insurance providers are disqualified
+        else if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+        }
+        // PASS if either the primary or secondary insurance is not disqualified (at least one is passing)
+        else if (!specificProviders.includes(insuranceProvider) || !specificProviders.includes(secondaryInsuranceProvider)) {
+            returnURL = "https://fortahealth.com/thank-you-schedule"; // Schedule case (PASS)
+        }
 
-            console.log("Redirecting to: " + returnURL); // Debugging line
-            document.getElementsByName("retURL")[0].value = returnURL; // Set the return URL
-        });
+        console.log("Redirecting to: " + returnURL); // Debugging line
+        document.getElementsByName("retURL")[0].value = returnURL; // Set the return URL
+    });        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+    // Gather values from form fields
+
 
         // Function to get URL parameters
         function getURLParameter(name) {
