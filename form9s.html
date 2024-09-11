@@ -942,7 +942,7 @@
     // List of disqualifying states
     const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
 
-    // List of disqualified payors
+    // List of disqualifying payors
     const specificProviders = [
         'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
         'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
@@ -971,7 +971,7 @@
         returnURL = "https://www.fortahealth.com/thank-you-2";
     }
     // DISQUALIFY if primary AND no secondary is one of the medicaidDisqualifiedStates AND primary insurance type is Medicaid
-    else if (isMedicaid === "Yes" && secondaryIsMedicaid === "No" && medicaidDisqualifiedStates.includes(state)) {
+    else if (isMedicaid === "Yes" && !secondaryInsuranceProvider && medicaidDisqualifiedStates.includes(state)) {
         returnURL = "https://www.fortahealth.com/thank-you-2";
     }
     // DISQUALIFY if BOTH primary AND secondary insurance providers are disqualified
