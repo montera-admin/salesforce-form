@@ -823,8 +823,8 @@
         <input id="company" maxlength="40" name="company" size="20" type="hidden" value="Forta9" /><br />
         <input id="city" maxlength="20" name="city" size="20" type="hidden" value="" /><br />
         <input id="00N8b00000GjstL" name="00N8b00000GjstL" type="hidden" />
-        <!--MQL Status-->
-        <input type=”hidden” name="00NRc00000Nxa1C" id="00NRc00000Nxa1C" value="" />
+        <!-- MQL Status -->
+        <input type="hidden" name="00NRc00000Nxa1C" id="00NRc00000Nxa1C" value="" />
 
         <!--Hidden UTMs Fields-->
         <input type="hidden" name="00NRc0000083yKn" id="00NRc0000083yKn" value="" />
@@ -925,69 +925,195 @@
             return input;
         }
 
-        // Redirect Conditions
+// Function to get URL parameters
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+// Capture UTM parameters
+var utm_source = getURLParameter('utm_source');
+var utm_medium = getURLParameter('utm_medium');
+var utm_campaign = getURLParameter('utm_campaign');
+var utm_content = getURLParameter('utm_content');
+var utm_domain = getURLParameter('utm_domain');
+
+function populateHiddenFields() {
+    if (document.getElementById('00NRc0000083yKn')) {
+        document.getElementById('00NRc0000083yKn').value = utm_source || '';
+    }
+    if (document.getElementById('00NRc0000083yW5')) {
+        document.getElementById('00NRc0000083yW5').value = utm_medium || '';
+    }
+    if (document.getElementById('00NRc0000083yhN')) {
+        document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
+    }
+    if (document.getElementById('00NRc0000083pBL')) {
+        document.getElementById('00NRc0000083pBL').value = utm_content || '';
+    }
+    if (document.getElementById('00NRc00000D4OSr')) {
+        document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
+
+document.addEventListener('DOMContentLoaded', function () {
+    const insuranceSelect = document.getElementById("insuranceSelect");
+    const insuranceName = document.getElementById("insuranceName");
+    const insuranceName2 = document.getElementById("insuranceName2");
+    const insurance = document.getElementById("insurance");
+    const insurance2 = document.getElementById("insurance2");
+    const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
+    const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
+    const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
+    const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
+    const type = document.getElementById("type");
+    const type2 = document.getElementById("type2");
+
+    function resetForm() {
+        insuranceName.classList.add("hidden");
+        insuranceName2.classList.add("hidden");
+        insurance.value = "";
+        insurance2.value = "";
+        type.value = "";
+        type2.value = "";
+        primaryInsuranceInput.value = "";
+        primaryMedicaidInput.value = "";
+        secondaryInsuranceInput.value = "";
+        secondaryMedicaidInput.value = "";
+
+        insurance.removeAttribute("required");
+        type.removeAttribute("required");
+        insurance2.removeAttribute("required");
+        type2.removeAttribute("required");
+    }
+
+    insuranceSelect.addEventListener("change", function () {
+        resetForm();
+        const selection = insuranceSelect.value.trim();
+
+        if (selection === 'Yes, primary only') {
+            insuranceName.classList.remove("hidden");
+            insurance.setAttribute("required", "required");
+            type.setAttribute("required", "required");
+        } else if (selection === 'Yes, primary & secondary') {
+            insuranceName.classList.remove("hidden");
+            insuranceName2.classList.remove("hidden");
+            insurance.setAttribute("required", "required");
+            type.setAttribute("required", "required");
+            insurance2.setAttribute("required", "required");
+            type2.setAttribute("required", "required");
+        }
+    });
+
+    insurance.addEventListener("change", function () {
+        if (insurance.value !== "") {
+            primaryInsuranceInput.value = insurance.value;
+        }
+    });
+
+    type.addEventListener("change", function () {
+        primaryMedicaidInput.value = this.value;
+    });
+
+    insurance2.addEventListener("change", function () {
+        if (insurance2.value !== "") {
+            secondaryInsuranceInput.value = insurance2.value;
+        }
+    });
+
+    type2.addEventListener("change", function () {
+        secondaryMedicaidInput.value = this.value;
+    });
+});
+
+// Main Form Submission Logic with MQL Status
+document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+    // Gather values from form fields
+    const asdDiagnosis = document.getElementById('asd').value;
+    const hasInsurance = document.getElementById('insuranceSelect').value;
+    const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    const state = document.getElementById('select').value;
+    const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
+    const insuranceProvider = document.getElementById('insurance').value;
+    const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+    const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+
+    // Default return URL and MQL Status
+    let returnURL = "https://www.fortahealth.com/thank-you-2"; 
+    let mqlStatus = "";
+
+    // List of disqualifying states
+    const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
+
+    // List of disqualifying payors
+    const specificProviders = [
+        'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+        'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+        'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+        'Aetna Better Health'
+    ];
+
+    // List of disqualified Medicaid states when there is no secondary insurance
+    const medicaidDisqualifiedStates = [
+        'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
+        'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
+    ];
+
+    // Redirect Logic
+
+    // DISQUALIFY if "Does your child have health insurance?" is "No"
+    if (hasInsurance === 'No') {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Insurance";
+    }
+    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
+    else if (asdDiagnosis.includes('No')) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Diagnosis";
+    }
+    // DISQUALIFY if state is in the disqualifiedStates list
+    else if (disqualifiedStates.includes(state)) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Location not supported";
+    }
+    // DISQUALIFY if specific payor (primary insurance) is in disqualified list
+    else if (specificProviders.includes(insuranceProvider)) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Insurance Not Supported";
+    }
+    // DISQUALIFY if primary is Medicaid/MCO, no secondary insurance, and state is in medicaidDisqualifiedStates
+    else if (
+        isMedicaid === "Yes" &&
+        (!secondaryInsuranceProvider || secondaryInsuranceProvider === "No secondary insurance" || secondaryInsuranceProvider === "") &&
+        medicaidDisqualifiedStates.includes(state)
+    ) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Medicaid Not Supported";
+    }
+    // DISQUALIFY if Age is >99
+    else if (childAge > 99) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Age";
+    }
+    // PASS all other conditions
+    else {
+        returnURL = "https://fortahealth.com/thank-you-schedule";
+        mqlStatus = "MQL";
+    }
+
+    console.log("Redirecting to: " + returnURL); // Debugging line
+    console.log("MQL Status: " + mqlStatus); // Debugging line
+
+    // Set the MQL Status hidden field
+    mqlStatusField.value = mqlStatus;
+
+    // Set the return URL
+    document.getElementsByName("retURL")[0].value = returnURL;
+});
+
+        //Redirect conditions
         /*document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-            // Gather values from form fields
-            const asdDiagnosis = document.getElementById('asd').value;
-            const hasInsurance = document.getElementById('insuranceSelect').value;
-            const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-            const state = document.getElementById('select').value;
-            const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
-            const secondaryIsMedicaid = document.getElementById('type2').value === "Yes" ? "Yes" : "No"; // Secondary insurance plan type
-            const insuranceProvider = document.getElementById('insurance').value;
-            const secondaryInsuranceProvider = document.getElementById('insurance2').value;
-
-            // Default return URL (Fail case)
-            let returnURL = "https://www.fortahealth.com/thank-you-2"; 
-
-            // List of disqualifying states
-            const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
-
-            // List of disqualifying payors
-            const specificProviders = [
-                'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-                'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-                'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-                'Aetna Better Health'
-            ];
-
-            // List of disqualified Medicaid states when there is no secondary insurance
-            const medicaidDisqualifiedStates = [
-                'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
-                'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
-            ];
-
-            // Redirect Logic
-
-            // DISQUALIFY if "Does your child have health insurance?" is "No"
-            if (hasInsurance === 'No') {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-            else if (asdDiagnosis.includes('No')) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if state is in the disqualifiedStates list
-            else if (disqualifiedStates.includes(state)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if primary AND no secondary is one of the medicaidDisqualifiedStates AND primary insurance type is Medicaid
-            else if (isMedicaid === "Yes" && !secondaryInsuranceProvider && medicaidDisqualifiedStates.includes(state)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // DISQUALIFY if BOTH primary AND secondary insurance providers are disqualified
-            else if (specificProviders.includes(insuranceProvider) && specificProviders.includes(secondaryInsuranceProvider)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-            }
-            // PASS if either the primary or secondary insurance is not disqualified (at least one is passing)
-            else if (!specificProviders.includes(insuranceProvider) || !specificProviders.includes(secondaryInsuranceProvider)) {
-                returnURL = "https://fortahealth.com/thank-you-schedule"; // Schedule case (PASS)
-            }
-
-            console.log("Redirecting to: " + returnURL); // Debugging line
-            document.getElementsByName("retURL")[0].value = returnURL; // Set the return URL
-        });*/
-        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
             // Gather values from form fields
             const asdDiagnosis = document.getElementById('asd').value;
             const hasInsurance = document.getElementById('insuranceSelect').value;
@@ -1176,7 +1302,7 @@
             type2.addEventListener("change", function () {
                 secondaryMedicaidInput.value = this.value;
     });
-});
+});*/
 
    </script>
 
