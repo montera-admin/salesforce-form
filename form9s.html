@@ -438,8 +438,7 @@
                     <option value="Cenpatico Behavioral Health"> Cenpatico Behavioral Health </option>
                     <option value="Centennial Care">Centennial Care</option>
                     <option value="ChampVa">ChampVa</option>
-                    <option value="Children's Medical Services Health Plan"> Children's Medical Services Health Plan
-                    </option>
+                    <option value="Children's Medical Services Health Plan"> Children's Medical Services Health Plan</option>
                     <option value="Colorado Access">Colorado Access</option>
                     <option value="Community Care Plan">Community Care Plan</option>
                     <option value="Community First">Community First</option>
@@ -556,8 +555,7 @@
                     <option value="Texas Children's Health Plan"> Texas Children's Health Plan </option>
                     <option value="Texas Star">Texas Star</option>
                     <option value="The Health Plan">The Health Plan</option>
-                    <option value="The Ohio State University Health Plan"> The Ohio State University Health Plan
-                    </option>
+                    <option value="The Ohio State University Health Plan"> The Ohio State University Health Plan</option>
                     <option value="Total Health Care">Total Health Care</option>
                     <option value="Tricare">Tricare</option>
                     <option value="Tricare East">Tricare East</option>
@@ -642,8 +640,7 @@
                     <option value="Cenpatico Behavioral Health"> Cenpatico Behavioral Health </option>
                     <option value="Centennial Care">Centennial Care</option>
                     <option value="ChampVa">ChampVa</option>
-                    <option value="Children's Medical Services Health Plan"> Children's Medical Services Health Plan
-                    </option>
+                    <option value="Children's Medical Services Health Plan"> Children's Medical Services Health Plan</option>
                     <option value="Colorado Access">Colorado Access</option>
                     <option value="Community Care Plan">Community Care Plan</option>
                     <option value="Community First">Community First</option>
@@ -760,8 +757,7 @@
                     <option value="Texas Children's Health Plan"> Texas Children's Health Plan </option>
                     <option value="Texas Star">Texas Star</option>
                     <option value="The Health Plan">The Health Plan</option>
-                    <option value="The Ohio State University Health Plan"> The Ohio State University Health Plan
-                    </option>
+                    <option value="The Ohio State University Health Plan"> The Ohio State University Health Plan</option>
                     <option value="Total Health Care">Total Health Care</option>
                     <option value="Tricare">Tricare</option>
                     <option value="Tricare East">Tricare East</option>
@@ -779,8 +775,7 @@
                     <option value="Vaya Health">Vaya Health</option>
                     <option value="Wellcare">Wellcare</option>
                     <option value="Wellpoint">Wellpoint</option>
-                    <option value="WellSense Health Plan">WellSense Health Plan</option> Western Sky Community Care
-                    </option>
+                    <option value="WellSense Health Plan">WellSense Health Plan</option> Western Sky Community Care</option>
                     <option value="Wisconsin Medical Assistance Program"> Wisconsin Medical Assistance Program </option>
                     <option value="WV Medicaid">WV Medicaid</option>
                     <option value="Wyoming Medicaid">Wyoming Medicaid</option>
@@ -828,6 +823,8 @@
         <input id="company" maxlength="40" name="company" size="20" type="hidden" value="Forta2" /><br />
         <input id="city" maxlength="20" name="city" size="20" type="hidden" value="" /><br />
         <input id="00N8b00000GjstL" name="00N8b00000GjstL" type="hidden" />
+        <!--MQL Status-->
+        <input type=”hidden” name="00NRc00000Nxa1C" id="00NRc00000Nxa1C" value="" />
 
         <!--Hidden UTMs Fields-->
         <input type="hidden" name="00NRc0000083yKn" id="00NRc0000083yKn" value="" />
@@ -835,6 +832,7 @@
         <input type="hidden" name="00NRc0000083yhN" id="00NRc0000083yhN" value="" />
         <input type="hidden" name="00NRc0000083pBL" id="00NRc0000083pBL" value="" />
         <input type="hidden" name="00NRc00000D4OSr" id="00NRc00000D4OSr" value="" />
+         
     </form>
     
     <script>
@@ -928,7 +926,7 @@
         }
 
         // Redirect Conditions
-        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+        /*document.getElementById('form_wrapper').addEventListener('submit', function (e) {
             // Gather values from form fields
             const asdDiagnosis = document.getElementById('asd').value;
             const hasInsurance = document.getElementById('insuranceSelect').value;
@@ -988,6 +986,89 @@
 
             console.log("Redirecting to: " + returnURL); // Debugging line
             document.getElementsByName("retURL")[0].value = returnURL; // Set the return URL
+        });*/
+        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+            // Gather values from form fields
+            const asdDiagnosis = document.getElementById('asd').value;
+            const hasInsurance = document.getElementById('insuranceSelect').value;
+            const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+            const state = document.getElementById('select').value;
+            const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
+            const insuranceProvider = document.getElementById('insurance').value;
+            const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+            const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+
+            // Default return URL and MQL Status
+            let returnURL = "https://www.fortahealth.com/thank-you-2"; 
+            let mqlStatus = "";
+
+            // List of disqualifying states
+            const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
+
+            // List of disqualifying payors
+            const specificProviders = [
+                'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
+                'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
+                'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
+                'Aetna Better Health'
+            ];
+
+            // List of disqualified Medicaid states when there is no secondary insurance
+            const medicaidDisqualifiedStates = [
+                'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
+                'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
+            ];
+
+            // Redirect Logic
+
+            // DISQUALIFY if "Does your child have health insurance?" is "No"
+            if (hasInsurance === 'No') {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - No Insurance";
+            }
+            // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
+            else if (asdDiagnosis.includes('No')) {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - No Diagnosis";
+            }
+            // DISQUALIFY if state is in the disqualifiedStates list
+            else if (disqualifiedStates.includes(state)) {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - Location not supported";
+            }
+            // DISQUALIFY if specific payor (primary insurance) is in disqualified list
+            else if (specificProviders.includes(insuranceProvider)) {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - Insurance Not Supported";
+            }
+            // DISQUALIFY if primary is Medicaid/MCO, no secondary insurance, and state is in medicaidDisqualifiedStates
+            else if (
+                isMedicaid === "Yes" &&
+                (!secondaryInsuranceProvider || secondaryInsuranceProvider === "No secondary insurance") &&
+                medicaidDisqualifiedStates.includes(state)
+            ) {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - Medicaid Not Supported";
+            }
+            // DISQUALIFY if Age is >99
+            else if (childAge > 99) {
+                returnURL = "https://www.fortahealth.com/thank-you-2";
+                mqlStatus = "DQ - Age";
+            }
+            // PASS all other conditions
+            else {
+                returnURL = "https://fortahealth.com/thank-you-schedule";
+                mqlStatus = "MQL";
+            }
+
+            console.log("Redirecting to: " + returnURL); // Debugging line
+            console.log("MQL Status: " + mqlStatus); // Debugging line
+
+            // Set the MQL Status hidden field
+            mqlStatusField.value = mqlStatus;
+
+            // Set the return URL
+            document.getElementsByName("retURL")[0].value = returnURL;
         });
 
         // Function to get URL parameters
