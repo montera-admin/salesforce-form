@@ -1064,11 +1064,6 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - No Insurance";
     }
-    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-    else if (asdDiagnosis.includes('No')) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - No Diagnosis";
-    }
     // DISQUALIFY if state is in the disqualifiedStates list
     else if (disqualifiedStates.includes(state)) {
         returnURL = "https://www.fortahealth.com/thank-you-2";
@@ -1092,6 +1087,11 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
     else if (childAge > 99) {
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - Age";
+    }
+    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
+    else if (asdDiagnosis.includes('No')) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Diagnosis";
     }
     // PASS all other conditions
     else {
