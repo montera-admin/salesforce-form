@@ -1053,7 +1053,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
 
     // List of disqualified Medicaid states when there is no secondary insurance
     const medicaidDisqualifiedStates = [
-        'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
+        'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
         'NE', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
     ];
 
@@ -1063,11 +1063,6 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
     if (hasInsurance === 'No') {
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - No Insurance";
-    }
-    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-    else if (asdDiagnosis.includes('No')) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - No Diagnosis";
     }
     // DISQUALIFY if state is in the disqualifiedStates list
     else if (disqualifiedStates.includes(state)) {
@@ -1092,6 +1087,11 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
     else if (childAge > 99) {
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - Age";
+    }
+    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
+    else if (asdDiagnosis.includes('No')) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Diagnosis";
     }
     // PASS all other conditions
     else {
