@@ -131,10 +131,9 @@ function populateHiddenFields() {
         document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
     }
 }
-
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
-//Form logic
+// ---------- FORM LOGIC ---------- //
 document.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
@@ -203,104 +202,6 @@ document.addEventListener('DOMContentLoaded', function () {
     type2.addEventListener("change", function () {
         secondaryMedicaidInput.value = this.value;
     });
-});
-
-// Main Form Submission Logic with MQL Status
-document.getElementById('form_wrapper').addEventListener('submit', async function (e) {
-    // Prevent form submission for processing
-    e.preventDefault();
-
-    // Gather values from form fields
-    const asdDiagnosis = document.getElementById('asd').value;
-    const hasInsurance = document.getElementById('insuranceSelect').value;
-    const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-    const state = document.getElementById('select').value;
-    const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
-    const insuranceProvider = document.getElementById('insurance').value;
-    const secondaryInsuranceProvider = document.getElementById('insurance2').value;
-    const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
-
-    // Default return URL and MQL Status
-    let returnURL = "https://www.fortahealth.com/thank-you-2";
-    let mqlStatus = "";
-
-    // List of disqualifying states
-    const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
-
-    // List of states for the diagnosis disqualification condition
-    const diagnosisDisqualifyStates = ['CA', 'NY', 'OR', 'LA', 'NM', 'AK', 'MA', 'IA'];
-
-    // List of disqualifying payors
-    const specificProviders = [
-        'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-        'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-        'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-        'Aetna Better Health'
-    ];
-
-    // Fetch the JSON data
-    const jsonData = await fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json').then(res => res.json());
-
-    // Function to find payor data from JSON
-    function findInsuranceData(state, insuranceProvider) {
-        return jsonData.find(item => item.state === state && item.tofu_payor_name === insuranceProvider);
-    }
-
-    // Get primary insurance's TOFU Status
-    const insuranceData = findInsuranceData(state, insuranceProvider);
-    const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
-
-    // Redirect Logic
-		// DISQUALIFY if "Does your child have health insurance?" is "No"
-    if (hasInsurance === 'No') {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - No Insurance";
-    }
-    // DISQUALIFY if state is in the disqualifiedStates list
-    else if (disqualifiedStates.includes(state)) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - Location not supported";
-    }
-    // DISQUALIFY if specific payor (primary insurance) is in disqualified list
-    else if (specificProviders.includes(insuranceProvider)) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - Insurance Not Supported";
-    }
-    // DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
-    else if (tofuStatus === "Disqualify") {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - Insurance not supported";
-    }
-    // DISQUALIFY based on adjusted ASD diagnosis logic
-    else if (
-        asdDiagnosis === "No, have non-ASD diagnosis" ||
-        (diagnosisDisqualifyStates.includes(state) && asdDiagnosis.includes('No'))
-    ) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - No Diagnosis";
-    }
-    // DISQUALIFY if Age is >99
-    else if (childAge > 99) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - Age";
-    }
-    // PASS if primary insurance's TOFU Status is "Passing"
-    else if (tofuStatus === "Passing") {
-        returnURL = "https://fortahealth.com/thank-you-schedule";
-        mqlStatus = "MQL";
-    }
-
-    console.log("Redirecting to: " + returnURL); // Debugging line
-    console.log("MQL Status: " + mqlStatus); // Debugging line
-
-    // Set the MQL Status hidden field
-    mqlStatusField.value = mqlStatus;
-
-    // Delay the form submission by 500ms
-    setTimeout(function () {
-        document.getElementsByName("retURL")[0].value = returnURL;
-        e.target.submit(); // Submit the form after delay
-    }, 500); // Adjust the delay time as necessary
 });
 
 // Load the JSON data
