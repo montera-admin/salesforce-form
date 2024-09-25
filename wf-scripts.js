@@ -1,3 +1,146 @@
+//script for gclid capture
+window.addEventListener('message', function (event) {
+    var origin = event.origin || event.originalEvent.origin;
+    if (event.data.call == 'gcValue') {
+        document.getElementById("00N8b00000GjstL").value = event.data.value;
+    }
+}, false);
+
+//script for communication checkbox
+const communicationYes = document.getElementById("communicationYes");
+communicationYes.addEventListener("change", () => {
+    if (communicationYes.checked) {
+        document.getElementById("00N8b00000EQM3O").setAttribute("value", "Yes");
+    } else if (communicationYes.checked === false) {
+        document.getElementById("00N8b00000EQM3O").setAttribute("value", "No");
+    }
+});
+
+//script for state dropdown
+const select = document.getElementById("select");
+const state2 = document.getElementById("input-field-1");
+select.addEventListener("change", function () {
+    state2.setAttribute("value", select.value);
+});
+
+//script for asd dropdown
+const asd = document.getElementById("asd");
+const asdInput = document.getElementById("00N8b00000EQM2f");
+asd.addEventListener("change", function () {
+    asdInput.setAttribute("value", asd.value);
+});
+
+//script for type dropdown
+const type = document.getElementById("type");
+const typeInput = document.getElementById("00N8b00000Bz6ey");
+type.addEventListener("change", function () {
+    typeInput.setAttribute("value", type.value);
+});
+
+//script for insuranceName dropdown
+const insurance = document.getElementById("insurance");
+const insuranceInput = document.getElementById("00N8b00000EQM3J");
+insurance.addEventListener("change", function () {
+    insuranceInput.setAttribute("value", insurance.value);
+});
+
+//script for zip code
+  document.getElementById('zip').oninput = function () {
+    if (this.value.length > this.maxLength) {
+      this.value = this.value.slice(0, this.maxLength);
+    }
+  };
+  
+//script for age
+  document.getElementById('00N8b00000EQM2a').oninput = function () {
+    if (this.value.length > this.maxLength) {
+      this.value = this.value.slice(0, this.maxLength);
+    }
+  };
+
+// script for email
+  document.getElementById('email').addEventListener('invalid', function() {
+        this.setCustomValidity('Please enter a valid email');
+    });
+
+    document.getElementById('email').addEventListener('input', function() {
+        this.setCustomValidity('');
+    }); 
+
+//removes unnecessary fields upon submission
+const formSales = document.getElementById("form_wrapper");
+formSales.addEventListener("submit", function (e) {
+    communicationYes.remove();
+    document.getElementById('consent').remove();
+});
+
+// Format the phone number as the user types it
+document.getElementById('phone').addEventListener('keyup', function (evt) {
+    var phoneNumber = document.getElementById('phone');
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    phoneNumber.value = phoneFormat(phoneNumber.value);
+});
+
+// Format the phone number on page load
+document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
+
+// A function to determine if the pressed key is an integer
+function numberPressed(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 36 || charCode > 40)) {
+        return false;
+    }
+    return true;
+}
+
+// A function to format text to look like a phone number
+function phoneFormat(input) {
+    input = input.replace(/\D/g, '');
+    input = input.substring(0, 10);
+    var size = input.length;
+    if (size == 0) {
+        input = input;
+    } else if (size < 4) {
+        input = '(' + input;
+    } else if (size < 7) {
+        input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6);
+    } else {
+        input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6) + ' - ' + input.substring(6, 10);
+    }
+    return input;
+}
+
+// Function to get URL parameters
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+// Capture UTM parameters
+var utm_source = getURLParameter('utm_source');
+var utm_medium = getURLParameter('utm_medium');
+var utm_campaign = getURLParameter('utm_campaign');
+var utm_content = getURLParameter('utm_content');
+var utm_domain = getURLParameter('utm_domain');
+
+function populateHiddenFields() {
+    if (document.getElementById('00NRc0000083yKn')) {
+        document.getElementById('00NRc0000083yKn').value = utm_source || '';
+    }
+    if (document.getElementById('00NRc0000083yW5')) {
+        document.getElementById('00NRc0000083yW5').value = utm_medium || '';
+    }
+    if (document.getElementById('00NRc0000083yhN')) {
+        document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
+    }
+    if (document.getElementById('00NRc0000083pBL')) {
+        document.getElementById('00NRc0000083pBL').value = utm_content || '';
+    }
+    if (document.getElementById('00NRc00000D4OSr')) {
+        document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
+    }
+}
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
+
 // ------- FORM LOGIC ----- //
 document.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
