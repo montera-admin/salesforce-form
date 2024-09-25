@@ -284,9 +284,9 @@
         }
     </style>
     <form id="form_wrapper" name="myForm" target="_parent"
-        action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST"> <input
-            type="hidden" name="oid" value="00D8b000002cl8t" /> <input type="hidden" name="retURL"
-            value="www.fortahealth.com/thank-you-2" />
+        action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+            <input type="hidden" name="oid" value="00D8b000002cl8t" />
+            <input type="hidden" name="retURL" value="www.fortahealth.com/thank-you-2" />
         <!--  ----------------------------------------------------------------------  -->
         <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
         <!--  these lines if you wish to test in debug mode.                          -->
@@ -294,20 +294,26 @@
         <!--  <input type="hidden" name="debugEmail"                                  -->
         <!--  value="christian@fortahealth.com">                                      -->
         <!--  ----------------------------------------------------------------------  -->
-        <div> <label for="first_name">First Name*</label> <input id="first_name" maxlength="30" placeholder="Enter name"
-                name="first_name" size="20" type="text" required /> <br /> </div>
-        <div> <label for="last_name">Last Name*</label> <input id="last_name" maxlength="30" placeholder="Enter name"
-                name="last_name" size="20" type="text" required /> <br /> </div>
-        <div> <label style="margin-right: 10px;" for="email">Email Address*</label> <input id="email" maxlength="60"
-                placeholder="Enter email address" name="email" size="20" type="email"
+        <div> <label for="first_name">First Name*</label>
+            <input id="first_name" maxlength="30" placeholder="Enter name" name="first_name" size="20" type="text" required /> <br />
+        </div>
+        <div> <label for="last_name">Last Name*</label>
+            <input id="last_name" maxlength="30" placeholder="Enter name" name="last_name" size="20" type="text" required /> <br />
+        </div>
+        <div> <label style="margin-right: 10px;" for="email">Email Address*</label>
+            <input id="email" maxlength="60" placeholder="Enter email address" name="email" size="20" type="email"
                 pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 oninvalid="this.setCustomValidity('Please enter a valid email')" oninput="this.setCustomValidity('')"
-                required /> <br /> </div>
-        <div> <label for="phone">Phone number*</label> <input id="phone" maxlength="16" placeholder="Enter phone number"
+                required /> <br />
+            </div>
+        <div> <label for="phone">Phone number*</label>
+            <input id="phone" maxlength="16" placeholder="Enter phone number"
                 name="phone" size="20" type="text" onkeypress="return numberPressed(event);" required /> <br /> </div>
-        <div> <label for="zip">Zip code*</label> <input id="zip"
+        <div> <label for="zip">Zip code*</label>
+            <input id="zip"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 maxlength="5" placeholder="Enter zip code" name="zip" size="20" type="number" required /> <br /> </div>
+       
         <div class="select-wrapper ">
             <label for="state">State*</label>
             <select id="select" class="select">
@@ -375,8 +381,8 @@
                     <br />
                 </div>
                 
-        <div class="select-wrapper"> <label for="asd">Does your child have an ASD diagnosis?*</label> <select id="asd"
-                class="select">
+        <div class="select-wrapper"> <label for="asd">Does your child have an ASD diagnosis?*</label>
+            <select id="asd" class="select">
                 <option value="" selected="selected">Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -438,14 +444,14 @@
                     <option value="Cenpatico Behavioral Health"> Cenpatico Behavioral Health </option>
                     <option value="Centennial Care">Centennial Care</option>
                     <option value="ChampVa">ChampVa</option>
-                    <option value="Children's Medical Services Health Plan"> Children's Medical Services Health Plan</option>
+                    <option value="Children's Medical Services Health Plan">Children's Medical Services Health Plan</option>
                     <option value="Colorado Access">Colorado Access</option>
                     <option value="Community Care Plan">Community Care Plan</option>
                     <option value="Community First">Community First</option>
-                    <option value="Community Health Group"> Community Health Group </option>
-                    <option value="Community Health Plan of Washington"> Community Health Plan of Washington </option>
+                    <option value="Community Health Group">Community Health Group</option>
+                    <option value="Community Health Plan of Washington"> Community Health Plan of Washington</option>
                     <option value="ComPsych">ComPsych</option>
-                    <option value="Cook Children's Health Plan"> Cook Children's Health Plan </option>
+                    <option value="Cook Children's Health Plan"> Cook Childrens Health Plan</option>
                     <option value="Coordinated Care">Coordinated Care</option>
                     <option value="DeanHealth Plan">DeanHealth Plan</option>
                     <option value="DenaliCare">DenaliCare</option>
@@ -788,10 +794,12 @@
                     <option value="No">Commercial</option>
                     <option value="Yes">Medicaid/MCO</option>
                 </select>
-                <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00NRc00000KXQa0"
+                <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00N8b00000Bz6ey" name="00N8b00000Bz6ey"
+                    type="text" tabindex="-1"/>
+                </div>
+                </div>
+            <input style="opacity: 0; position: absolute; top: 0px; z-index: -1" id="00NRc00000KXQa0"
                 name="00NRc00000KXQa0" type="text" tabindex="-1"/>
-                </div>
-                </div>
         </div>
         <div class="dflexRow margin-top" style="align-content: start"> <input
                 style="min-width: 16px; min-height: 16px; margin-top: 5px; margin-right: 10px;" class="checkbox"
@@ -1041,17 +1049,20 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
     // List of disqualifying states
     const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
 
+    // List of states for the diagnosis disqualification condition
+    const diagnosisDisqualifyStates = ['CA', 'NY', 'OR', 'LA', 'NM', 'AK', 'MA', 'IA'];
+
     // List of disqualifying payors
     const specificProviders = [
         'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
         'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
         'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-        'Aetna Better Health'
+        'Aetna Better Health', 'Driscoll', 'DeanHealth Plan', 'Sentara Health Plans', 'Optima Health', 'Molina Healthcare', 'Cook Childrens Health Plan'
     ];
 
     // List of disqualified Medicaid states when there is no secondary insurance
     const medicaidDisqualifiedStates = [
-        'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
+        'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'MI', 'MS', 'ND',
         'NE', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
     ];
 
@@ -1081,15 +1092,18 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - Medicaid Not Supported";
     }
+    // DISQUALIFY based on adjusted ASD diagnosis logic
+    else if (
+        asdDiagnosis === "No, have non-ASD diagnosis" ||
+        (diagnosisDisqualifyStates.includes(state) && asdDiagnosis.includes('No'))
+    ) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Diagnosis";
+    }
     // DISQUALIFY if Age is >99
     else if (childAge > 99) {
         returnURL = "https://www.fortahealth.com/thank-you-2";
         mqlStatus = "DQ - Age";
-    }
-    // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-    else if (asdDiagnosis.includes('No')) {
-        returnURL = "https://www.fortahealth.com/thank-you-2";
-        mqlStatus = "DQ - No Diagnosis";
     }
     // PASS all other conditions
     else {
@@ -1106,200 +1120,7 @@ document.getElementById('form_wrapper').addEventListener('submit', function (e) 
     // Set the return URL
     document.getElementsByName("retURL")[0].value = returnURL;
 });
-
-        //Redirect conditions
-        document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-            // Gather values from form fields
-            const asdDiagnosis = document.getElementById('asd').value;
-            const hasInsurance = document.getElementById('insuranceSelect').value;
-            const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-            const state = document.getElementById('select').value;
-            const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
-            const insuranceProvider = document.getElementById('insurance').value;
-            const secondaryInsuranceProvider = document.getElementById('insurance2').value;
-            const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
-
-            // Default return URL and MQL Status
-            let returnURL = "https://www.fortahealth.com/thank-you-2"; 
-            let mqlStatus = "";
-
-            // List of disqualifying states
-            const disqualifiedStates = ['AZ', 'LA', 'NV', 'PA', 'SD'];
-
-            // List of disqualifying payors
-            const specificProviders = [
-                'Tricare', 'Tricare East', 'Tricare West', 'United Healthcare', 'Optum', 'ComPsych', 'Humana',
-                'Kaiser Permanente', 'L. A. Care Health Plan', 'Inland Empire Health Plan (IEHP)', 'Magellan',
-                'United Healthcare Community Plan', 'Carelon', 'Beacon', 'Pacific Source', 'Molina Healthcare',
-                'Aetna Better Health'
-            ];
-
-            // List of disqualified Medicaid states when there is no secondary insurance
-            const medicaidDisqualifiedStates = [
-                'AK', 'AL', 'AR', 'AZ', 'CT', 'FL', 'HI', 'IA', 'ID', 'IL', 'IN', 'KY', 'LA', 'MD', 'MN', 'MO', 'MT', 'ND',
-                'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OK', 'PA', 'SD', 'TX', 'UT', 'WA', 'WV'
-            ];
-
-            // Redirect Logic
-
-            // DISQUALIFY if "Does your child have health insurance?" is "No"
-            if (hasInsurance === 'No') {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - No Insurance";
-            }
-            // DISQUALIFY if "Does your child have an ASD diagnosis?" contains "No"
-            else if (asdDiagnosis.includes('No')) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - No Diagnosis";
-            }
-            // DISQUALIFY if state is in the disqualifiedStates list
-            else if (disqualifiedStates.includes(state)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - Location not supported";
-            }
-            // DISQUALIFY if specific payor (primary insurance) is in disqualified list
-            else if (specificProviders.includes(insuranceProvider)) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - Insurance Not Supported";
-            }
-            // DISQUALIFY if primary is Medicaid/MCO, no secondary insurance, and state is in medicaidDisqualifiedStates
-            else if (
-                isMedicaid === "Yes" &&
-                (!secondaryInsuranceProvider || secondaryInsuranceProvider === "No secondary insurance") &&
-                medicaidDisqualifiedStates.includes(state)
-            ) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - Medicaid Not Supported";
-            }
-            // DISQUALIFY if Age is >99
-            else if (childAge > 99) {
-                returnURL = "https://www.fortahealth.com/thank-you-2";
-                mqlStatus = "DQ - Age";
-            }
-            // PASS all other conditions
-            else {
-                returnURL = "https://fortahealth.com/thank-you-schedule";
-                mqlStatus = "MQL";
-            }
-
-            console.log("Redirecting to: " + returnURL); // Debugging line
-            console.log("MQL Status: " + mqlStatus); // Debugging line
-
-            // Set the MQL Status hidden field
-            mqlStatusField.value = mqlStatus;
-
-            // Set the return URL
-            document.getElementsByName("retURL")[0].value = returnURL;
-        });
-
-        // Function to get URL parameters
-        function getURLParameter(name) {
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-        }
-
-        // Capture UTM parameters
-        var utm_source = getURLParameter('utm_source');
-        console.log('UTM Source:', utm_source);
-        var utm_medium = getURLParameter('utm_medium');
-        console.log('UTM Medium:', utm_medium);
-        var utm_campaign = getURLParameter('utm_campaign');
-        console.log('UTM Campaign:', utm_campaign);
-        var utm_content = getURLParameter('utm_content');
-        console.log('UTM Content:', utm_content);
-        var utm_domain = getURLParameter('utm_domain');
-        console.log('UTM Domain:', utm_domain);
-
-        function populateHiddenFields() {
-            if (document.getElementById('00NRc0000083yKn')) {
-                document.getElementById('00NRc0000083yKn').value = utm_source || '';
-            }
-            if (document.getElementById('00NRc0000083yW5')) {
-                document.getElementById('00NRc0000083yW5').value = utm_medium || '';
-            }
-            if (document.getElementById('00NRc0000083yhN')) {
-                document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
-            }
-            if (document.getElementById('00NRc0000083pBL')) {
-                document.getElementById('00NRc0000083pBL').value = utm_content || '';
-            }
-            if (document.getElementById('00NRc00000D4OSr')) {
-                document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', populateHiddenFields);
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const insuranceSelect = document.getElementById("insuranceSelect");
-            const insuranceName = document.getElementById("insuranceName");
-            const insuranceName2 = document.getElementById("insuranceName2");
-            const insurance = document.getElementById("insurance");
-            const insurance2 = document.getElementById("insurance2");
-            const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
-            const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
-            const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
-            const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
-            const type = document.getElementById("type");
-            const type2 = document.getElementById("type2");
-
-            function resetForm() {
-                insuranceName.classList.add("hidden");
-                insuranceName2.classList.add("hidden");
-                insurance.value = "";
-                insurance2.value = "";
-                type.value = "";
-                type2.value = "";
-                primaryInsuranceInput.value = "";
-                primaryMedicaidInput.value = "";
-                secondaryInsuranceInput.value = "";
-                secondaryMedicaidInput.value = "";
-
-                insurance.removeAttribute("required");
-                type.removeAttribute("required");
-                insurance2.removeAttribute("required");
-                type2.removeAttribute("required");
-            }
-
-            insuranceSelect.addEventListener("change", function () {
-                resetForm();
-                const selection = insuranceSelect.value.trim();
-
-                if (selection === 'Yes, primary only') {
-                    insuranceName.classList.remove("hidden");
-                    insurance.setAttribute("required", "required");
-                    type.setAttribute("required", "required");
-                } else if (selection === 'Yes, primary & secondary') {
-                    insuranceName.classList.remove("hidden");
-                    insuranceName2.classList.remove("hidden");
-                    insurance.setAttribute("required", "required");
-                    type.setAttribute("required", "required");
-                    insurance2.setAttribute("required", "required");
-                    type2.setAttribute("required", "required");
-                }
-            });
-
-            insurance.addEventListener("change", function () {
-                if (insurance.value !== "") {
-                    primaryInsuranceInput.value = insurance.value;
-                }
-            });
-
-            type.addEventListener("change", function () {
-                primaryMedicaidInput.value = this.value;
-            });
-
-            insurance2.addEventListener("change", function () {
-                if (insurance2.value !== "") {
-                    secondaryInsuranceInput.value = insurance2.value;
-                }
-            });
-
-            type2.addEventListener("change", function () {
-                secondaryMedicaidInput.value = this.value;
-    });
-});
-
-   </script>
+</script>
 
     <script type="text/javascript" src="./iframeResizer.contentWindow.min.js"></script>
 </body>
