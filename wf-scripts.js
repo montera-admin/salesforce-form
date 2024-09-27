@@ -142,7 +142,7 @@ function populateHiddenFields() {
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
 // ------- FORM LOGIC ----- //
-/*document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
     const insuranceName2 = document.getElementById("insuranceName2");
@@ -392,10 +392,10 @@ function filterPayors(state, type) {
     return jsonData.filter(item => item.state === state && (item.payor_type === 'Commercial' || item.payor_type === 'Government Plan'));
   }
   return [];
-}*/
+}
 
 // ------- FORM LOGIC ----- //
-ddocument.addEventListener('DOMContentLoaded', function () {
+/*ddocument.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
     const insuranceName2 = document.getElementById("insuranceName2");
@@ -671,4 +671,4 @@ function filterPayors(state, type) {
     return jsonData.filter(item => item.state === state && (item.payor_type === 'Commercial' || item.payor_type === 'Government Plan') && item.tofu_payor_name != null);
   }
   return [];
-}
+}*/
