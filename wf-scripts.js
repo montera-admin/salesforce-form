@@ -539,37 +539,36 @@ fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
     jsonData = data;
   });
 
-// Function to filter the selected insurance data from JSON based on the state and insurance name
-function findInsuranceData(state, insuranceName) {
-  return jsonData.find(item => item.state === state && item.tofu_payor_name === insuranceName);
-}
-
-// Function to update the hidden fields for primary insurance (uses payor_name instead of tofu_payor_name)
-function updatePrimaryInsuranceFields(state, insuranceName) {
-  const insuranceData = findInsuranceData(state, insuranceName);
-  if (insuranceData) {
-    document.getElementById('00NRc00000OHqQz').value = insuranceData.payor_name; // Primary Insurance Bay using payor_name
-    document.getElementById('00NRc00000OHo1Z').value = insuranceData.inn_oon_designation; // Primary Insurance Status
-  } else {
-    // Clear hidden fields if no matching data is found
-    document.getElementById('00NRc00000OHqQz').value = '';
-    document.getElementById('00NRc00000OHo1Z').value = '';
-  }
-}
-
 // Function to find payor data from JSON based on the state and insurance name
 function findInsuranceData(state, insuranceName) {
-    // Ensure insuranceName exists and matches the correct payor_name
-    return jsonData.find(item => item.state === state && item.tofu_payor_name === insuranceName);
+    // Log the state and insurance name to ensure correct parameters are passed
+    console.log("Finding insurance data for State:", state, "Insurance Name:", insuranceName);
+    
+    // Find the relevant insurance data in the JSON
+    const insuranceData = jsonData.find(item => item.state === state && item.tofu_payor_name === insuranceName);
+    
+    // Log the found data for debugging
+    console.log("Found Insurance Data:", insuranceData);
+    
+    return insuranceData;
   }
   
   // Function to update the hidden fields for primary insurance (uses payor_name instead of tofu_payor_name)
   function updatePrimaryInsuranceFields(state, insuranceName) {
     const insuranceData = findInsuranceData(state, insuranceName);
+    
+    // Check if data was found and update hidden fields accordingly
     if (insuranceData) {
-      document.getElementById('00NRc00000OHqQz').value = insuranceData.final_forta_bay || ''; // Primary Insurance Bay using payor_name
+      document.getElementById('00NRc00000OHqQz').value = insuranceData.payor_name || ''; // Primary Insurance Bay using payor_name
       document.getElementById('00NRc00000OHo1Z').value = insuranceData.inn_oon_designation || ''; // Primary Insurance Status
+      
+      // Log the values being set
+      console.log("Setting Primary Insurance Bay:", insuranceData.payor_name);
+      console.log("Setting Primary Network Status:", insuranceData.inn_oon_designation);
     } else {
+      // Log when no matching data is found
+      console.log("No matching Primary Insurance data found.");
+      
       // Clear hidden fields if no matching data is found
       document.getElementById('00NRc00000OHqQz').value = '';
       document.getElementById('00NRc00000OHo1Z').value = '';
@@ -579,10 +578,19 @@ function findInsuranceData(state, insuranceName) {
   // Function to update the hidden fields for secondary insurance (uses payor_name instead of tofu_payor_name)
   function updateSecondaryInsuranceFields(state, insuranceName) {
     const insuranceData = findInsuranceData(state, insuranceName);
+    
+    // Check if data was found and update hidden fields accordingly
     if (insuranceData) {
-      document.getElementById('00NRc00000OHWu6').value = insuranceData.final_forta_bay || ''; // Secondary Insurance Bay using payor_name
+      document.getElementById('00NRc00000OHWu6').value = insuranceData.payor_name || ''; // Secondary Insurance Bay using payor_name
       document.getElementById('00NRc00000OHuZR').value = insuranceData.inn_oon_designation || ''; // Secondary Insurance Status
+      
+      // Log the values being set
+      console.log("Setting Secondary Insurance Bay:", insuranceData.payor_name);
+      console.log("Setting Secondary Network Status:", insuranceData.inn_oon_designation);
     } else {
+      // Log when no matching data is found
+      console.log("No matching Secondary Insurance data found.");
+      
       // Clear hidden fields if no matching data is found
       document.getElementById('00NRc00000OHWu6').value = '';
       document.getElementById('00NRc00000OHuZR').value = '';
