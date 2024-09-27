@@ -395,7 +395,7 @@ function filterPayors(state, type) {
 }
 
 // ------- FORM LOGIC ----- //
-/*ddocument.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     const insuranceSelect = document.getElementById("insuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
     const insuranceName2 = document.getElementById("insuranceName2");
