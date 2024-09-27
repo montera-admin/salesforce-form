@@ -557,104 +557,123 @@ function updatePrimaryInsuranceFields(state, insuranceName) {
   }
 }
 
-// Function to update the hidden fields for secondary insurance (uses payor_name instead of tofu_payor_name)
-function updateSecondaryInsuranceFields(state, insuranceName) {
-  const insuranceData = findInsuranceData(state, insuranceName);
-  if (insuranceData) {
-    document.getElementById('00NRc00000OHWu6').value = insuranceData.payor_name; // Secondary Insurance Bay using payor_name
-    document.getElementById('00NRc00000OHuZR').value = insuranceData.inn_oon_designation; // Secondary Insurance Status
-  } else {
-    // Clear hidden fields if no matching data is found
-    document.getElementById('00NRc00000OHWu6').value = '';
-    document.getElementById('00NRc00000OHuZR').value = '';
+// Function to find payor data from JSON based on the state and insurance name
+function findInsuranceData(state, insuranceName) {
+    // Ensure insuranceName exists and matches the correct payor_name
+    return jsonData.find(item => item.state === state && item.tofu_payor_name === insuranceName);
   }
-}
-
-// Event listener for state selection to mirror the state into both groups initially
-document.getElementById('select').addEventListener('change', function () {
-  const selectedState = this.value;
-
-  // Mirror selection into statePrimary and stateSecondary
-  document.getElementById('statePrimary').value = selectedState;
-  document.getElementById('stateSecondary').value = selectedState;
-
-  // Get current type values for each group
-  const type1 = document.getElementById('type').value;
-  const type2 = document.getElementById('type2').value;
-
-  // Update insurance dropdowns for both groups based on the initial state and their respective types
-  updateInsuranceDropdowns(selectedState, type1, 'insurance');
-  updateInsuranceDropdowns(selectedState, type2, 'insurance2');
-});
-
-// Event listener for changes in Group 1 (statePrimary, type, insurance)
-document.getElementById('statePrimary').addEventListener('change', function () {
-  const selectedState = this.value;
-  const selectedType = document.getElementById('type').value;
-  updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-});
-
-document.getElementById('type').addEventListener('change', function () {
-  const selectedState = document.getElementById('statePrimary').value;
-  const selectedType = this.value;
-  updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-});
-
-// Event listener for changes in Group 2 (stateSecondary, type2, insurance2)
-document.getElementById('stateSecondary').addEventListener('change', function () {
-  const selectedState = this.value;
-  const selectedType = document.getElementById('type2').value;
-  updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-});
-
-document.getElementById('type2').addEventListener('change', function () {
-  const selectedState = document.getElementById('stateSecondary').value;
-  const selectedType = this.value;
-  updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-});
-
-// Update insurance dropdowns based on state and type
-function updateInsuranceDropdowns(state, type, insuranceId) {
-  let payorNames = filterPayors(state, type);
   
-  // Alphabetize the payor names
-  payorNames.sort((a, b) => a.tofu_payor_name.localeCompare(b.tofu_payor_name));
-
-  const insuranceDropdown = document.getElementById(insuranceId);
-
-  // Clear current options
-  insuranceDropdown.innerHTML = '';
-
-  // Add default "Select provider" option
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.text = 'Select provider';
-  insuranceDropdown.appendChild(defaultOption);
-
-  // Add new options, excluding blank tofu_payor_name
-  payorNames.forEach(payor => {
-    if (payor.tofu_payor_name) {
-      const option = document.createElement('option');
-      option.value = payor.tofu_payor_name;
-      option.text = payor.tofu_payor_name;
-      insuranceDropdown.appendChild(option);
+  // Function to update the hidden fields for primary insurance (uses payor_name instead of tofu_payor_name)
+  function updatePrimaryInsuranceFields(state, insuranceName) {
+    const insuranceData = findInsuranceData(state, insuranceName);
+    if (insuranceData) {
+      document.getElementById('00NRc00000OHqQz').value = insuranceData.final_forta_bay || ''; // Primary Insurance Bay using payor_name
+      document.getElementById('00NRc00000OHo1Z').value = insuranceData.inn_oon_designation || ''; // Primary Insurance Status
+    } else {
+      // Clear hidden fields if no matching data is found
+      document.getElementById('00NRc00000OHqQz').value = '';
+      document.getElementById('00NRc00000OHo1Z').value = '';
     }
+  }
+  
+  // Function to update the hidden fields for secondary insurance (uses payor_name instead of tofu_payor_name)
+  function updateSecondaryInsuranceFields(state, insuranceName) {
+    const insuranceData = findInsuranceData(state, insuranceName);
+    if (insuranceData) {
+      document.getElementById('00NRc00000OHWu6').value = insuranceData.final_forta_bay || ''; // Secondary Insurance Bay using payor_name
+      document.getElementById('00NRc00000OHuZR').value = insuranceData.inn_oon_designation || ''; // Secondary Insurance Status
+    } else {
+      // Clear hidden fields if no matching data is found
+      document.getElementById('00NRc00000OHWu6').value = '';
+      document.getElementById('00NRc00000OHuZR').value = '';
+    }
+  }
+  
+  // Event listener for state selection to mirror the state into both groups initially
+  document.getElementById('select').addEventListener('change', function () {
+    const selectedState = this.value;
+  
+    // Mirror selection into statePrimary and stateSecondary
+    document.getElementById('statePrimary').value = selectedState;
+    document.getElementById('stateSecondary').value = selectedState;
+  
+    // Get current type values for each group
+    const type1 = document.getElementById('type').value;
+    const type2 = document.getElementById('type2').value;
+  
+    // Update insurance dropdowns for both groups based on the initial state and their respective types
+    updateInsuranceDropdowns(selectedState, type1, 'insurance');
+    updateInsuranceDropdowns(selectedState, type2, 'insurance2');
   });
-
-  // Trigger the hidden fields update for primary or secondary insurance based on the dropdown
-  if (insuranceId === 'insurance') {
-    updatePrimaryInsuranceFields(state, insuranceDropdown.value);
-  } else {
-    updateSecondaryInsuranceFields(state, insuranceDropdown.value);
+  
+  // Event listener for changes in Group 1 (statePrimary, type, insurance)
+  document.getElementById('statePrimary').addEventListener('change', function () {
+    const selectedState = this.value;
+    const selectedType = document.getElementById('type').value;
+    updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+  });
+  
+  document.getElementById('type').addEventListener('change', function () {
+    const selectedState = document.getElementById('statePrimary').value;
+    const selectedType = this.value;
+    updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+  });
+  
+  // Event listener for changes in Group 2 (stateSecondary, type2, insurance2)
+  document.getElementById('stateSecondary').addEventListener('change', function () {
+    const selectedState = this.value;
+    const selectedType = document.getElementById('type2').value;
+    updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+  });
+  
+  document.getElementById('type2').addEventListener('change', function () {
+    const selectedState = document.getElementById('stateSecondary').value;
+    const selectedType = this.value;
+    updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+  });
+  
+  // Update insurance dropdowns based on state and type
+  function updateInsuranceDropdowns(state, type, insuranceId) {
+    let payorNames = filterPayors(state, type);
+  
+    // Alphabetize the payor names
+    payorNames.sort((a, b) => a.tofu_payor_name.localeCompare(b.tofu_payor_name));
+  
+    const insuranceDropdown = document.getElementById(insuranceId);
+  
+    // Clear current options
+    insuranceDropdown.innerHTML = '';
+  
+    // Add default "Select provider" option
+    const defaultOption = document.createElement('option');
+    defaultOption.value = '';
+    defaultOption.text = 'Select provider';
+    insuranceDropdown.appendChild(defaultOption);
+  
+    // Add new options, excluding blank tofu_payor_name
+    payorNames.forEach(payor => {
+      if (payor.tofu_payor_name) {
+        const option = document.createElement('option');
+        option.value = payor.tofu_payor_name;
+        option.text = payor.tofu_payor_name;
+        insuranceDropdown.appendChild(option);
+      }
+    });
+  
+    // Trigger the hidden fields update for primary or secondary insurance based on the dropdown
+    if (insuranceId === 'insurance') {
+      updatePrimaryInsuranceFields(state, insuranceDropdown.value);
+    } else {
+      updateSecondaryInsuranceFields(state, insuranceDropdown.value);
+    }
   }
-}
-
-// Function to filter payors based on state and type
-function filterPayors(state, type) {
-  if (type === 'Yes') {
-    return jsonData.filter(item => item.state === state && (item.payor_type === 'Medicaid' || item.payor_type === 'MCO'));
-  } else if (type === 'No') {
-    return jsonData.filter(item => item.state === state && (item.payor_type === 'Commercial' || item.payor_type === 'Government Plan'));
+  
+  // Function to filter payors based on state and type
+  function filterPayors(state, type) {
+    if (type === 'Yes') {
+      return jsonData.filter(item => item.state === state && (item.payor_type === 'Medicaid' || item.payor_type === 'MCO'));
+    } else if (type === 'No') {
+      return jsonData.filter(item => item.state === state && (item.payor_type === 'Commercial' || item.payor_type === 'Government Plan'));
+    }
+    return [];
   }
-  return [];
-}
