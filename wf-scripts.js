@@ -435,7 +435,52 @@ function initializeScript() {
 }*/
 
 document.addEventListener('DOMContentLoaded', function () {
-    // All code that depends on DOM being loaded
+    // Variable declarations
+    // Script for communication checkbox
+    const communicationYes = document.getElementById("communicationYes");
+    const communicationInput = document.getElementById("00N8b00000EQM3O");
+  
+    // Script for state dropdown
+    const select = document.getElementById("select");
+    const state2 = document.getElementById("input-field-1");
+  
+    // Script for ASD dropdown
+    const asd = document.getElementById("asd");
+    const asdInput = document.getElementById("00N8b00000EQM2f");
+  
+    // Script for type dropdown
+    const type = document.getElementById("type");
+    const typeInput = document.getElementById("00N8b00000Bz6ey");
+  
+    // Script for insuranceName dropdown
+    const insurance = document.getElementById("insurance");
+    const insuranceInput = document.getElementById("00N8b00000EQM3J");
+  
+    // Script for zip code
+    const zip = document.getElementById('zip');
+  
+    // Script for age
+    const ageInput = document.getElementById('00N8b00000EQM2a');
+  
+    // Script for email
+    const email = document.getElementById('email');
+  
+    // Remove unnecessary fields upon submission
+    const formSales = document.getElementById("form_wrapper");
+  
+    // Phone number formatting
+    const phone = document.getElementById('phone');
+  
+    // Variables for form logic
+    const insuranceSelect = document.getElementById("insuranceSelect");
+    const insuranceName = document.getElementById("insuranceName");
+    const insuranceName2 = document.getElementById("insuranceName2");
+    const insurance2 = document.getElementById("insurance2");
+    const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
+    const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
+    const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
+    const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
+    const type2 = document.getElementById("type2");
   
     // Script for gclid capture
     window.addEventListener('message', function (event) {
@@ -446,83 +491,72 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
   
     // Script for communication checkbox
-    const communicationYes = document.getElementById("communicationYes");
     communicationYes.addEventListener("change", () => {
       if (communicationYes.checked) {
-        document.getElementById("00N8b00000EQM3O").setAttribute("value", "Yes");
+        communicationInput.setAttribute("value", "Yes");
       } else {
-        document.getElementById("00N8b00000EQM3O").setAttribute("value", "No");
+        communicationInput.setAttribute("value", "No");
       }
     });
   
     // Script for state dropdown
-    const select = document.getElementById("select");
-    const state2 = document.getElementById("input-field-1");
     select.addEventListener("change", function () {
       state2.setAttribute("value", select.value);
     });
   
-    // Script for asd dropdown
-    const asd = document.getElementById("asd");
-    const asdInput = document.getElementById("00N8b00000EQM2f");
+    // Script for ASD dropdown
     asd.addEventListener("change", function () {
       asdInput.setAttribute("value", asd.value);
     });
   
     // Script for type dropdown
-    const type = document.getElementById("type");
-    const typeInput = document.getElementById("00N8b00000Bz6ey");
     type.addEventListener("change", function () {
       typeInput.setAttribute("value", type.value);
     });
   
     // Script for insuranceName dropdown
-    const insurance = document.getElementById("insurance");
-    const insuranceInput = document.getElementById("00N8b00000EQM3J");
     insurance.addEventListener("change", function () {
       insuranceInput.setAttribute("value", insurance.value);
     });
   
     // Script for zip code
-    document.getElementById('zip').oninput = function () {
+    zip.oninput = function () {
       if (this.value.length > this.maxLength) {
         this.value = this.value.slice(0, this.maxLength);
       }
     };
   
     // Script for age
-    document.getElementById('00N8b00000EQM2a').oninput = function () {
+    ageInput.oninput = function () {
       if (this.value.length > this.maxLength) {
         this.value = this.value.slice(0, this.maxLength);
       }
     };
   
     // Script for email validation
-    document.getElementById('email').addEventListener('invalid', function () {
+    email.addEventListener('invalid', function () {
       this.setCustomValidity('Please enter a valid email');
     });
   
-    document.getElementById('email').addEventListener('input', function () {
+    email.addEventListener('input', function () {
       this.setCustomValidity('');
     });
   
     // Remove unnecessary fields upon submission
-    const formSales = document.getElementById("form_wrapper");
     formSales.addEventListener("submit", function (e) {
       communicationYes.remove();
       document.getElementById('consent').remove();
     });
   
     // Format the phone number as the user types it
-    document.getElementById('phone').addEventListener('keyup', function (evt) {
-      var phoneNumber = document.getElementById('phone');
-      phoneNumber.value = phoneFormat(phoneNumber.value);
+    phone.addEventListener('keyup', function (evt) {
+      phone.value = phoneFormat(phone.value);
     });
   
     // Format the phone number on page load
-    document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
+    phone.value = phoneFormat(phone.value);
   
-    // Function to format text to look like a phone number
+    // Function to format phone number
     function phoneFormat(input) {
       input = input.replace(/\D/g, '');
       input = input.substring(0, 10);
@@ -582,19 +616,7 @@ document.addEventListener('DOMContentLoaded', function () {
         initializeScript(); // Initialize the rest of the script after data is loaded
       });
   
-    // Set up variables and event listeners that don't depend on JSON data
-    const insuranceSelect = document.getElementById("insuranceSelect");
-    const insuranceName = document.getElementById("insuranceName");
-    const insuranceName2 = document.getElementById("insuranceName2");
-    const insurance = document.getElementById("insurance");
-    const insurance2 = document.getElementById("insurance2");
-    const primaryInsuranceInput = document.getElementById("00N8b00000EQM3J");
-    const primaryMedicaidInput = document.getElementById("00N8b00000Bz6ey");
-    const secondaryInsuranceInput = document.getElementById("00NRc00000KXXrJ");
-    const secondaryMedicaidInput = document.getElementById("00NRc00000KXQa0");
-    const type = document.getElementById("type");
-    const type2 = document.getElementById("type2");
-  
+    // Function to reset the form
     function resetForm() {
       insuranceName.classList.add("is-hidden");
       insuranceName2.classList.add("is-hidden");
@@ -613,6 +635,7 @@ document.addEventListener('DOMContentLoaded', function () {
       type2.removeAttribute("required");
     }
   
+    // Event listener for insuranceSelect change
     insuranceSelect.addEventListener("change", function () {
       resetForm();
       const selection = insuranceSelect.value.trim();
@@ -631,7 +654,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   
-    // Function to be called after JSON data is loaded
     function initializeScript() {
       // Function to find payor data from JSON
       function findInsuranceData(state, insuranceName) {
@@ -669,7 +691,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   
       // Event listener for state selection to mirror the state into both groups initially
-      document.getElementById('select').addEventListener('change', function () {
+      select.addEventListener('change', function () {
         const selectedState = this.value;
   
         // Mirror selection into statePrimary and stateSecondary
@@ -677,28 +699,28 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('stateSecondary').value = selectedState;
   
         // Get current type values for each group
-        const type1 = document.getElementById('type').value;
-        const type2 = document.getElementById('type2').value;
+        const type1 = type.value;
+        const type2Value = type2.value;
   
         // Update insurance dropdowns for both groups based on the initial state and their respective types
         updateInsuranceDropdowns(selectedState, type1, 'insurance');
-        updateInsuranceDropdowns(selectedState, type2, 'insurance2');
+        updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
       });
   
       // Event listener for changes in Group 1 (statePrimary, type, insurance)
       document.getElementById('statePrimary').addEventListener('change', function () {
         const selectedState = this.value;
-        const selectedType = document.getElementById('type').value;
+        const selectedType = type.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
       });
   
-      document.getElementById('type').addEventListener('change', function () {
+      type.addEventListener('change', function () {
         const selectedState = document.getElementById('statePrimary').value;
         const selectedType = this.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
       });
   
-      document.getElementById('insurance').addEventListener('change', function () {
+      insurance.addEventListener('change', function () {
         const selectedState = document.getElementById('statePrimary').value;
         updatePrimaryInsuranceFields(selectedState, this.value);
       });
@@ -706,24 +728,24 @@ document.addEventListener('DOMContentLoaded', function () {
       // Event listener for changes in Group 2 (stateSecondary, type2, insurance2)
       document.getElementById('stateSecondary').addEventListener('change', function () {
         const selectedState = this.value;
-        const selectedType = document.getElementById('type2').value;
+        const selectedType = type2.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
       });
   
-      document.getElementById('type2').addEventListener('change', function () {
+      type2.addEventListener('change', function () {
         const selectedState = document.getElementById('stateSecondary').value;
         const selectedType = this.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
       });
   
-      document.getElementById('insurance2').addEventListener('change', function () {
+      insurance2.addEventListener('change', function () {
         const selectedState = document.getElementById('stateSecondary').value;
         updateSecondaryInsuranceFields(selectedState, this.value);
       });
   
       // Update insurance dropdowns based on state and type
-      function updateInsuranceDropdowns(state, type, insuranceId) {
-        const payorNames = filterPayors(state, type);
+      function updateInsuranceDropdowns(state, typeValue, insuranceId) {
+        const payorNames = filterPayors(state, typeValue);
         const insuranceDropdown = document.getElementById(insuranceId);
   
         // Clear current options
@@ -762,36 +784,36 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   
       // Function to filter payors based on state and type
-      function filterPayors(state, type) {
-        if (type === 'Yes') {
+      function filterPayors(state, typeValue) {
+        if (typeValue === 'Yes') {
           return jsonData.filter(item => item.state === state && (item.payor_type === 'Medicaid' || item.payor_type === 'MCO') && item.tofu_payor_name != null);
-        } else if (type === 'No') {
+        } else if (typeValue === 'No') {
           return jsonData.filter(item => item.state === state && (item.payor_type === 'Commercial' || item.payor_type === 'Government Plan') && item.tofu_payor_name != null);
         }
         return [];
       }
   
       // Main Form Submission Logic with MQL Status
-      document.getElementById('form_wrapper').addEventListener('submit', function (e) {
+      formSales.addEventListener('submit', function (e) {
         e.preventDefault();
   
         // Update hidden fields before submission
         const statePrimary = document.getElementById('statePrimary').value;
-        const insurancePrimary = document.getElementById('insurance').value;
+        const insurancePrimary = insurance.value;
         updatePrimaryInsuranceFields(statePrimary, insurancePrimary);
   
         const stateSecondary = document.getElementById('stateSecondary').value;
-        const insuranceSecondary = document.getElementById('insurance2').value;
+        const insuranceSecondary = insurance2.value;
         updateSecondaryInsuranceFields(stateSecondary, insuranceSecondary);
   
         // Gather values from form fields
-        const asdDiagnosis = document.getElementById('asd').value;
-        const hasInsurance = document.getElementById('insuranceSelect').value;
-        const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-        const state = document.getElementById('select').value;
-        const isMedicaid = document.getElementById('type').value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
-        const insuranceProvider = document.getElementById('insurance').value;
-        const secondaryInsuranceProvider = document.getElementById('insurance2').value;
+        const asdDiagnosis = asd.value;
+        const hasInsurance = insuranceSelect.value;
+        const childAge = parseInt(ageInput.value, 10);
+        const state = select.value;
+        const isMedicaid = type.value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
+        const insuranceProvider = insurance.value;
+        const secondaryInsuranceProvider = insurance2.value;
         const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
   
         // Get primary insurance's TOFU Status
