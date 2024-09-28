@@ -50,75 +50,101 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('message', function (event) {
       var origin = event.origin || event.originalEvent.origin;
       if (event.data.call == 'gcValue') {
-        document.getElementById("00N8b00000GjstL").value = event.data.value;
+        const gclidInput = document.getElementById("00N8b00000GjstL");
+        if (gclidInput) {
+          gclidInput.value = event.data.value;
+        }
       }
     }, false);
   
     // Script for communication checkbox
-    communicationYes.addEventListener("change", () => {
-      if (communicationYes.checked) {
-        communicationInput.setAttribute("value", "Yes");
-      } else {
-        communicationInput.setAttribute("value", "No");
-      }
-    });
+    if (communicationYes && communicationInput) {
+      communicationYes.addEventListener("change", () => {
+        if (communicationYes.checked) {
+          communicationInput.setAttribute("value", "Yes");
+        } else {
+          communicationInput.setAttribute("value", "No");
+        }
+      });
+    }
   
     // Script for state dropdown
-    select.addEventListener("change", function () {
-      state2.setAttribute("value", select.value);
-    });
+    if (select && state2) {
+      select.addEventListener("change", function () {
+        state2.setAttribute("value", select.value);
+      });
+    }
   
     // Script for ASD dropdown
-    asd.addEventListener("change", function () {
-      asdInput.setAttribute("value", asd.value);
-    });
+    if (asd && asdInput) {
+      asd.addEventListener("change", function () {
+        asdInput.setAttribute("value", asd.value);
+      });
+    } else {
+      console.error('Element with id "asd" not found.');
+    }
   
     // Script for type dropdown
-    type.addEventListener("change", function () {
-      typeInput.setAttribute("value", type.value);
-    });
+    if (type && typeInput) {
+      type.addEventListener("change", function () {
+        typeInput.setAttribute("value", type.value);
+      });
+    }
   
     // Script for insuranceName dropdown
-    insurance.addEventListener("change", function () {
-      insuranceInput.setAttribute("value", insurance.value);
-    });
+    if (insurance && insuranceInput) {
+      insurance.addEventListener("change", function () {
+        insuranceInput.setAttribute("value", insurance.value);
+      });
+    }
   
     // Script for zip code
-    zip.oninput = function () {
-      if (this.value.length > this.maxLength) {
-        this.value = this.value.slice(0, this.maxLength);
-      }
-    };
+    if (zip) {
+      zip.oninput = function () {
+        if (this.value.length > this.maxLength) {
+          this.value = this.value.slice(0, this.maxLength);
+        }
+      };
+    }
   
     // Script for age
-    ageInput.oninput = function () {
-      if (this.value.length > this.maxLength) {
-        this.value = this.value.slice(0, this.maxLength);
-      }
-    };
+    if (ageInput) {
+      ageInput.oninput = function () {
+        if (this.value.length > this.maxLength) {
+          this.value = this.value.slice(0, this.maxLength);
+        }
+      };
+    }
   
     // Script for email validation
-    email.addEventListener('invalid', function () {
-      this.setCustomValidity('Please enter a valid email');
-    });
+    if (email) {
+      email.addEventListener('invalid', function () {
+        this.setCustomValidity('Please enter a valid email');
+      });
   
-    email.addEventListener('input', function () {
-      this.setCustomValidity('');
-    });
+      email.addEventListener('input', function () {
+        this.setCustomValidity('');
+      });
+    }
   
     // Remove unnecessary fields upon submission
-    formSales.addEventListener("submit", function (e) {
-      communicationYes.remove();
-      document.getElementById('consent').remove();
-    });
+    if (formSales) {
+      formSales.addEventListener("submit", function (e) {
+        if (communicationYes) communicationYes.remove();
+        const consent = document.getElementById('consent');
+        if (consent) consent.remove();
+      });
+    }
   
     // Format the phone number as the user types it
-    phone.addEventListener('keyup', function (evt) {
-      phone.value = phoneFormat(phone.value);
-    });
+    if (phone) {
+      phone.addEventListener('keyup', function (evt) {
+        phone.value = phoneFormat(phone.value);
+      });
   
-    // Format the phone number on page load
-    phone.value = phoneFormat(phone.value);
+      // Format the phone number on page load
+      phone.value = phoneFormat(phone.value);
+    }
   
     // Function to format phone number
     function phoneFormat(input) {
@@ -151,21 +177,17 @@ document.addEventListener('DOMContentLoaded', function () {
     var utm_domain = getURLParameter('utm_domain');
   
     function populateHiddenFields() {
-      if (document.getElementById('00NRc0000083yKn')) {
-        document.getElementById('00NRc0000083yKn').value = utm_source || '';
-      }
-      if (document.getElementById('00NRc0000083yW5')) {
-        document.getElementById('00NRc0000083yW5').value = utm_medium || '';
-      }
-      if (document.getElementById('00NRc0000083yhN')) {
-        document.getElementById('00NRc0000083yhN').value = utm_campaign || '';
-      }
-      if (document.getElementById('00NRc0000083pBL')) {
-        document.getElementById('00NRc0000083pBL').value = utm_content || '';
-      }
-      if (document.getElementById('00NRc00000D4OSr')) {
-        document.getElementById('00NRc00000D4OSr').value = utm_domain || '';
-      }
+      const utmSourceInput = document.getElementById('00NRc0000083yKn');
+      const utmMediumInput = document.getElementById('00NRc0000083yW5');
+      const utmCampaignInput = document.getElementById('00NRc0000083yhN');
+      const utmContentInput = document.getElementById('00NRc0000083pBL');
+      const utmDomainInput = document.getElementById('00NRc00000D4OSr');
+  
+      if (utmSourceInput) utmSourceInput.value = utm_source || '';
+      if (utmMediumInput) utmMediumInput.value = utm_medium || '';
+      if (utmCampaignInput) utmCampaignInput.value = utm_campaign || '';
+      if (utmContentInput) utmContentInput.value = utm_content || '';
+      if (utmDomainInput) utmDomainInput.value = utm_domain || '';
     }
     populateHiddenFields();
   
@@ -182,41 +204,43 @@ document.addEventListener('DOMContentLoaded', function () {
   
     // Function to reset the form
     function resetForm() {
-      insuranceName.classList.add("is-hidden");
-      insuranceName2.classList.add("is-hidden");
-      insurance.value = "";
-      insurance2.value = "";
-      type.value = "";
-      type2.value = "";
-      primaryInsuranceInput.value = "";
-      primaryMedicaidInput.value = "";
-      secondaryInsuranceInput.value = "";
-      secondaryMedicaidInput.value = "";
+      if (insuranceName) insuranceName.classList.add("is-hidden");
+      if (insuranceName2) insuranceName2.classList.add("is-hidden");
+      if (insurance) insurance.value = "";
+      if (insurance2) insurance2.value = "";
+      if (type) type.value = "";
+      if (type2) type2.value = "";
+      if (primaryInsuranceInput) primaryInsuranceInput.value = "";
+      if (primaryMedicaidInput) primaryMedicaidInput.value = "";
+      if (secondaryInsuranceInput) secondaryInsuranceInput.value = "";
+      if (secondaryMedicaidInput) secondaryMedicaidInput.value = "";
   
-      insurance.removeAttribute("required");
-      type.removeAttribute("required");
-      insurance2.removeAttribute("required");
-      type2.removeAttribute("required");
+      if (insurance) insurance.removeAttribute("required");
+      if (type) type.removeAttribute("required");
+      if (insurance2) insurance2.removeAttribute("required");
+      if (type2) type2.removeAttribute("required");
     }
   
     // Event listener for insuranceSelect change
-    insuranceSelect.addEventListener("change", function () {
-      resetForm();
-      const selection = insuranceSelect.value.trim();
+    if (insuranceSelect) {
+      insuranceSelect.addEventListener("change", function () {
+        resetForm();
+        const selection = insuranceSelect.value.trim();
   
-      if (selection === 'Yes, primary only') {
-        insuranceName.classList.remove("is-hidden");
-        insurance.setAttribute("required", "required");
-        type.setAttribute("required", "required");
-      } else if (selection === 'Yes, primary & secondary') {
-        insuranceName.classList.remove("is-hidden");
-        insuranceName2.classList.remove("is-hidden");
-        insurance.setAttribute("required", "required");
-        type.setAttribute("required", "required");
-        insurance2.setAttribute("required", "required");
-        type2.setAttribute("required", "required");
-      }
-    });
+        if (selection === 'Yes, primary only') {
+          if (insuranceName) insuranceName.classList.remove("is-hidden");
+          if (insurance) insurance.setAttribute("required", "required");
+          if (type) type.setAttribute("required", "required");
+        } else if (selection === 'Yes, primary & secondary') {
+          if (insuranceName) insuranceName.classList.remove("is-hidden");
+          if (insuranceName2) insuranceName2.classList.remove("is-hidden");
+          if (insurance) insurance.setAttribute("required", "required");
+          if (type) type.setAttribute("required", "required");
+          if (insurance2) insurance2.setAttribute("required", "required");
+          if (type2) type2.setAttribute("required", "required");
+        }
+      });
+    }
   
     function initializeScript() {
       // Function to find payor data from JSON
@@ -228,14 +252,11 @@ document.addEventListener('DOMContentLoaded', function () {
       function updatePrimaryInsuranceFields(state, insuranceName) {
         const insuranceData = findInsuranceData(state, insuranceName);
         if (insuranceData) {
-          document.getElementById('00NRc00000OHqQz').value = insuranceData.final_forta_bay; // Primary Insurance Bay
-          document.getElementById('00NRc00000OHo1Z').value = insuranceData.inn_oon_designation; // Primary Insurance Status
-          primaryInsuranceInput.value = insuranceData.payor_name; // Set primary insurance input
-        } else {
-          // Clear hidden fields if no matching data is found
-          document.getElementById('00NRc00000OHqQz').value = '';
-          document.getElementById('00NRc00000OHo1Z').value = '';
-          primaryInsuranceInput.value = '';
+          const primaryInsuranceBay = document.getElementById('00NRc00000OHqQz');
+          const primaryInsuranceStatus = document.getElementById('00NRc00000OHo1Z');
+          if (primaryInsuranceBay) primaryInsuranceBay.value = insuranceData.payor_name;
+          if (primaryInsuranceStatus) primaryInsuranceStatus.value = insuranceData.inn_oon_designation;
+          if (primaryInsuranceInput) primaryInsuranceInput.value = insuranceData.payor_name;
         }
       }
   
@@ -243,74 +264,91 @@ document.addEventListener('DOMContentLoaded', function () {
       function updateSecondaryInsuranceFields(state, insuranceName) {
         const insuranceData = findInsuranceData(state, insuranceName);
         if (insuranceData) {
-          document.getElementById('00NRc00000OHWu6').value = insuranceData.final_forta_bay; // Secondary Insurance Bay
-          document.getElementById('00NRc00000OHuZR').value = insuranceData.inn_oon_designation; // Secondary Insurance Status
-          secondaryInsuranceInput.value = insuranceData.payor_name; // Set secondary insurance input
-        } else {
-          // Clear hidden fields if no matching data is found
-          document.getElementById('00NRc00000OHWu6').value = '';
-          document.getElementById('00NRc00000OHuZR').value = '';
-          secondaryInsuranceInput.value = '';
+          const secondaryInsuranceBay = document.getElementById('00NRc00000OHWu6');
+          const secondaryInsuranceStatus = document.getElementById('00NRc00000OHuZR');
+          if (secondaryInsuranceBay) secondaryInsuranceBay.value = insuranceData.payor_name;
+          if (secondaryInsuranceStatus) secondaryInsuranceStatus.value = insuranceData.inn_oon_designation;
+          if (secondaryInsuranceInput) secondaryInsuranceInput.value = insuranceData.payor_name;
         }
       }
   
       // Event listener for state selection to mirror the state into both groups initially
-      select.addEventListener('change', function () {
-        const selectedState = this.value;
+      if (select) {
+        select.addEventListener('change', function () {
+          const selectedState = this.value;
   
-        // Mirror selection into statePrimary and stateSecondary
-        document.getElementById('statePrimary').value = selectedState;
-        document.getElementById('stateSecondary').value = selectedState;
+          // Mirror selection into statePrimary and stateSecondary
+          const statePrimary = document.getElementById('statePrimary');
+          const stateSecondary = document.getElementById('stateSecondary');
+          if (statePrimary) statePrimary.value = selectedState;
+          if (stateSecondary) stateSecondary.value = selectedState;
   
-        // Get current type values for each group
-        const type1 = type.value;
-        const type2Value = type2.value;
+          // Get current type values for each group
+          const type1Value = type ? type.value : '';
+          const type2Value = type2 ? type2.value : '';
   
-        // Update insurance dropdowns for both groups based on the initial state and their respective types
-        updateInsuranceDropdowns(selectedState, type1, 'insurance');
-        updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
-      });
+          // Update insurance dropdowns for both groups based on the initial state and their respective types
+          updateInsuranceDropdowns(selectedState, type1Value, 'insurance');
+          updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
+        });
+      }
   
       // Event listener for changes in Group 1 (statePrimary, type, insurance)
-      document.getElementById('statePrimary').addEventListener('change', function () {
-        const selectedState = this.value;
-        const selectedType = type.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-      });
+      const statePrimary = document.getElementById('statePrimary');
+      if (statePrimary) {
+        statePrimary.addEventListener('change', function () {
+          const selectedState = this.value;
+          const selectedType = type ? type.value : '';
+          updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+        });
+      }
   
-      type.addEventListener('change', function () {
-        const selectedState = document.getElementById('statePrimary').value;
-        const selectedType = this.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-      });
+      if (type) {
+        type.addEventListener('change', function () {
+          const selectedState = statePrimary ? statePrimary.value : '';
+          const selectedType = this.value;
+          updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+        });
+      }
   
-      insurance.addEventListener('change', function () {
-        const selectedState = document.getElementById('statePrimary').value;
-        updatePrimaryInsuranceFields(selectedState, this.value);
-      });
+      if (insurance) {
+        insurance.addEventListener('change', function () {
+          const selectedState = statePrimary ? statePrimary.value : '';
+          updatePrimaryInsuranceFields(selectedState, this.value);
+        });
+      }
   
       // Event listener for changes in Group 2 (stateSecondary, type2, insurance2)
-      document.getElementById('stateSecondary').addEventListener('change', function () {
-        const selectedState = this.value;
-        const selectedType = type2.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-      });
+      const stateSecondary = document.getElementById('stateSecondary');
+      if (stateSecondary) {
+        stateSecondary.addEventListener('change', function () {
+          const selectedState = this.value;
+          const selectedType = type2 ? type2.value : '';
+          updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+        });
+      }
   
-      type2.addEventListener('change', function () {
-        const selectedState = document.getElementById('stateSecondary').value;
-        const selectedType = this.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-      });
+      if (type2) {
+        type2.addEventListener('change', function () {
+          const selectedState = stateSecondary ? stateSecondary.value : '';
+          const selectedType = this.value;
+          updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+        });
+      }
   
-      insurance2.addEventListener('change', function () {
-        const selectedState = document.getElementById('stateSecondary').value;
-        updateSecondaryInsuranceFields(selectedState, this.value);
-      });
+      if (insurance2) {
+        insurance2.addEventListener('change', function () {
+          const selectedState = stateSecondary ? stateSecondary.value : '';
+          updateSecondaryInsuranceFields(selectedState, this.value);
+        });
+      }
   
       // Update insurance dropdowns based on state and type
       function updateInsuranceDropdowns(state, typeValue, insuranceId) {
         const payorNames = filterPayors(state, typeValue);
         const insuranceDropdown = document.getElementById(insuranceId);
+  
+        if (!insuranceDropdown) return;
   
         // Clear current options
         insuranceDropdown.innerHTML = '';
@@ -358,65 +396,65 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   
       // Main Form Submission Logic with MQL Status
-      formSales.addEventListener('submit', function (e) {
-        e.preventDefault();
+      if (formSales) {
+        formSales.addEventListener('submit', function (e) {
+          e.preventDefault();
   
-        // Update hidden fields before submission
-        const statePrimary = document.getElementById('statePrimary').value;
-        const insurancePrimary = insurance.value;
-        updatePrimaryInsuranceFields(statePrimary, insurancePrimary);
+          // Update hidden fields before submission
+          const statePrimaryValue = statePrimary ? statePrimary.value : '';
+          const insurancePrimaryValue = insurance ? insurance.value : '';
+          updatePrimaryInsuranceFields(statePrimaryValue, insurancePrimaryValue);
   
-        const stateSecondary = document.getElementById('stateSecondary').value;
-        const insuranceSecondary = insurance2.value;
-        updateSecondaryInsuranceFields(stateSecondary, insuranceSecondary);
+          const stateSecondaryValue = stateSecondary ? stateSecondary.value : '';
+          const insuranceSecondaryValue = insurance2 ? insurance2.value : '';
+          updateSecondaryInsuranceFields(stateSecondaryValue, insuranceSecondaryValue);
   
-        // Gather values from form fields
-        const asdDiagnosis = asd.value;
-        const hasInsurance = insuranceSelect.value;
-        const childAge = parseInt(ageInput.value, 10);
-        const state = select.value;
-        const isMedicaid = type.value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
-        const insuranceProvider = insurance.value;
-        const secondaryInsuranceProvider = insurance2.value;
-        const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+          // Gather values from form fields
+          const asdDiagnosis = asd ? asd.value : '';
+          const hasInsurance = insuranceSelect ? insuranceSelect.value : '';
+          const childAge = parseInt(ageInput ? ageInput.value : '0', 10);
+          const stateValue = select ? select.value : '';
+          const isMedicaid = type && type.value === "Yes" ? "Yes" : "No"; // Primary insurance plan type
+          const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
   
-        // Get primary insurance's TOFU Status
-        const insuranceData = findInsuranceData(state, insuranceProvider);
-        const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
+          // Get primary insurance's TOFU Status
+          const insuranceData = findInsuranceData(stateValue, insurancePrimaryValue);
+          const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
   
-        // Redirect Logic based on JSON tofu_status
-        if (hasInsurance === 'No') {
-          returnURL = "https://www.fortahealth.com/thank-you-2";
-          mqlStatus = "DQ - No Insurance";
-        } else if (tofuStatus === "Disqualify") {
-          returnURL = "https://www.fortahealth.com/thank-you-2";
-          mqlStatus = "DQ - Insurance not supported";
-        } else if (asdDiagnosis === "No, have non-ASD diagnosis" || asdDiagnosis === "No, on a waitlist") {
-          returnURL = "https://www.fortahealth.com/thank-you-2";
-          mqlStatus = "DQ - No Diagnosis";
-        } else if (childAge > 99) {
-          returnURL = "https://www.fortahealth.com/thank-you-2";
-          mqlStatus = "DQ - Age";
-        } else if (tofuStatus === "Passing") {
-          returnURL = "https://fortahealth.com/thank-you-schedule";
-          mqlStatus = "MQL";
-        } else {
-          // Default fallback
-          returnURL = "https://www.fortahealth.com/thank-you-2";
-          mqlStatus = "DQ - Other";
-        }
+          // Redirect Logic based on JSON tofu_status
+          let returnURL = "https://www.fortahealth.com/thank-you-2"; // Default URL
+          let mqlStatus = "DQ - Other"; // Default status
   
-        console.log("Redirecting to: " + returnURL); // Debugging line
-        console.log("MQL Status: " + mqlStatus); // Debugging line
+          if (hasInsurance === 'No') {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - No Insurance";
+          } else if (tofuStatus === "Disqualify") {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - Insurance not supported";
+          } else if (asdDiagnosis === "No, have non-ASD diagnosis" || asdDiagnosis === "No, on a waitlist") {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - No Diagnosis";
+          } else if (childAge > 99) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - Age";
+          } else if (tofuStatus === "Passing") {
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+            mqlStatus = "MQL";
+          }
   
-        // Set the MQL Status hidden field
-        mqlStatusField.value = mqlStatus;
+          console.log("Redirecting to: " + returnURL); // Debugging line
+          console.log("MQL Status: " + mqlStatus); // Debugging line
   
-        // Delay the form submission by 500ms
-        setTimeout(function () {
-          document.getElementsByName("retURL")[0].value = returnURL;
-          e.target.submit(); // Submit the form after delay
-        }, 500);
-      });
+          // Set the MQL Status hidden field
+          if (mqlStatusField) mqlStatusField.value = mqlStatus;
+  
+          // Delay the form submission by 500ms
+          setTimeout(function () {
+            const retURLInput = document.getElementsByName("retURL")[0];
+            if (retURLInput) retURLInput.value = returnURL;
+            e.target.submit(); // Submit the form after delay
+          }, 500);
+        });
+      }
     }
   });
