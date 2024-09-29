@@ -24,6 +24,12 @@ const select = document.getElementById("select");
 const state2 = document.getElementById("input-field-1");
 select.addEventListener("change", function () {
     state2.value = select.value;
+
+    // Also mirror selection into statePrimary and stateSecondary
+    const statePrimary = document.getElementById('statePrimary');
+    const stateSecondary = document.getElementById('stateSecondary');
+    if (statePrimary) statePrimary.value = select.value;
+    if (stateSecondary) stateSecondary.value = select.value;
 });
 
 // -------------------------
@@ -53,29 +59,32 @@ type2.addEventListener("change", function () {
 // -----------------
 // Script for Zip Code
 // -----------------
-document.getElementById('zip').oninput = function () {
+const zipInput = document.getElementById('zip');
+zipInput.addEventListener('input', function () {
     if (this.value.length > this.maxLength) {
         this.value = this.value.slice(0, this.maxLength);
     }
-};
+});
 
 // -----------------
 // Script for Age
 // -----------------
-document.getElementById('00N8b00000EQM2a').oninput = function () {
+const ageInput = document.getElementById('00N8b00000EQM2a');
+ageInput.addEventListener('input', function () {
     if (this.value.length > this.maxLength) {
         this.value = this.value.slice(0, this.maxLength);
     }
-};
+});
 
 // -----------------
 // Script for Email Validation
 // -----------------
-document.getElementById('email').addEventListener('invalid', function () {
+const emailInput = document.getElementById('email');
+emailInput.addEventListener('invalid', function () {
     this.setCustomValidity('Please enter a valid email');
 });
 
-document.getElementById('email').addEventListener('input', function () {
+emailInput.addEventListener('input', function () {
     this.setCustomValidity('');
 });
 
@@ -83,7 +92,7 @@ document.getElementById('email').addEventListener('input', function () {
 // Remove Unnecessary Fields Upon Submission
 // ----------------------------------------
 const formSales = document.getElementById("form_wrapper");
-formSales.addEventListener("submit", function (e) {
+formSales.addEventListener("submit", function () {
     communicationYes.remove();
     document.getElementById('consent').remove();
 });
@@ -91,13 +100,13 @@ formSales.addEventListener("submit", function (e) {
 // -----------------------------------
 // Script for Phone Number Formatting
 // -----------------------------------
-document.getElementById('phone').addEventListener('keyup', function (evt) {
-    var phoneNumber = document.getElementById('phone');
-    phoneNumber.value = phoneFormat(phoneNumber.value);
+const phoneInput = document.getElementById('phone');
+phoneInput.addEventListener('keyup', function () {
+    phoneInput.value = phoneFormat(phoneInput.value);
 });
 
 // Format the phone number on page load
-document.getElementById('phone').value = phoneFormat(document.getElementById('phone').value);
+phoneInput.value = phoneFormat(phoneInput.value);
 
 // Function to format text to look like a phone number
 function phoneFormat(input) {
@@ -120,7 +129,9 @@ function phoneFormat(input) {
 // Function to Get URL Parameters
 // -------------------------------
 function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
+        '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
+        /\+/g, '%20')) || null;
 }
 
 // ----------------------
@@ -150,15 +161,14 @@ function populateHiddenFields() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', populateHiddenFields);
+
 // -----------------------
 // Load JSON Data and Initialize Script
 // -----------------------
 let jsonData = [];
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Populate hidden fields
-    populateHiddenFields();
-
     // Fetch JSON data
     fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
         .then(response => response.json())
@@ -270,45 +280,25 @@ function initializeScript() {
     // Event Listeners for Insurance Name Fields
     // ------------------------------------------------
     insurance.addEventListener("change", function () {
-        const selectedState = document.getElementById('statePrimary').value;
+        const selectedState = document.getElementById('statePrimary').value || select.value;
         updatePrimaryInsuranceFields(selectedState, this.value);
     });
 
     insurance2.addEventListener("change", function () {
-        const selectedState = document.getElementById('stateSecondary').value;
+        const selectedState = document.getElementById('stateSecondary').value || select.value;
         updateSecondaryInsuranceFields(selectedState, this.value);
     });
 
     // --------------------------------------------
     // Event Listener for Main State Selection
     // --------------------------------------------
-    document.getElementById('select').addEventListener('change', function () {
-        const selectedState = this.value;
-
-        // Mirror selection into statePrimary and stateSecondary
-        document.getElementById('statePrimary').value = selectedState;
-        document.getElementById('stateSecondary').value = selectedState;
-
-        // Get current type values for each group
-        const type1 = type.value;
-        const type2Value = type2.value;
-
-        // Update insurance dropdowns for both groups based on the initial state and their respective types
-        updateInsuranceDropdowns(selectedState, type1, 'insurance');
-        updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
-    });
+    // This is already handled in the global 'select' change event
 
     // ----------------------------------------------------
     // Event Listeners for Changes in Primary Insurance
     // ----------------------------------------------------
-    document.getElementById('statePrimary').addEventListener('change', function () {
-        const selectedState = this.value;
-        const selectedType = type.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-    });
-
     type.addEventListener("change", function () {
-        const selectedState = document.getElementById('statePrimary').value;
+        const selectedState = select.value;
         const selectedType = this.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
 
@@ -320,14 +310,8 @@ function initializeScript() {
     // -----------------------------------------------------
     // Event Listeners for Changes in Secondary Insurance
     // -----------------------------------------------------
-    document.getElementById('stateSecondary').addEventListener('change', function () {
-        const selectedState = this.value;
-        const selectedType = type2.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-    });
-
     type2.addEventListener("change", function () {
-        const selectedState = document.getElementById('stateSecondary').value;
+        const selectedState = select.value;
         const selectedType = this.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
 
@@ -404,83 +388,90 @@ function initializeScript() {
         }
         return [];
     }
-
-    // ----------------------------------------------
-    // Main Form Submission Logic with MQL Status
-    // ----------------------------------------------
-    document.getElementById('form_wrapper').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Update hidden fields before submission
-        const statePrimary = document.getElementById('statePrimary').value;
-        const insurancePrimary = document.getElementById('insurance').value;
-        updatePrimaryInsuranceFields(statePrimary, insurancePrimary);
-
-        const stateSecondary = document.getElementById('stateSecondary').value;
-        const insuranceSecondary = document.getElementById('insurance2').value;
-        updateSecondaryInsuranceFields(stateSecondary, insuranceSecondary);
-
-        // Gather values from form fields
-        const asdDiagnosis = document.getElementById('asd').value;
-        const hasInsurance = document.getElementById('InsuranceSelect').value;
-        const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-        const state = document.getElementById('select').value;
-        const insuranceProvider = document.getElementById('insurance').value;
-        const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
-
-        // Diagnosis Disqualify States
-        const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
-
-        // Get primary insurance's TOFU Status
-        const insuranceData = findInsuranceData(state, insuranceProvider);
-        const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
-
-        // ---------------------------------------
-        // Redirect Logic Based on Business Rules
-        // ---------------------------------------
-        let returnURL = '';
-        let mqlStatus = '';
-
-        // DISQUALIFY if "Does your child have health insurance?" is "No"
-        if (hasInsurance === 'No') {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - No Insurance";
-        }
-        // DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
-        else if (tofuStatus === "Disqualify") {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Insurance not supported";
-        }
-        // DISQUALIFY based on adjusted ASD diagnosis logic
-        else if (
-            asdDiagnosis === "No, have non-ASD diagnosis" ||
-            (diagnosisDisqualifyStates.includes(state) && asdDiagnosis.includes('No'))
-        ) {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - No Diagnosis";
-        }
-        // DISQUALIFY if Age is >99
-        else if (childAge > 99) {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Age";
-        }
-        // PASS if primary insurance's TOFU Status is "Passing"
-        else if (tofuStatus === "Passing") {
-            returnURL = "https://fortahealth.com/thank-you-schedule";
-            mqlStatus = "MQL";
-        } else {
-            // Default fallback
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Other";
-        }
-
-        // Set the MQL Status hidden field
-        mqlStatusField.value = mqlStatus;
-
-        // Delay the form submission by 500ms
-        setTimeout(function () {
-            document.getElementsByName("retURL")[0].value = returnURL;
-            e.target.submit(); // Submit the form after delay
-        }, 500);
-    });
 }
+
+// ----------------------------
+// Main Form Submission Logic
+// ----------------------------
+formSales.addEventListener('submit', function () {
+    // Update hidden fields before submission
+    const statePrimary = document.getElementById('statePrimary').value || select.value;
+    const insurancePrimary = document.getElementById('insurance').value;
+    if (insurancePrimary) {
+        updatePrimaryInsuranceFields(statePrimary, insurancePrimary);
+    }
+
+    const stateSecondary = document.getElementById('stateSecondary').value || select.value;
+    const insuranceSecondary = document.getElementById('insurance2').value;
+    if (insuranceSecondary) {
+        updateSecondaryInsuranceFields(stateSecondary, insuranceSecondary);
+    }
+
+    // Gather values from form fields
+    const asdDiagnosis = document.getElementById('asd').value;
+    const hasInsurance = document.getElementById('InsuranceSelect').value;
+    const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
+    const state = select.value;
+    const insuranceProvider = document.getElementById('insurance').value;
+    const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+
+    // Diagnosis Disqualify States
+    const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
+
+    // Function to find payor data from JSON
+    function findInsuranceData(state, insuranceProvider) {
+        return jsonData.find(item =>
+            item.state === state &&
+            item.tofu_payor_name === insuranceProvider
+        );
+    }
+
+    // Get primary insurance's TOFU Status
+    const insuranceData = findInsuranceData(state, insuranceProvider);
+    const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
+
+    // ---------------------------------------
+    // Redirect Logic Based on Business Rules
+    // ---------------------------------------
+    let returnURL = '';
+    let mqlStatus = '';
+
+    // DISQUALIFY if "Does your child have health insurance?" is "No"
+    if (hasInsurance === 'No') {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Insurance";
+    }
+    // DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
+    else if (tofuStatus === "Disqualify") {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Insurance not supported";
+    }
+    // DISQUALIFY based on adjusted ASD diagnosis logic
+    else if (
+        asdDiagnosis === "No, have non-ASD diagnosis" ||
+        (diagnosisDisqualifyStates.includes(state) && asdDiagnosis.includes('No'))
+    ) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - No Diagnosis";
+    }
+    // DISQUALIFY if Age is >99
+    else if (childAge > 99) {
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Age";
+    }
+    // PASS if primary insurance's TOFU Status is "Passing"
+    else if (tofuStatus === "Passing") {
+        returnURL = "https://fortahealth.com/thank-you-schedule";
+        mqlStatus = "MQL";
+    } else {
+        // Default fallback
+        returnURL = "https://www.fortahealth.com/thank-you-2";
+        mqlStatus = "DQ - Other";
+    }
+
+    // Set the MQL Status hidden field
+    mqlStatusField.value = mqlStatus;
+
+    // Set the return URL
+    document.getElementsByName("retURL")[0].value = returnURL;
+});
