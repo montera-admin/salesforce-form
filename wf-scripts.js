@@ -480,3 +480,14 @@ function initializeScript() {
         document.getElementsByName("retURL")[0].value = returnURL;
     });
 }
+
+// Get all select elements you want to target
+const selectFields = document.querySelectorAll('select.sf-form_input');
+
+// Function to remove 'is-fill' class when an option is selected
+selectFields.forEach(function(selectField) {
+    selectField.addEventListener('change', function() {
+        // Remove 'is-fill' class
+        selectField.classList.remove('is-fill');
+    });
+});
