@@ -50,35 +50,6 @@ type2.addEventListener("change", function () {
     type2Input.value = type2.value;
 });
 
-// -------------------------------
-// Script for Insurance Name Fields
-// -------------------------------
-const insurance = document.getElementById("insurance");
-const insuranceInput = document.getElementById("00N8b00000EQM3J");
-insurance.addEventListener("change", function () {
-    const selectedState = document.getElementById('statePrimary').value;
-    const insuranceData = findInsuranceData(selectedState, this.value);
-    if (insuranceData) {
-        // Set to payor_name from JSON
-        insuranceInput.value = insuranceData.payor_name;
-    } else {
-        insuranceInput.value = "";
-    }
-});
-
-const insurance2 = document.getElementById("insurance2");
-const insurance2Input = document.getElementById("00NRc00000KXXrJ");
-insurance2.addEventListener("change", function () {
-    const selectedState = document.getElementById('stateSecondary').value;
-    const insuranceData = findInsuranceData(selectedState, this.value);
-    if (insuranceData) {
-        // Set to payor_name from JSON
-        insurance2Input.value = insuranceData.payor_name;
-    } else {
-        insurance2Input.value = "";
-    }
-});
-
 // -----------------
 // Script for Zip Code
 // -----------------
@@ -138,7 +109,7 @@ function phoneFormat(input) {
     } else if (size < 4) {
         input = '(' + input;
     } else if (size < 7) {
-        input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6);
+        input = '(' + input.substring(0, 3) + ') ' + input.substring(3);
     } else {
         input = '(' + input.substring(0, 3) + ') ' + input.substring(3, 6) + ' - ' + input.substring(6, 10);
     }
@@ -295,6 +266,19 @@ function initializeScript() {
         }
     }
 
+    // ------------------------------------------------
+    // Event Listeners for Insurance Name Fields
+    // ------------------------------------------------
+    insurance.addEventListener("change", function () {
+        const selectedState = document.getElementById('statePrimary').value;
+        updatePrimaryInsuranceFields(selectedState, this.value);
+    });
+
+    insurance2.addEventListener("change", function () {
+        const selectedState = document.getElementById('stateSecondary').value;
+        updateSecondaryInsuranceFields(selectedState, this.value);
+    });
+
     // --------------------------------------------
     // Event Listener for Main State Selection
     // --------------------------------------------
@@ -333,11 +317,6 @@ function initializeScript() {
         primaryInsuranceInput.value = '';
     });
 
-    insurance.addEventListener("change", function () {
-        const selectedState = document.getElementById('statePrimary').value;
-        updatePrimaryInsuranceFields(selectedState, this.value);
-    });
-
     // -----------------------------------------------------
     // Event Listeners for Changes in Secondary Insurance
     // -----------------------------------------------------
@@ -355,11 +334,6 @@ function initializeScript() {
         // Reset insurance2 dropdown to 'Select provider'
         insurance2.selectedIndex = 0;
         secondaryInsuranceInput.value = '';
-    });
-
-    insurance2.addEventListener("change", function () {
-        const selectedState = document.getElementById('stateSecondary').value;
-        updateSecondaryInsuranceFields(selectedState, this.value);
     });
 
     // -------------------------------------------------
@@ -456,14 +430,6 @@ function initializeScript() {
 
         // Diagnosis Disqualify States
         const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
-
-        // Function to find payor data from JSON
-        function findInsuranceData(state, insuranceProvider) {
-            return jsonData.find(item =>
-                item.state === state &&
-                item.tofu_payor_name === insuranceProvider
-            );
-        }
 
         // Get primary insurance's TOFU Status
         const insuranceData = findInsuranceData(state, insuranceProvider);
