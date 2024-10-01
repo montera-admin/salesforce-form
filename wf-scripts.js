@@ -285,16 +285,26 @@ function initializeScript() {
         updateSecondaryInsuranceFields(selectedState, this.value);
     });
 
-    // --------------------------------------------
-    // Event Listener for Main State Selection
-    // --------------------------------------------
-    select.addEventListener('change', function () {
+// --------------------------------------------
+// Mutual Updating Between State Fields
+// --------------------------------------------
+
+const mainStateSelect = document.getElementById('select');
+const statePrimary = document.getElementById('statePrimary');
+const stateSecondary = document.getElementById('stateSecondary');
+const type = document.getElementById('type');
+const type2 = document.getElementById('type2');
+
+// Flag to prevent infinite loops
+let isProgrammaticChange = false;
+
+// Event listener for main state select
+mainStateSelect.addEventListener('change', function () {
+    if (!isProgrammaticChange) {
+        isProgrammaticChange = true;
         const selectedState = this.value;
 
         // Mirror selection into statePrimary and stateSecondary
-        const statePrimary = document.getElementById('statePrimary');
-        const stateSecondary = document.getElementById('stateSecondary');
-
         if (statePrimary) statePrimary.value = selectedState;
         if (stateSecondary) stateSecondary.value = selectedState;
 
@@ -305,7 +315,42 @@ function initializeScript() {
         // Update insurance dropdowns for both groups based on the initial state and their respective types
         updateInsuranceDropdowns(selectedState, type1, 'insurance');
         updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
+
+        isProgrammaticChange = false;
+    }
+});
+
+// Event listener for statePrimary
+if (statePrimary) {
+    statePrimary.addEventListener('change', function () {
+        if (!isProgrammaticChange) {
+            isProgrammaticChange = true;
+            mainStateSelect.value = this.value;
+
+            // Update insurance dropdown for primary insurance
+            const type1 = type.value;
+            updateInsuranceDropdowns(this.value, type1, 'insurance');
+
+            isProgrammaticChange = false;
+        }
     });
+}
+
+// Event listener for stateSecondary
+if (stateSecondary) {
+    stateSecondary.addEventListener('change', function () {
+        if (!isProgrammaticChange) {
+            isProgrammaticChange = true;
+            mainStateSelect.value = this.value;
+
+            // Update insurance dropdown for secondary insurance
+            const type2Value = type2.value;
+            updateInsuranceDropdowns(this.value, type2Value, 'insurance2');
+
+            isProgrammaticChange = false;
+        }
+    });
+}
 
     // ----------------------------------------------------
     // Event Listeners for Changes in Primary Insurance
