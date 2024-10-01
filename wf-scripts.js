@@ -296,57 +296,62 @@ const stateSecondary = document.getElementById('stateSecondary');
 // Flag to prevent infinite loops
 let isProgrammaticChange = false;
 
-// Event listener for main state select
-mainStateSelect.addEventListener('change', function () {
+// Function to update all state selects when one changes
+function updateAllStateSelects(changedSelect, newValue) {
     if (!isProgrammaticChange) {
         isProgrammaticChange = true;
-        const selectedState = this.value;
 
-        // Mirror selection into statePrimary and stateSecondary
-        if (statePrimary) statePrimary.value = selectedState;
-        if (stateSecondary) stateSecondary.value = selectedState;
+        // Update main state select if it's not the one changed
+        if (mainStateSelect && mainStateSelect !== changedSelect) {
+            mainStateSelect.value = newValue;
+        }
 
-        // Get current type values for each group
-        const type1 = type.value;
-        const type2Value = type2.value;
+        // Update statePrimary if it's not the one changed
+        if (statePrimary && statePrimary !== changedSelect) {
+            statePrimary.value = newValue;
+        }
 
-        // Update insurance dropdowns for both groups based on the initial state and their respective types
-        updateInsuranceDropdowns(selectedState, type1, 'insurance');
-        updateInsuranceDropdowns(selectedState, type2Value, 'insurance2');
+        // Update stateSecondary if it's not the one changed
+        if (stateSecondary && stateSecondary !== changedSelect) {
+            stateSecondary.value = newValue;
+        }
+
+        // Update insurance dropdowns as needed
+        if (changedSelect !== mainStateSelect) {
+            const type1 = type.value;
+            const type2Value = type2.value;
+            updateInsuranceDropdowns(newValue, type1, 'insurance');
+            updateInsuranceDropdowns(newValue, type2Value, 'insurance2');
+        } else {
+            // If mainStateSelect was changed, update insurance dropdowns accordingly
+            if (changedSelect === mainStateSelect) {
+                const type1 = type.value;
+                const type2Value = type2.value;
+                updateInsuranceDropdowns(newValue, type1, 'insurance');
+                updateInsuranceDropdowns(newValue, type2Value, 'insurance2');
+            }
+        }
 
         isProgrammaticChange = false;
     }
+}
+
+// Event listener for main state select
+mainStateSelect.addEventListener('change', function () {
+    updateAllStateSelects(mainStateSelect, this.value);
 });
 
 // Event listener for statePrimary
 if (statePrimary) {
     statePrimary.addEventListener('change', function () {
-        if (!isProgrammaticChange) {
-            isProgrammaticChange = true;
-            mainStateSelect.value = this.value;
-
-            // Update insurance dropdown for primary insurance
-            const type1 = type.value;
-            updateInsuranceDropdowns(this.value, type1, 'insurance');
-
-            isProgrammaticChange = false;
-        }
+        updateAllStateSelects(statePrimary, this.value);
     });
 }
 
 // Event listener for stateSecondary
 if (stateSecondary) {
     stateSecondary.addEventListener('change', function () {
-        if (!isProgrammaticChange) {
-            isProgrammaticChange = true;
-            mainStateSelect.value = this.value;
-
-            // Update insurance dropdown for secondary insurance
-            const type2Value = type2.value;
-            updateInsuranceDropdowns(this.value, type2Value, 'insurance2');
-
-            isProgrammaticChange = false;
-        }
+        updateAllStateSelects(stateSecondary, this.value);
     });
 }
 
