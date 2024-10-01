@@ -292,8 +292,6 @@ function initializeScript() {
 const mainStateSelect = document.getElementById('select');
 const statePrimary = document.getElementById('statePrimary');
 const stateSecondary = document.getElementById('stateSecondary');
-const type = document.getElementById('type');
-const type2 = document.getElementById('type2');
 
 // Flag to prevent infinite loops
 let isProgrammaticChange = false;
