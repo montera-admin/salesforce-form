@@ -187,6 +187,10 @@ function initializeScript() {
     const type2 = document.getElementById("type2");
     const formSales = document.getElementById("form_wrapper");
     const select = document.getElementById("select");
+    const statePrimary = document.getElementById('statePrimary');
+    const stateSecondary = document.getElementById('stateSecondary');
+    const asd = document.getElementById('asd');
+    const ageInput = document.getElementById('00N8b00000EQM2a');
 
     // --------------------------
     // Reset Form Functionality
@@ -276,90 +280,20 @@ function initializeScript() {
     // Event Listeners for Insurance Name Fields
     // ------------------------------------------------
     insurance.addEventListener("change", function () {
-        const selectedState = document.getElementById('statePrimary') ? document.getElementById('statePrimary').value : select.value;
+        const selectedState = statePrimary.value;
         updatePrimaryInsuranceFields(selectedState, this.value);
     });
 
     insurance2.addEventListener("change", function () {
-        const selectedState = document.getElementById('stateSecondary') ? document.getElementById('stateSecondary').value : select.value;
+        const selectedState = stateSecondary.value;
         updateSecondaryInsuranceFields(selectedState, this.value);
     });
 
-// --------------------------------------------
-// Mutual Updating Between State Fields
-// --------------------------------------------
-
-const mainStateSelect = document.getElementById('select');
-const statePrimary = document.getElementById('statePrimary');
-const stateSecondary = document.getElementById('stateSecondary');
-
-// Flag to prevent infinite loops
-let isProgrammaticChange = false;
-
-// Function to update all state selects when one changes
-function updateAllStateSelects(changedSelect, newValue) {
-    if (!isProgrammaticChange) {
-        isProgrammaticChange = true;
-
-        // Update main state select if it's not the one changed
-        if (mainStateSelect && mainStateSelect !== changedSelect) {
-            mainStateSelect.value = newValue;
-        }
-
-        // Update statePrimary if it's not the one changed
-        if (statePrimary && statePrimary !== changedSelect) {
-            statePrimary.value = newValue;
-        }
-
-        // Update stateSecondary if it's not the one changed
-        if (stateSecondary && stateSecondary !== changedSelect) {
-            stateSecondary.value = newValue;
-        }
-
-        // Update insurance dropdowns as needed
-        if (changedSelect !== mainStateSelect) {
-            const type1 = type.value;
-            const type2Value = type2.value;
-            updateInsuranceDropdowns(newValue, type1, 'insurance');
-            updateInsuranceDropdowns(newValue, type2Value, 'insurance2');
-        } else {
-            // If mainStateSelect was changed, update insurance dropdowns accordingly
-            if (changedSelect === mainStateSelect) {
-                const type1 = type.value;
-                const type2Value = type2.value;
-                updateInsuranceDropdowns(newValue, type1, 'insurance');
-                updateInsuranceDropdowns(newValue, type2Value, 'insurance2');
-            }
-        }
-
-        isProgrammaticChange = false;
-    }
-}
-
-// Event listener for main state select
-mainStateSelect.addEventListener('change', function () {
-    updateAllStateSelects(mainStateSelect, this.value);
-});
-
-// Event listener for statePrimary
-if (statePrimary) {
-    statePrimary.addEventListener('change', function () {
-        updateAllStateSelects(statePrimary, this.value);
-    });
-}
-
-// Event listener for stateSecondary
-if (stateSecondary) {
-    stateSecondary.addEventListener('change', function () {
-        updateAllStateSelects(stateSecondary, this.value);
-    });
-}
-
     // ----------------------------------------------------
-    // Event Listeners for Changes in Primary Insurance
+    // Event Listener for Changes in Primary Insurance Type
     // ----------------------------------------------------
     type.addEventListener("change", function () {
-        const selectedState = select.value;
+        const selectedState = statePrimary.value;
         const selectedType = this.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
 
@@ -369,11 +303,37 @@ if (stateSecondary) {
     });
 
     // -----------------------------------------------------
-    // Event Listeners for Changes in Secondary Insurance
+    // Event Listener for Changes in Secondary Insurance Type
     // -----------------------------------------------------
     type2.addEventListener("change", function () {
-        const selectedState = select.value;
+        const selectedState = stateSecondary.value;
         const selectedType = this.value;
+        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+
+        // Reset insurance2 dropdown to 'Select provider'
+        insurance2.selectedIndex = 0;
+        secondaryInsuranceInput.value = '';
+    });
+
+    // -----------------------------------------------------
+    // Event Listener for Changes in Primary Insurance State
+    // -----------------------------------------------------
+    statePrimary.addEventListener('change', function () {
+        const selectedState = this.value;
+        const selectedType = type.value;
+        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+
+        // Reset insurance dropdown to 'Select provider'
+        insurance.selectedIndex = 0;
+        primaryInsuranceInput.value = '';
+    });
+
+    // -------------------------------------------------------
+    // Event Listener for Changes in Secondary Insurance State
+    // -------------------------------------------------------
+    stateSecondary.addEventListener('change', function () {
+        const selectedState = this.value;
+        const selectedType = type2.value;
         updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
 
         // Reset insurance2 dropdown to 'Select provider'
@@ -400,8 +360,8 @@ if (stateSecondary) {
         // Filter out entries with null or empty 'tofu_payor_name' and sort alphabetically
         const filteredPayors = payorNames.filter(payor => payor.tofu_payor_name && payor.tofu_payor_name.trim() !== '');
         filteredPayors.sort((a, b) => {
-            const nameA = a.tofu_payor_name.toUpperCase();
-            const nameB = b.tofu_payor_name.toUpperCase();
+            const nameA = payor.tofu_payor_name.toUpperCase();
+            const nameB = payor.tofu_payor_name.toUpperCase();
             return nameA.localeCompare(nameB);
         });
 
@@ -455,31 +415,31 @@ if (stateSecondary) {
     // ----------------------------
     formSales.addEventListener('submit', function () {
         // Update hidden fields before submission
-        const statePrimary = document.getElementById('statePrimary') ? document.getElementById('statePrimary').value : select.value;
-        const insurancePrimary = document.getElementById('insurance').value;
+        const statePrimaryValue = statePrimary.value;
+        const insurancePrimary = insurance.value;
         if (insurancePrimary) {
-            updatePrimaryInsuranceFields(statePrimary, insurancePrimary);
+            updatePrimaryInsuranceFields(statePrimaryValue, insurancePrimary);
         }
 
-        const stateSecondary = document.getElementById('stateSecondary') ? document.getElementById('stateSecondary').value : select.value;
-        const insuranceSecondary = document.getElementById('insurance2').value;
+        const stateSecondaryValue = stateSecondary.value;
+        const insuranceSecondary = insurance2.value;
         if (insuranceSecondary) {
-            updateSecondaryInsuranceFields(stateSecondary, insuranceSecondary);
+            updateSecondaryInsuranceFields(stateSecondaryValue, insuranceSecondary);
         }
 
         // Gather values from form fields
-        const asdDiagnosis = document.getElementById('asd').value;
-        const hasInsurance = document.getElementById('InsuranceSelect').value;
-        const childAge = parseInt(document.getElementById('00N8b00000EQM2a').value, 10);
-        const state = select.value;
-        const insuranceProvider = document.getElementById('insurance').value;
+        const asdDiagnosis = asd.value;
+        const hasInsurance = insuranceSelect.value;
+        const childAge = parseInt(ageInput.value, 10);
+        const state = select.value; // User's residential state
+        const insuranceProvider = insurance.value;
         const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
 
         // Diagnosis Disqualify States
         const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
 
-        // Get primary insurance's TOFU Status
-        const insuranceData = findInsuranceData(state, insuranceProvider);
+        // Get primary insurance's TOFU Status using the correct state
+        const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
         const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 
         // ---------------------------------------
@@ -526,16 +486,18 @@ if (stateSecondary) {
 
         // Set the return URL
         document.getElementsByName("retURL")[0].value = returnURL;
-    });
-}
+    }); // Close formSales.addEventListener
 
-// Get all select elements you want to target
-const selectFields = document.querySelectorAll('select.sf-form_input');
+    // ---------------------------------------
+    // Change select field fill
+    // ---------------------------------------
+    const selectFields = document.querySelectorAll('select.sf-form_input');
 
-// Function to remove 'is-fill' class when an option is selected
-selectFields.forEach(function(selectField) {
-    selectField.addEventListener('change', function() {
-        // Remove 'is-fill' class
-        selectField.classList.remove('is-fill');
+    // Function to remove 'is-fill' class when an option is selected
+    selectFields.forEach(function (selectField) {
+        selectField.addEventListener('change', function () {
+            // Remove 'is-fill' class
+            selectField.classList.remove('is-fill');
+        });
     });
-});
+} 
