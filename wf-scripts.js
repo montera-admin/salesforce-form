@@ -453,68 +453,72 @@ function initializeScript() {
         }
 
         // Gather values from form fields
-        const asdDiagnosis = asd.value;
-        const hasInsurance = insuranceSelect.value;
-        const childAge = parseInt(ageInput.value, 10);
-        const state = select.value; // User's residential state
-        const insuranceProvider = insurance.value;
-        const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+const asdDiagnosis = asd.value.trim();
+const hasInsurance = insuranceSelect.value;
+const childAge = parseInt(ageInput.value, 10);
+const state = select.value; // User's residential state
+const insuranceProvider = insurance.value;
+const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
 
-        // Diagnosis Disqualify States
-        const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
+// Diagnosis Disqualify States
+const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
 
-        // Get primary insurance's TOFU Status using the correct state
-        const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
-        const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
+// Get primary insurance's TOFU Status using the correct state
+const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
+const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 
-        // ---------------------------------------
-        // Redirect Logic Based on Business Rules
-        // ---------------------------------------
-        let returnURL = '';
-        let mqlStatus = '';
+// Debugging statements
+console.log('asdDiagnosis:', asdDiagnosis);
+console.log('tofuStatus:', tofuStatus);
 
-        // DISQUALIFY if "Does your child have health insurance?" is "No"
-        if (hasInsurance === 'No') {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - No Insurance";
-        }
-        // DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
-        else if (tofuStatus === "Disqualify") {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Insurance not supported";
-        }
-        // DISQUALIFY based on adjusted ASD diagnosis logic
-        else if (
-            asdDiagnosis === "No, have non-ASD diagnosis" ||
-            (
-                asdDiagnosis !== "No, evaluation scheduled" &&
-                diagnosisDisqualifyStates.includes(state) &&
-                asdDiagnosis.includes('No')
-            )
-        ) {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - No Diagnosis";
-        }
-        // DISQUALIFY if Age is >99
-        else if (childAge > 99) {
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Age";
-        }
-        // PASS if primary insurance's TOFU Status is "Passing"
-        else if (tofuStatus === "Passing") {
-            returnURL = "https://fortahealth.com/thank-you-schedule";
-            mqlStatus = "MQL";
-        } else {
-            // Default fallback
-            returnURL = "https://www.fortahealth.com/thank-you-2";
-            mqlStatus = "DQ - Other";
-        }
+// ---------------------------------------
+// Redirect Logic Based on Business Rules
+// ---------------------------------------
+let returnURL = '';
+let mqlStatus = '';
 
-        // Set the MQL Status hidden field
-        mqlStatusField.value = mqlStatus;
+// DISQUALIFY if "Does your child have health insurance?" is "No"
+if (hasInsurance === 'No') {
+    returnURL = "https://www.fortahealth.com/thank-you-2";
+    mqlStatus = "DQ - No Insurance";
+}
+// DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
+else if (tofuStatus === "Disqualify") {
+    returnURL = "https://www.fortahealth.com/thank-you-2";
+    mqlStatus = "DQ - Insurance not supported";
+}
+// DISQUALIFY based on adjusted ASD diagnosis logic
+else if (
+    asdDiagnosis.toLowerCase() === "no, have non-asd diagnosis" ||
+    (
+        asdDiagnosis.toLowerCase() !== "no, evaluation scheduled" &&
+        diagnosisDisqualifyStates.includes(state) &&
+        asdDiagnosis.toLowerCase().includes('no')
+    )
+) {
+    returnURL = "https://www.fortahealth.com/thank-you-2";
+    mqlStatus = "DQ - No Diagnosis";
+}
+// DISQUALIFY if Age is >99
+else if (childAge > 99) {
+    returnURL = "https://www.fortahealth.com/thank-you-2";
+    mqlStatus = "DQ - Age";
+}
+// PASS if primary insurance's TOFU Status is "Passing"
+else if (tofuStatus === "Passing") {
+    returnURL = "https://fortahealth.com/thank-you-schedule";
+    mqlStatus = "MQL";
+} else {
+    // Default fallback
+    returnURL = "https://www.fortahealth.com/thank-you-2";
+    mqlStatus = "DQ - Other";
+}
 
-        // Set the return URL
-        document.getElementsByName("retURL")[0].value = returnURL;
+// Set the MQL Status hidden field
+mqlStatusField.value = mqlStatus;
+
+// Set the return URL
+document.getElementsByName("retURL")[0].value = returnURL;
     }); // Close formSales.addEventListener
 } 
 
