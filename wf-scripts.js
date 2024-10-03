@@ -226,6 +226,9 @@ function initializeScript() {
             // Auto-fill statePrimary and stateSecondary with main state
             statePrimary.value = select.value;
             stateSecondary.value = select.value;
+
+            // Remove 'is-fill' class from #type
+            type.classList.remove('is-fill');
         } else if (selection === 'Yes, primary & secondary') {
             insuranceName.classList.remove("is-hidden");
             insuranceName2.classList.remove("is-hidden");
@@ -237,6 +240,10 @@ function initializeScript() {
             // Auto-fill statePrimary and stateSecondary with main state
             statePrimary.value = select.value;
             stateSecondary.value = select.value;
+
+            // Remove 'is-fill' class from #type and #type2
+            type.classList.remove('is-fill');
+            type2.classList.remove('is-fill');
         }
     });
 
@@ -249,6 +256,10 @@ function initializeScript() {
         // Auto-fill statePrimary and stateSecondary with main state
         if (statePrimary) statePrimary.value = selectedState;
         if (stateSecondary) stateSecondary.value = selectedState;
+
+        // Remove 'is-fill' class from #type and #type2
+        type.classList.remove('is-fill');
+        type2.classList.remove('is-fill');
 
         // Optionally, update the insurance dropdowns based on the new state and existing type selections
         const type1 = type.value;
@@ -325,6 +336,12 @@ function initializeScript() {
         // Reset insurance dropdown to 'Select provider'
         insurance.selectedIndex = 0;
         primaryInsuranceInput.value = '';
+
+        // Remove 'is-fill' class from #type to make it active
+        type.classList.remove('is-fill');
+
+        // Add 'is-fill' class back to #insurance
+        insurance.classList.add('is-fill');
     });
 
     // -------------------------------------------------------
@@ -338,6 +355,12 @@ function initializeScript() {
         // Reset insurance2 dropdown to 'Select provider'
         insurance2.selectedIndex = 0;
         secondaryInsuranceInput.value = '';
+
+        // Remove 'is-fill' class from #type2 to make it active
+        type2.classList.remove('is-fill');
+
+        // Add 'is-fill' class back to #insurance2
+        insurance2.classList.add('is-fill');
     });
 
     // ----------------------------------------------------
@@ -351,6 +374,9 @@ function initializeScript() {
         // Reset insurance dropdown to 'Select provider'
         insurance.selectedIndex = 0;
         primaryInsuranceInput.value = '';
+
+        // Remove 'is-fill' class from #insurance to make it active
+        insurance.classList.remove('is-fill');
     });
 
     // -----------------------------------------------------
@@ -364,6 +390,9 @@ function initializeScript() {
         // Reset insurance2 dropdown to 'Select provider'
         insurance2.selectedIndex = 0;
         secondaryInsuranceInput.value = '';
+
+        // Remove 'is-fill' class from #insurance2 to make it active
+        insurance2.classList.remove('is-fill');
     });
 
     // -------------------------------------------------
@@ -385,8 +414,8 @@ function initializeScript() {
         // Filter out entries with null or empty 'tofu_payor_name' and sort alphabetically
         const filteredPayors = payorNames.filter(payor => payor.tofu_payor_name && payor.tofu_payor_name.trim() !== '');
         filteredPayors.sort((a, b) => {
-            const nameA = a.tofu_payor_name.toUpperCase();
-            const nameB = b.tofu_payor_name.toUpperCase();
+            const nameA = payor.tofu_payor_name.toUpperCase();
+            const nameB = payor.tofu_payor_name.toUpperCase();
             return nameA.localeCompare(nameB);
         });
 
@@ -406,10 +435,16 @@ function initializeScript() {
             primaryInsuranceInput.value = '';
             document.getElementById('00NRc00000OHqQz').value = '';
             document.getElementById('00NRc00000OHo1Z').value = '';
+
+            // Add 'is-fill' class back to #insurance
+            insurance.classList.add('is-fill');
         } else {
             secondaryInsuranceInput.value = '';
             document.getElementById('00NRc00000OHWu6').value = '';
             document.getElementById('00NRc00000OHuZR').value = '';
+
+            // Add 'is-fill' class back to #insurance2
+            insurance2.classList.add('is-fill');
         }
     }
 
@@ -482,6 +517,11 @@ function initializeScript() {
         else if (tofuStatus === "Disqualify") {
             returnURL = "https://www.fortahealth.com/thank-you-2";
             mqlStatus = "DQ - Insurance not supported";
+        }
+        // PASS if ASD Diagnosis is "No, evaluation scheduled" (regardless of state)
+        else if (asdDiagnosis === "No, evaluation scheduled") {
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+            mqlStatus = "MQL";
         }
         // DISQUALIFY based on adjusted ASD diagnosis logic
         else if (
