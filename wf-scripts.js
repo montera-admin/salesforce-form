@@ -222,6 +222,10 @@ function initializeScript() {
             insuranceName.classList.remove("is-hidden");
             insurance.setAttribute("required", "required");
             type.setAttribute("required", "required");
+
+            // Auto-fill statePrimary and stateSecondary with main state
+            statePrimary.value = select.value;
+            stateSecondary.value = select.value;
         } else if (selection === 'Yes, primary & secondary') {
             insuranceName.classList.remove("is-hidden");
             insuranceName2.classList.remove("is-hidden");
@@ -229,7 +233,28 @@ function initializeScript() {
             type.setAttribute("required", "required");
             insurance2.setAttribute("required", "required");
             type2.setAttribute("required", "required");
+
+            // Auto-fill statePrimary and stateSecondary with main state
+            statePrimary.value = select.value;
+            stateSecondary.value = select.value;
         }
+    });
+
+    // ----------------------------
+    // Event Listener for Main State Selection
+    // ----------------------------
+    select.addEventListener('change', function () {
+        const selectedState = this.value;
+
+        // Auto-fill statePrimary and stateSecondary with main state
+        if (statePrimary) statePrimary.value = selectedState;
+        if (stateSecondary) stateSecondary.value = selectedState;
+
+        // Optionally, update the insurance dropdowns based on the new state and existing type selections
+        const type1 = type.value;
+        const type2Value = type2.value;
+        updateInsuranceDropdowns(statePrimary.value, type1, 'insurance');
+        updateInsuranceDropdowns(stateSecondary.value, type2Value, 'insurance2');
     });
 
     // ------------------------------------------
@@ -289,32 +314,6 @@ function initializeScript() {
         updateSecondaryInsuranceFields(selectedState, this.value);
     });
 
-    // ----------------------------------------------------
-    // Event Listener for Changes in Primary Insurance Type
-    // ----------------------------------------------------
-    type.addEventListener("change", function () {
-        const selectedState = statePrimary.value;
-        const selectedType = this.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
-
-        // Reset insurance dropdown to 'Select provider'
-        insurance.selectedIndex = 0;
-        primaryInsuranceInput.value = '';
-    });
-
-    // -----------------------------------------------------
-    // Event Listener for Changes in Secondary Insurance Type
-    // -----------------------------------------------------
-    type2.addEventListener("change", function () {
-        const selectedState = stateSecondary.value;
-        const selectedType = this.value;
-        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
-
-        // Reset insurance2 dropdown to 'Select provider'
-        insurance2.selectedIndex = 0;
-        secondaryInsuranceInput.value = '';
-    });
-
     // -----------------------------------------------------
     // Event Listener for Changes in Primary Insurance State
     // -----------------------------------------------------
@@ -341,6 +340,32 @@ function initializeScript() {
         secondaryInsuranceInput.value = '';
     });
 
+    // ----------------------------------------------------
+    // Event Listener for Changes in Primary Insurance Type
+    // ----------------------------------------------------
+    type.addEventListener("change", function () {
+        const selectedState = statePrimary.value;
+        const selectedType = this.value;
+        updateInsuranceDropdowns(selectedState, selectedType, 'insurance');
+
+        // Reset insurance dropdown to 'Select provider'
+        insurance.selectedIndex = 0;
+        primaryInsuranceInput.value = '';
+    });
+
+    // -----------------------------------------------------
+    // Event Listener for Changes in Secondary Insurance Type
+    // -----------------------------------------------------
+    type2.addEventListener("change", function () {
+        const selectedState = stateSecondary.value;
+        const selectedType = this.value;
+        updateInsuranceDropdowns(selectedState, selectedType, 'insurance2');
+
+        // Reset insurance2 dropdown to 'Select provider'
+        insurance2.selectedIndex = 0;
+        secondaryInsuranceInput.value = '';
+    });
+
     // -------------------------------------------------
     // Update Insurance Dropdowns Based on State and Type
     // -------------------------------------------------
@@ -360,8 +385,8 @@ function initializeScript() {
         // Filter out entries with null or empty 'tofu_payor_name' and sort alphabetically
         const filteredPayors = payorNames.filter(payor => payor.tofu_payor_name && payor.tofu_payor_name.trim() !== '');
         filteredPayors.sort((a, b) => {
-            const nameA = payor.tofu_payor_name.toUpperCase();
-            const nameB = payor.tofu_payor_name.toUpperCase();
+            const nameA = a.tofu_payor_name.toUpperCase();
+            const nameB = b.tofu_payor_name.toUpperCase();
             return nameA.localeCompare(nameB);
         });
 
@@ -488,16 +513,17 @@ function initializeScript() {
         document.getElementsByName("retURL")[0].value = returnURL;
     }); // Close formSales.addEventListener
 
-    // ---------------------------------------
-    // Change select field fill
-    // ---------------------------------------
-    const selectFields = document.querySelectorAll('select.sf-form_input');
+} // Close initializeScript function
 
-    // Function to remove 'is-fill' class when an option is selected
-    selectFields.forEach(function (selectField) {
-        selectField.addEventListener('change', function () {
-            // Remove 'is-fill' class
-            selectField.classList.remove('is-fill');
-        });
+// ---------------------------------------
+// Change select field fill
+// ---------------------------------------
+const selectFields = document.querySelectorAll('select.sf-form_input');
+
+// Function to remove 'is-fill' class when an option is selected
+selectFields.forEach(function(selectField) {
+    selectField.addEventListener('change', function() {
+        // Remove 'is-fill' class
+        selectField.classList.remove('is-fill');
     });
-} 
+});
