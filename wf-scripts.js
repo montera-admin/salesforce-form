@@ -533,7 +533,9 @@ document.getElementsByName("retURL")[0].value = returnURL;
         // Remove 'is-fill' class
  //       selectField.classList.remove('is-fill');
  //   });
- // ---------------------------------------
+//});
+
+// ---------------------------------------
 // Script for Managing 'is-fill' Class Removal
 // ---------------------------------------
 (function() {
@@ -644,4 +646,3 @@ document.getElementsByName("retURL")[0].value = returnURL;
     initialIsFillSetup();
 
 })();
-//});
