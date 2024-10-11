@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', populateHiddenFields);
 // -----------------------
 let jsonData = [];
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     // Fetch JSON data
     fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
         .then(response => response.json())
@@ -170,6 +170,16 @@ document.addEventListener('DOMContentLoaded', function () {
             jsonData = data;
             initializeScript(); // Initialize the rest of the script after data is loaded
         });
+});*/
+document.addEventListener('DOMContentLoaded', function () {
+    fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
+        .then(response => response.json())
+        .then(data => {
+            jsonData = data;
+            console.log('Fetched JSON data:', jsonData); // Debugging line
+            initializeScript();
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
 });
 
 function initializeScript() {
