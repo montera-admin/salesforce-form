@@ -383,6 +383,8 @@ function initializeScript() {
         const payorNames = filterPayors(state, type);
         const insuranceDropdown = document.getElementById(insuranceId);
 
+        console.log(`Populating ${insuranceId} with payors:`, payorNames); // Debugging line
+
         // Clear current options
         insuranceDropdown.innerHTML = '';
 
@@ -407,6 +409,8 @@ function initializeScript() {
             option.text = payor.tofu_payor_name;
             insuranceDropdown.appendChild(option);
         });
+        
+        console.log(`${insuranceId} options:`, insuranceDropdown.innerHTML); // Debugging line
 
         // Ensure default option is selected
         insuranceDropdown.selectedIndex = 0;
