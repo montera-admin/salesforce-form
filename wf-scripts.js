@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             jsonData = data;
-            console.log('Fetched JSON data:', jsonData); // Debugging line
+            //console.log('Fetched JSON data:', jsonData); // Debugging line
             initializeScript();
         })
         .catch(error => console.error('Error fetching JSON:', error));
