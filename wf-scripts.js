@@ -7,20 +7,21 @@
         document.getElementById("00N8b00000GjstL").value = event.data.value;
     }
 }, false);*/
-window.addEventListener('message', function (event) {
-    var origin = event.origin || event.originalEvent.origin;
-    
-    if (event.data.call == 'gcValue') {
-        console.log('Received GCLID:', event.data.value); // Log GCLID to the console
+window.addEventListener('DOMContentLoaded', function() {
+    var gclid = getUrlParameter('gclid');
+    console.log('GCLID from URL:', gclid); // Log the GCLID value
+    if (gclid) {
         var gclidField = document.getElementById("00N8b00000GjstL");
         if (gclidField) {
-            gclidField.value = event.data.value;
+            gclidField.value = gclid;
             console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
         } else {
             console.log('GCLID field not found'); // Log if the hidden field is not found
         }
+    } else {
+        console.log('No GCLID found in URL'); // Log if GCLID is not present in URL
     }
-}, false);
+});
 
 // -------------------------------
 // Script for Communication Checkbox
