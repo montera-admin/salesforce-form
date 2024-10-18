@@ -7,6 +7,14 @@
         document.getElementById("00N8b00000GjstL").value = event.data.value;
     }
 }, false);*/
+// Function to get URL parameters
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
 window.addEventListener('DOMContentLoaded', function() {
     var gclid = getUrlParameter('gclid');
     console.log('GCLID from URL:', gclid); // Log the GCLID value
