@@ -9,17 +9,17 @@
 }, false);*/
 window.addEventListener('DOMContentLoaded', function() {
     var gclid = getURLParameter('gclid');
-    console.log('GCLID from URL:', gclid); // Log the GCLID value
+    //console.log('GCLID from URL:', gclid); // Log the GCLID value
     if (gclid) {
         var gclidField = document.getElementById("00N8b00000GjstL");
         if (gclidField) {
             gclidField.value = gclid;
-            console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
+           // console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
         } else {
-            console.log('GCLID field not found'); // Log if the hidden field is not found
+           // console.log('GCLID field not found'); // Log if the hidden field is not found
         }
     } else {
-        console.log('No GCLID found in URL'); // Log if GCLID is not present in URL
+       // console.log('No GCLID found in URL'); // Log if GCLID is not present in URL
     }
 });
 
@@ -389,7 +389,7 @@ function initializeScript() {
         const payorNames = filterPayors(state, type);
         const insuranceDropdown = document.getElementById(insuranceId);
 
-        console.log(`Populating ${insuranceId} with payors:`, payorNames); // Debugging line
+        //console.log(`Populating ${insuranceId} with payors:`, payorNames); // Debugging line
 
         // Clear current options
         insuranceDropdown.innerHTML = '';
@@ -416,7 +416,7 @@ function initializeScript() {
             insuranceDropdown.appendChild(option);
         });
         
-        console.log(`${insuranceId} options:`, insuranceDropdown.innerHTML); // Debugging line
+        //console.log(`${insuranceId} options:`, insuranceDropdown.innerHTML); // Debugging line
 
         // Ensure default option is selected
         insuranceDropdown.selectedIndex = 0;
@@ -488,8 +488,8 @@ const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
 const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 
 // Debugging statements
-console.log('asdDiagnosis:', asdDiagnosis);
-console.log('tofuStatus:', tofuStatus);
+//console.log('asdDiagnosis:', asdDiagnosis);
+//console.log('tofuStatus:', tofuStatus);
 
 // ---------------------------------------
 // Redirect Logic Based on Business Rules
