@@ -1,10 +1,24 @@
 // -----------------------
 // Script for GCLID Capture
 // -----------------------
-window.addEventListener('message', function (event) {
+/*window.addEventListener('message', function (event) {
     var origin = event.origin || event.originalEvent.origin;
     if (event.data.call == 'gcValue') {
         document.getElementById("00N8b00000GjstL").value = event.data.value;
+    }
+}, false);*/
+window.addEventListener('message', function (event) {
+    var origin = event.origin || event.originalEvent.origin;
+    
+    if (event.data.call == 'gcValue') {
+        console.log('Received GCLID:', event.data.value); // Log GCLID to the console
+        var gclidField = document.getElementById("00N8b00000GjstL");
+        if (gclidField) {
+            gclidField.value = event.data.value;
+            console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
+        } else {
+            console.log('GCLID field not found'); // Log if the hidden field is not found
+        }
     }
 }, false);
 
@@ -162,15 +176,6 @@ document.addEventListener('DOMContentLoaded', populateHiddenFields);
 // -----------------------
 let jsonData = [];
 
-/*document.addEventListener('DOMContentLoaded', function () {
-    // Fetch JSON data
-    fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
-        .then(response => response.json())
-        .then(data => {
-            jsonData = data;
-            initializeScript(); // Initialize the rest of the script after data is loaded
-        });
-});*/
 document.addEventListener('DOMContentLoaded', function () {
     fetch('https://cdn.prod.fortahealth.com/assets/tofu_payor_status.json')
         .then(response => response.json())
