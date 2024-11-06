@@ -481,7 +481,7 @@ const insuranceProvider = insurance.value;
 const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
 
 // Diagnosis Disqualify States
-const diagnosisDisqualifyStates = ["OH", "TX", "IN", "MD", "KS", "MO", "NC"];
+const diagnosisDisqualifyStates = ["AK", "CA", "IA", "HI", "LA", "MA", "MT", "NM", "NY", "OR"];
 
 // Get primary insurance's TOFU Status using the correct state
 const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
