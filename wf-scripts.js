@@ -23,36 +23,36 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// -------------------------------
+// ---------------------------------
 // Script for Communication Checkbox
-// -------------------------------
+// ---------------------------------
 const communicationYes = document.getElementById("communicationYes");
 communicationYes.addEventListener("change", () => {
     const communicationField = document.getElementById("00N8b00000EQM3O");
     communicationField.value = communicationYes.checked ? "Yes" : "No";
 });
 
-// --------------------------
+// -------------------------
 // Script for State Dropdown
-// --------------------------
+// -------------------------
 const select = document.getElementById("select");
 const state2 = document.getElementById("input-field-1");
 select.addEventListener("change", function () {
     state2.value = select.value;
 });
 
-// -------------------------
+// -----------------------
 // Script for ASD Dropdown
-// -------------------------
+// -----------------------
 const asd = document.getElementById("asd");
 const asdInput = document.getElementById("00N8b00000EQM2f");
 asd.addEventListener("change", function () {
     asdInput.value = asd.value;
 });
 
-// --------------------------
+// -------------------------
 // Script for Type Dropdowns
-// --------------------------
+// -------------------------
 const type = document.getElementById("type");
 const typeInput = document.getElementById("00N8b00000Bz6ey");
 type.addEventListener("change", function () {
@@ -65,9 +65,9 @@ type2.addEventListener("change", function () {
     type2Input.value = type2.value;
 });
 
-// -----------------
+// -------------------
 // Script for Zip Code
-// -----------------
+// -------------------
 const zipInput = document.getElementById('zip');
 zipInput.addEventListener('input', function () {
     if (this.value.length > this.maxLength) {
@@ -75,9 +75,9 @@ zipInput.addEventListener('input', function () {
     }
 });
 
-// -----------------
+// --------------
 // Script for Age
-// -----------------
+// --------------
 const ageInput = document.getElementById('00N8b00000EQM2a');
 ageInput.addEventListener('input', function () {
     if (this.value.length > this.maxLength) {
@@ -85,9 +85,9 @@ ageInput.addEventListener('input', function () {
     }
 });
 
-// -----------------
+// ---------------------------
 // Script for Email Validation
-// -----------------
+// ---------------------------
 const emailInput = document.getElementById('email');
 emailInput.addEventListener('invalid', function () {
     this.setCustomValidity('Please enter a valid email');
@@ -97,9 +97,9 @@ emailInput.addEventListener('input', function () {
     this.setCustomValidity('');
 });
 
-// ----------------------------------------
+// -----------------------------------------
 // Remove Unnecessary Fields Upon Submission
-// ----------------------------------------
+// -----------------------------------------
 const formSales = document.getElementById("form_wrapper");
 formSales.addEventListener("submit", function () {
     communicationYes.remove();
@@ -134,9 +134,9 @@ function phoneFormat(input) {
     return input;
 }
 
-// -------------------------------
+// ------------------------------
 // Function to Get URL Parameters
-// -------------------------------
+// ------------------------------
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
         '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
@@ -172,9 +172,9 @@ function populateHiddenFields() {
 
 document.addEventListener('DOMContentLoaded', populateHiddenFields);
 
-// -----------------------
+// ------------------------------------
 // Load JSON Data and Initialize Script
-// -----------------------
+// ------------------------------------
 let jsonData = [];
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -189,9 +189,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initializeScript() {
-    // ----------------------------
+    // ---------------------
     // Variable Declarations
-    // ----------------------------
+    // ---------------------
     const insuranceSelect = document.getElementById("InsuranceSelect");
     const insuranceName = document.getElementById("insuranceName");
     const insuranceName2 = document.getElementById("insuranceName2");
@@ -208,9 +208,9 @@ function initializeScript() {
     const asd = document.getElementById('asd');
     const ageInput = document.getElementById('00N8b00000EQM2a');
 
-    // --------------------------
+    // ------------------------
     // Reset Form Functionality
-    // --------------------------
+    // ------------------------
     function resetForm() {
         insuranceName.classList.add("is-hidden");
         insuranceName2.classList.add("is-hidden");
@@ -227,9 +227,9 @@ function initializeScript() {
         type2.removeAttribute("required");
     }
 
-    // ----------------------------------------
+    // --------------------------------------
     // Event Listener for Insurance Selection
-    // ----------------------------------------
+    // --------------------------------------
     insuranceSelect.addEventListener("change", function () {
         resetForm();
         const selection = insuranceSelect.value.trim();
@@ -256,9 +256,9 @@ function initializeScript() {
         }
     });
 
-    // ----------------------------
+    // ---------------------------------------
     // Event Listener for Main State Selection
-    // ----------------------------
+    // ---------------------------------------
     select.addEventListener('change', function () {
         const selectedState = this.value;
 
@@ -283,7 +283,7 @@ function initializeScript() {
         );
     }
 
-    // --------------------------------------------------
+    // ------------------------------------------
     // Update Hidden Fields for Primary Insurance
     // --------------------------------------------------
     function updatePrimaryInsuranceFields(state, insuranceName) {
@@ -300,9 +300,9 @@ function initializeScript() {
         }
     }
 
-    // --------------------------------------------------
+    // --------------------------------------------
     // Update Hidden Fields for Secondary Insurance
-    // --------------------------------------------------
+    // --------------------------------------------
     function updateSecondaryInsuranceFields(state, insuranceName) {
         const insuranceData = findInsuranceData(state, insuranceName);
         if (insuranceData) {
@@ -317,9 +317,9 @@ function initializeScript() {
         }
     }
 
-    // ------------------------------------------------
+    // -----------------------------------------
     // Event Listeners for Insurance Name Fields
-    // ------------------------------------------------
+    // -----------------------------------------
     insurance.addEventListener("change", function () {
         const selectedState = statePrimary.value;
         updatePrimaryInsuranceFields(selectedState, this.value);
@@ -369,9 +369,9 @@ function initializeScript() {
         primaryInsuranceInput.value = '';
     });
 
-    // -----------------------------------------------------
+    // ------------------------------------------------------
     // Event Listener for Changes in Secondary Insurance Type
-    // -----------------------------------------------------
+    // ------------------------------------------------------
     type2.addEventListener("change", function () {
         const selectedState = stateSecondary.value;
         const selectedType = this.value;
@@ -382,9 +382,9 @@ function initializeScript() {
         secondaryInsuranceInput.value = '';
     });
 
-    // -------------------------------------------------
+    // --------------------------------------------------
     // Update Insurance Dropdowns Based on State and Type
-    // -------------------------------------------------
+    // --------------------------------------------------
     function updateInsuranceDropdowns(state, type, insuranceId) {
         const payorNames = filterPayors(state, type);
         const insuranceDropdown = document.getElementById(insuranceId);
@@ -455,9 +455,9 @@ function initializeScript() {
         return [];
     }
 
-    // ----------------------------
+    // --------------------------
     // Main Form Submission Logic
-    // ----------------------------
+    // --------------------------
     formSales.addEventListener('submit', function () {
         // Update hidden fields before submission
         const statePrimaryValue = statePrimary.value;
@@ -491,9 +491,9 @@ const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 //console.log('asdDiagnosis:', asdDiagnosis);
 //console.log('tofuStatus:', tofuStatus);
 
-// ---------------------------------------
+// --------------------------------------
 // Redirect Logic Based on Business Rules
-// ---------------------------------------
+// --------------------------------------
 let returnURL = '';
 let mqlStatus = '';
 
@@ -541,16 +541,3 @@ mqlStatusField.value = mqlStatus;
 document.getElementsByName("retURL")[0].value = returnURL;
     }); // Close formSales.addEventListener
 } 
-
-// ---------------------------------------
-// Change select field fill
-// ---------------------------------------
-//const selectFields = document.querySelectorAll('select.sf-form_input');
-
-// Function to remove 'is-fill' class when an option is selected
-//selectFields.forEach(function(selectField) {
-//    selectField.addEventListener('change', function() {
-        // Remove 'is-fill' class
- //       selectField.classList.remove('is-fill');
- //   });
-//});
