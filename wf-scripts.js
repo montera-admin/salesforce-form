@@ -473,23 +473,19 @@ function initializeScript() {
         }
 
         // Gather values from form fields
-const asdDiagnosis = asd.value.trim();
-const hasInsurance = insuranceSelect.value;
-const childAge = parseInt(ageInput.value, 10);
-const state = select.value; // User's residential state
-const insuranceProvider = insurance.value;
-const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
+        const asdDiagnosis = asd.value.trim();
+        const hasInsurance = insuranceSelect.value;
+        const childAge = parseInt(ageInput.value, 10);
+        const state = select.value; // User's residential state
+        const insuranceProvider = insurance.value;
+        const mqlStatusField = document.getElementById('00NRc00000Nxa1C'); // Hidden MQL Status field
 
-// Diagnosis Disqualify States
-const diagnosisDisqualifyStates = ["AK", "CA", "IA", "HI", "LA", "MA", "MT", "NM", "NY", "OR"];
+        // Diagnosis Disqualify States
+        const diagnosisDisqualifyStates = ["AK", "CA", "IA", "HI", "LA", "MA", "MT", "NM", "NY", "OR"];
 
-// Get primary insurance's TOFU Status using the correct state
-const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
-const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
-
-// Debugging statements
-//console.log('asdDiagnosis:', asdDiagnosis);
-//console.log('tofuStatus:', tofuStatus);
+        // Get primary insurance's TOFU Status using the correct state
+        const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
+        const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 
 // --------------------------------------
 // Redirect Logic Based on Business Rules
