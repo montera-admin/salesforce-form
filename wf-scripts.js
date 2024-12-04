@@ -7,19 +7,19 @@
         document.getElementById("00N8b00000GjstL").value = event.data.value;
     }
 }, false);*/
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', function () {
     var gclid = getURLParameter('gclid');
     //console.log('GCLID from URL:', gclid); // Log the GCLID value
     if (gclid) {
         var gclidField = document.getElementById("00N8b00000GjstL");
         if (gclidField) {
             gclidField.value = gclid;
-           // console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
+            // console.log('GCLID field updated with value:', gclidField.value); // Confirm the field is updated
         } else {
-           // console.log('GCLID field not found'); // Log if the hidden field is not found
+            // console.log('GCLID field not found'); // Log if the hidden field is not found
         }
     } else {
-       // console.log('No GCLID found in URL'); // Log if GCLID is not present in URL
+        // console.log('No GCLID found in URL'); // Log if GCLID is not present in URL
     }
 });
 
@@ -140,7 +140,7 @@ function phoneFormat(input) {
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' +
         '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(
-        /\+/g, '%20')) || null;
+            /\+/g, '%20')) || null;
 }
 
 // ----------------------
@@ -415,7 +415,7 @@ function initializeScript() {
             option.text = payor.tofu_payor_name;
             insuranceDropdown.appendChild(option);
         });
-        
+
         //console.log(`${insuranceId} options:`, insuranceDropdown.innerHTML); // Debugging line
 
         // Ensure default option is selected
@@ -487,53 +487,69 @@ function initializeScript() {
         const insuranceData = findInsuranceData(statePrimaryValue, insuranceProvider);
         const tofuStatus = insuranceData ? insuranceData.tofu_status : null;
 
-// --------------------------------------
-// Redirect Logic Based on Business Rules
-// --------------------------------------
-let returnURL = '';
-let mqlStatus = '';
+        // --------------------------------------
+        // Redirect Logic Based on Business Rules
+        // --------------------------------------
+        let returnURL = '';
+        let mqlStatus = '';
 
-// DISQUALIFY if "Does your child have health insurance?" is "No"
-if (hasInsurance === 'No') {
-    returnURL = "https://www.fortahealth.com/thank-you-2";
-    mqlStatus = "DQ - No Insurance";
-}
-// DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
-else if (tofuStatus === "Disqualify") {
-    returnURL = "https://www.fortahealth.com/thank-you-2";
-    mqlStatus = "DQ - Insurance not supported";
-}
-// DISQUALIFY based on adjusted ASD diagnosis logic
-else if (
-    asdDiagnosis.toLowerCase() === "no, have non-asd diagnosis" ||
-    (
-        asdDiagnosis.toLowerCase() !== "no, evaluation scheduled" &&
-        diagnosisDisqualifyStates.includes(state) &&
-        asdDiagnosis.toLowerCase().includes('no')
-    )
-) {
-    returnURL = "https://www.fortahealth.com/thank-you-2";
-    mqlStatus = "DQ - No Diagnosis";
-}
-// DISQUALIFY if Age is >99
-else if (childAge > 99) {
-    returnURL = "https://www.fortahealth.com/thank-you-2";
-    mqlStatus = "DQ - Age";
-}
-// PASS if primary insurance's TOFU Status is "Passing"
-else if (tofuStatus === "Passing") {
-    returnURL = "https://fortahealth.com/thank-you-schedule";
-    mqlStatus = "MQL";
-} else {
-    // Default fallback
-    returnURL = "https://www.fortahealth.com/thank-you-2";
-    mqlStatus = "DQ - Other";
-}
+        // DISQUALIFY if "Does your child have health insurance?" is "No"
+        if (hasInsurance === 'No') {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - No Insurance";
+        }
+        // DISQUALIFY if primary insurance's TOFU Status is "Disqualify" (regardless of secondary)
+        else if (tofuStatus === "Disqualify") {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - Insurance not supported";
+        }
+        // MQL - Check Diagnosis
+        else if (
+            asdDiagnosis.toLowerCase() === "no, evaluation scheduled" ||
+            (
+                ["no", "no, on a waitlist", "no, evaluation scheduled"].includes(asdDiagnosis.toLowerCase()) &&
+                state.toLowerCase() === "california" &&
+                ["medicaid", "mco"].includes(insuranceType.toLowerCase())
+            )
+        ) {
+            returnURL = "https://www.fortahealth.com/thank-you-diagnosis";
+            mqlStatus = "MQL - Check Diagnosis";
+        }
+        // DQ - No Diagnosis
+        else if (
+            ["no", "no, on a waitlist", "no, have a non-asd diagnosis"].includes(asdDiagnosis.toLowerCase())
+        ) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - No Diagnosis";
+        }
+        // MQL - Standard Pass if primary insurance's TOFU Status is "Passing"
+        else if (tofuStatus === "Passing") {
+            returnURL = "https://fortahealth.com/thank-you-schedule";
+            mqlStatus = "MQL";
+        }
+        // DISQUALIFY based on adjusted ASD diagnosis logic
+        else if (
+            asdDiagnosis.toLowerCase() !== "yes" &&
+            diagnosisDisqualifyStates.includes(state) &&
+            asdDiagnosis.toLowerCase().includes('no')
+        ) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - No Diagnosis";
+        }
+        // DISQUALIFY if Age is >99
+        else if (childAge > 99) {
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - Age";
+        } else {
+            // Default fallback
+            returnURL = "https://www.fortahealth.com/thank-you-2";
+            mqlStatus = "DQ - Other";
+        }
 
-// Set the MQL Status hidden field
-mqlStatusField.value = mqlStatus;
+        // Set the MQL Status hidden field
+        mqlStatusField.value = mqlStatus;
 
-// Set the return URL
-document.getElementsByName("retURL")[0].value = returnURL;
+        // Set the return URL
+        document.getElementsByName("retURL")[0].value = returnURL;
     }); // Close formSales.addEventListener
-} 
+}
