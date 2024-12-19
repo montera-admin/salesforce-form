@@ -517,7 +517,7 @@ function initializeScript() {
         }
         // DQ - No Diagnosis
         else if (
-            ["no", "no, on a waitlist", "no, have a non-asd diagnosis"].includes(asdDiagnosis.toLowerCase())
+            ["no", "no, on a waitlist", "no, have non-asd diagnosis"].includes(asdDiagnosis.toLowerCase())
         ) {
             returnURL = "https://www.fortahealth.com/thank-you-2";
             mqlStatus = "DQ - No Diagnosis";
