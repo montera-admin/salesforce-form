@@ -524,7 +524,7 @@ function initializeScript() {
         }
         // MQL - Standard Pass if primary insurance's TOFU Status is "Passing"
         else if (tofuStatus === "Passing") {
-            returnURL = "https://fortahealth.com/thank-you-schedule";
+            returnURL = "https://fortahealth.com/thank-you-intake";
             mqlStatus = "MQL";
         }
         // DISQUALIFY based on adjusted ASD diagnosis logic
